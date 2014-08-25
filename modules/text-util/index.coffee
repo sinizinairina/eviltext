@@ -1,4 +1,4 @@
-app.textUtil =
+module.exports =
   # Assigning weighting to tags, build tag cloud.
   assignLogWeights: (tagCloud, minSize = 90, maxSize = 150) ->
     counts = _(tagCloud).pluck('count')
@@ -146,7 +146,7 @@ app.textUtil =
     firstElementWithLength = true
     convert = (node) ->
       if node.type == 'text'
-        length = app.textUtil.symbolLength node.text
+        length = module.exports.symbolLength node.text
         length += 1 unless firstElementWithLength
 
         # Skipping text elements of empty spaces.
@@ -162,7 +162,7 @@ app.textUtil =
           if options.min and totalLength < options.min
             maxLength = options.max - totalLength
             maxLength -= 1 unless firstElementWithLength
-            [text, length, tmp...] = app.textUtil.truncateText node.text, max: maxLength
+            [text, length, tmp...] = module.exports.truncateText node.text, max: maxLength
             length += 1 unless firstElementWithLength
             totalLength += length
             firstElementWithLength = false

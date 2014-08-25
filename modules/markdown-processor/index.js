@@ -2,6 +2,7 @@ var fs = require('fs')
 var fspath = require('path')
 var marked = require('marked')
 var baseProcessor = require('../base-processor')
+var textUtil = require('../text-util')
 
 var targetMd = function(file){return file.basePath + '.' + file.extension}
 var targetJson = function(file){return file.basePath + '.json'}
@@ -144,7 +145,7 @@ exports.process = function(srcDir, buildDir, file, config, ecb, cb, dontWrite){
     var markdownAttributes = htmlAndAttributes[1]
 
     // Updating html.
-    html = app.textUtil.postprocessHtml(html, {
+    html = textUtil.postprocessHtml(html, {
       path                 : file.basePath,
       replaceRelativePaths : true,
       lazyImages           : true
@@ -153,7 +154,7 @@ exports.process = function(srcDir, buildDir, file, config, ecb, cb, dontWrite){
     // Truncating
     if(config.previewLength > 0){
       var previewAttributes = {}
-      var result = app.textUtil.smartHtmlTruncate(html, config.previewLength)
+      var result = textUtil.smartHtmlTruncate(html, config.previewLength)
       previewAttributes.htmlPreview = result[0]
       previewAttributes.htmlPreviewLength = result[1]
       previewAttributes.htmlPreviewTruncated = result[2]

@@ -1,9 +1,5 @@
 global.app = {}
 
-// TODO remove CoffeeScript.
-// CoffeeScript.
-require('coffee-script/register')
-
 // `p` helper.
 global.p = function(){
   // var inspected = []
