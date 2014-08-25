@@ -1,0 +1,33 @@
+<section id="river" role="main">
+  <!-- Top time. -->
+  <header id="begin">
+    <time datetime="<%= formatDateForWeb(post.date) %>" id="top_time"><%= formatDateForHuman(post.date) %></time>
+  </header>
+
+  <!-- Post. -->
+  <article class="post">
+    <h2 class="entry-title">
+      <a href="<%= paths.post(post) %>" class="no-link title"><%- post.title %></a>
+    </h2>
+
+    <!-- Content. -->
+    <div class="entry-content">
+      <% if(post.type == 'text'){ %>
+        <%- post.html %>
+      <% }else if(post.type == 'gallery'){ %>
+        <% _(post.images).each(function(image){ %>
+          <p>
+            <img src="<%= imgStub %>" data-src="<%= image.default.path %>" title="<%= image.default.title %>" onload="lazyImage(this)"></img>
+          </p>
+        <% }) %>
+      <% } %>
+    </div>
+  </article>
+
+  <!-- Pagination. -->
+  <nav class="pagination">
+    <span class="prev">
+      <a href="<%= paths.home() %>" class="back_to_blog">&larr;&nbsp;&nbsp;&nbsp;Read more</a>
+    </span>
+  </nav>
+</section>

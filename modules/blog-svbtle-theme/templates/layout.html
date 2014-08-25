@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<% var lang = config.lang || 'en' %>
+<!--[if lt IE 7 ]><html lang="<%= lang %>" class="no-js ie ie6 lte7 lte8 lte9"><![endif]-->
+<!--[if IE 7 ]><html lang="<%= lang %>" class="no-js ie ie7 lte7 lte8 lte9"><![endif]-->
+<!--[if IE 8 ]><html lang="<%= lang %>" class="no-js ie ie8 lte8 lte9"><![endif]-->
+<!--[if IE 9 ]><html lang="<%= lang %>" class="no-js ie ie9 lte9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="<%= lang %>" class="no-js"><!--<![endif]-->
+  <head>
+    <meta charset="<%= config.charset || 'utf-8' %>"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.5, minimum-scale=0.5">
+    <title><%= title %></title>
+
+    <!-- Styles. -->
+    <link rel="stylesheet" type="text/css" media="all" href="<%= paths.themeAsset(themeName, '/style.css?cache=true') %>"/>
+
+    <%- headCommons %>
+  </head>
+  <body>
+    <!-- Sidebar. -->
+    <header id="sidebar">
+      <% if(config.logo){ %>
+        <aside id="logo" class="clearfix">
+          <div class="clearfix">
+            <a href="<%= paths.home() %>"><%- config.title %></a>
+          </div>
+        </aside>
+      <% } %>
+      <ul id="user_meta">
+        <li class="blog_name">
+          <h1 id="blog_name">
+            <a href="<%= paths.home() %>"><%- config.title %></a>
+          </h1>
+        </li>
+        <li class="blog_owner">
+          <h2 id="blog_owner">
+            <a href="<%= paths.home() %>"><%- config.author %></a>
+          </h2>
+        </li>
+        <li class="tagline">
+          <h2 id="tagline">
+            <%- config.about %>
+          </h2>
+        </li>
+
+        <!-- Navigation. -->
+        <% _(navigation).each(function(item){ %>
+          <li class="link">
+            <% if(item.path == currentPath){ %>
+              <a href="<%= item.path %>" class="selected"><%= item.title %></a>
+            <% }else{ %>
+              <a href="<%= item.path %>"><%= item.title %></a>
+            <% } %>
+          </li>
+        <% }) %>
+        <% if(navigation.length > 0){ %>
+          <li>
+            &nbsp;
+          </li>
+        <% } %>
+
+        <!-- Tags. -->
+        <% var truncatedTagCloud = tagCloud.slice(0, config.tagCount) %>
+        <% _(truncatedTagCloud).each(function(item){ %>
+          <li class="link">
+            <% var humanizedCount = _s.pluralizeCount(item.count, 'post', 'posts') %>
+            <% var tagPath = paths.posts({tag: item.name}) %>
+            <% if(tagPath == currentPath){ %>
+              <a href="<%= tagPath %>" class="selected" title="<%= humanizedCount %>"><%= item.name %></a>
+            <% }else{ %>
+              <a href="<%= tagPath %>" title="<%= humanizedCount %>"><%= item.name %></a>
+            <% } %>
+          </li>
+        <% }) %>
+
+        <!-- <li class="link twitter">
+          <a target="_blank" href="#link">@name</a>
+        </li> -->
+
+        <!-- <li class="link github">
+          <a target="_blank" href="#link">Github</a>
+        </li> -->
+
+        <!-- <li class="link email">
+          <a href="mailto:address">
+            say hello</a>
+        </li> -->
+
+        <!-- <li class="link feed">
+          <a href="#link">feed</a>
+        </li> -->
+      </ul>
+      <% if(app.brand){ %>
+        <aside id="svbtle_linkback">
+          <a href="<%= app.brandPath %>"><%- app.brand %></a>
+        </aside>
+      <% } %>
+    </header>
+
+    <!-- Content. -->
+    <%- _content %>
+
+    <!-- Application script, currently not used. -->
+    <!-- <script src="themeAssetPath/script.js" data-turbolinks-eval="false"></script> -->
+
+    <%- bottomCommons %>
+  </body>
+</html>

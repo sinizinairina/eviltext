@@ -1,0 +1,21 @@
+<!-- Lazy images. -->
+<script>
+  lazyImage = function(img){lazyImage.images.push(img)}
+  lazyImage.images = []
+  lazyImage.implement = function(implementation){
+    var deferredImages = lazyImage.images
+    var cache = function(img){
+      var uri = img.getAttribute('data-src')
+      if(/^[\/a-z0-9]/.test(uri) && !/\?/.test(uri)){
+        img.setAttribute('data-src', uri + "?cache=true")
+      }
+    }
+    lazyImage = function(img){
+      try{cache(img)}catch(err){console.warn(err)}
+      implementation(img)
+    }
+    for(var i = 0; i < deferredImages.length; i++) lazyImage(deferredImages[i])
+  }
+</script>
+
+<% if(config.head){ %><%- config.head %><% } %>

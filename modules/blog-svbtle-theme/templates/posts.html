@@ -1,0 +1,64 @@
+<section id="river">
+  <!-- Top Time. -->
+  <header id="begin">
+    <time datetime="<%= formatDateForWeb(date) %>" id="top_time"><%= formatDateForHuman(date) %></time>
+  </header>
+
+  <!-- Posts. -->
+  <% _(posts).each(function(post){ %>
+
+    <!-- Post. -->
+    <article class="post">
+
+      <!-- Title. -->
+      <h2 class="entry-title">
+        <a href="<%= paths.post(post) %>" class="no-link title"><%= post.title %></a>
+      </h2>
+
+      <!-- Text. -->
+      <div class="entry-content">
+        <% if(post.type == 'text'){ %>
+          <%- post.htmlPreview %>
+          <% if(post.htmlPreviewTruncated){ %>
+            <p><a href='<%= paths.post(post) %>'>Read more ...</a></p>
+          <% } %>
+        <% }else if(post.type == 'gallery'){ %>
+          <% _(post.imagesPreview).each(function(image){ %>
+            <p>
+              <img src="<%= imgStub %>" data-src="<%= image.default.path %>" title="<%= image.default.title %>" onload="lazyImage(this)"></img>
+            </p>
+          <% }) %>
+          <% if(post.imagesPreviewTruncated){ %>
+            <p><a href='<%= paths.post(post) %>'>Read more ...</a></p>
+          <% } %>
+        <% } %>
+      </div>
+    </article>
+  <% }) %>
+
+  <!-- Pagination. -->
+  <% if(previousPath || nextPath){ %>
+    <nav class="pagination">
+      <!-- <span class="first">
+        <a href="{{firstPath}}">First</a>
+      </span> -->
+      <% if(previousPath){ %>
+        <span class="prev">
+          <a href="<%= previousPath %>" rel="prev">←&nbsp;&nbsp;&nbsp;Newer</a>
+        </span>
+      <% } %>
+      <!-- <span class="page current">
+        {{currentPage}}
+      </span> -->
+      <% if(nextPath){ %>
+        <span class="next">
+          <a href="<%= nextPath %>" rel="next">Continue&nbsp;&nbsp;&nbsp;→</a>
+        </span>
+      <% } %>
+      <!-- <span class="last">
+        <a href="{{lastPath}}">Last</a>
+      </span> -->
+    </nav>
+  <% } %>
+
+</section>
