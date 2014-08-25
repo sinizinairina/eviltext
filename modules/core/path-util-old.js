@@ -56,6 +56,9 @@
         return "" + base + (base === '/' ? '' : '/') + path;
       }
     },
+    isImagePath: function(path) {
+      return /\.(png|jpg|jpeg|bmp|svf)$/.test(path);
+    },
     buildUrl: function(path, params) {
       var buff, delimiter, format, host, k, oldParams, port, portStr, protocol, v;
       if (params == null) {

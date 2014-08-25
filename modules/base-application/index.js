@@ -17,9 +17,14 @@ module.exports = function(klass, appName, appDirectory){
       userConfig.navigation = navigation
     }
 
+    // Home.
+    if(userConfig.home) config.home = app.pathUtil.absolutePathIfNotAbsolute(mountPath, userConfig.home)
+
     // Logo.
-    if(userConfig.logoPath)
-      config.logoPath = app.pathUtil.absolutePathIfNotAbsolute(mountPath, userConfig.logoPath)
+    if(app.pathUtil.isImagePath(userConfig.logo)){
+      config.logo = app.pathUtil.absolutePathIfNotAbsolute(mountPath, userConfig.logo)
+      config.isLogoPath = true
+    }
 
     // Sort by.
     if(_(userConfig.sortBy).isPresent()){

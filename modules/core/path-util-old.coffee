@@ -57,8 +57,8 @@ app.pathUtil =
     if /^\.\//.test path then path.replace /^\./, base
     else "#{base}#{if base == '/' then '' else '/'}#{path}"
 
-  # isImagePath: (path) ->
-  #   /\.(png|jpg|jpeg|bmp|svf)$/.test path
+  isImagePath: (path) ->
+    /\.(png|jpg|jpeg|bmp|svf)$/.test path
 
   # isObject: (path, options={}) ->
   #   prefix = options.prefix || ''

@@ -18,10 +18,12 @@ exports.parseAttributes = function(data){
   if(!data) return parsed
   _(data).each(function(value, name){
     name = exports.normalizeAttributeName(name)
-    // name  = app.translateAttributeName(name)
+    name = exports.translateAttributeName(name)
     parsed[name] = exports.parseAttributeValue(name, value)
   })
   return parsed
 }
 
-exports.translateAttributeName = function(attributeName){return attributeName}
+exports.translateAttributeName = function(attributeName){
+  return app.attributeTranslation[attributeName] || attributeName
+}

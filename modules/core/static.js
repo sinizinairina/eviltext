@@ -192,6 +192,7 @@ proto._readConfigs = function(ecb, cb){
     var parentBasePath = configFile.parent.basePath
 
     if(
+      app.regenerateFiles ||
       !(targetPath in _this.buildEntries) ||
       (configFile.updatedAt > _this.buildEntries[targetPath].updatedAt)
     ){

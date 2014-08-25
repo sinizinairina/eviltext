@@ -46,34 +46,34 @@ app.themes = {
 // Known attributes.
 app.attributeTypes = {
   about          : 'string',
-  title          : 'string',
-  tags           : 'sortedArray',
-  date           : 'date',
-  navigation     : 'orderedHash',
-  sortBy         : 'string',
-  details        : 'string',
-  perPage        : 'number',
-  useDirectories : 'boolean',
-  // gallery        : 'boolean',
-  price          : 'number',
   amount         : 'number',
-  currency       : 'string',
   application    : 'lowerCaseString',
-  theme          : 'lowerCaseString',
+  bottom         : 'lowerCaseString',
+  date           : 'date',
+  details        : 'string',
+  googleId       : 'lowerCaseString',
+  head           : 'lowerCaseString',
+  home           : 'string',
   images         : 'hash',
   language       : 'lowerCaseString',
-  head           : 'lowerCaseString',
-  bottom         : 'lowerCaseString',
-  googleId       : 'lowerCaseString'
-  // type           : 'lowerCaseString'
+  logo           : 'string',
+  navigation     : 'orderedHash',
+  perPage        : 'number',
+  sortBy         : 'string',
+  tags           : 'sortedArray',
+  theme          : 'lowerCaseString',
+  title          : 'string'
 }
+
+// Attribute translations.
+app.attributeTranslation = {}
 
 // Miscellaneous.
 app.configBaseName = 'config'
 app.configTargetPath = function(basePath){return basePath + '.json'}
 
-app.regenerateFiles = process.env.regenerateFiles || false
-app.regenerateApplications = process.env.regenerateApplications || false
+app.regenerateFiles        = (process.env.regenerateFiles == 'true') || false
+app.regenerateApplications = (process.env.regenerateApplications == 'true') || false
 
 app.brand = 'eviltext'
 app.brandPath = 'http://eviltext.com'
