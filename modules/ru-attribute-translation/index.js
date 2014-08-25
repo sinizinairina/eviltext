@@ -16,8 +16,5 @@ _(app.attributeTranslation).extend({
   'теги'             : 'tags',
   'тэги'             : 'tags',
   'тема'             : 'theme',
-  'заголовок'        : 'title',
-
-  // Used in markdown processor as a key for attribute section.
-  'аттрибуты'        : 'attributes'
+  'заголовок'        : 'title'
 })

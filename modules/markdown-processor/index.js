@@ -20,28 +20,23 @@ exports.markedOptions = {
   langPrefix  : 'lang-'
 }
 
-exports._isAttributeSectionName = function(name){
-  name = name.toLowerCase()
-  name = baseProcessor.translateAttributeName(name)
-  return name == 'attributes'
-}
-
 exports.parseMarkdown = function(markdown){
-  // Removing attributes section from generated html.
-  var removeAttributesFromTokens = function(tokens, skipFirstHeading){
-    var result = []
-    // TODO don't use named attrs on array.
-    result.links = tokens.links
-    var inAttributesSection = false
-    for(var i = 0; i < tokens.length; i++){
-      var token = tokens[i]
-      if((token.type == 'heading') && (token.depth == 1)){
-        if(skipFirstHeading && (i == 0) && !exports._isAttributeSectionName(token.text)) continue
-        inAttributesSection = exports._isAttributeSectionName(token.text)
-      }
-      if(!inAttributesSection) result.push(token)
-    }
-    return result
+  var splitMarkdownIntoTextAndAttributes = function(tokens){
+    tokens = _(tokens).clone()
+    tokens.reverse()
+    var textTokens = []
+    var attrTokens = []
+    var inList = false
+    _(tokens).each(function(token, i){
+      if(i == 0 && token.type == 'list_end') inList = true
+      if(inList){
+        if(token.type == 'text') attrTokens.push(token)
+      }else textTokens.push(token)
+      if(inList && token.type == 'list_start') inList = false
+    })
+    textTokens.reverse()
+    attrTokens.reverse()
+    return [textTokens, attrTokens]
   }
 
   // Parses attribute line, normalize attribute names and cast values to types.
@@ -57,63 +52,41 @@ exports.parseMarkdown = function(markdown){
     return result
   }
 
-  // Extracting attributes from text.
-  var extractAttributesFromText = function(tokens){
-    var attributes = {}
-
-    var inAttributesSection = false
-    var inList              = false
-    var nameAndValue
-    _(tokens).each(function(token){
-      if((token.type == 'heading') && (token.depth == 1))
-        inAttributesSection = exports._isAttributeSectionName(token.text)
-
-      if(token.type == 'list_item_start') inList = true
-      if(token.type == 'list_item_end')   inList = false
-
-      if(
-        inAttributesSection && inList && (token.type == 'text') && _(token.text).isPresent() &&
-        (nameAndValue = parseAttributeLine(token.text))
-      ){
-        var name = nameAndValue[0]
-        var value = nameAndValue[1]
-        // name  = app.normalizeAttributeName(name)
-        // name  = app.translateAttributeName(name)
-        // value = app.parseAttributeValue(name, value)
-        attributes[name] = value
+  var parseAttributeTokens = function(attrTokens){
+    var attrs = {}
+    _(attrTokens).each(function(token){
+      if(_(token.text).isPresent()){
+        var nameAndValue = parseAttributeLine(token.text)
+        attrs[nameAndValue[0]] = nameAndValue[1]
       }
     })
-
-    return baseProcessor.parseAttributes(attributes)
+    return baseProcessor.parseAttributes(attrs)
   }
 
   // Parsing markdown text into tokens.
   var tokens = marked.lexer(markdown, exports.markedOptions)
+  var textAndAttributes = splitMarkdownIntoTextAndAttributes(tokens)
+  var textTokens = textAndAttributes[0]
+  var attrTokens = textAndAttributes[1]
 
-  var dataAttributes = extractAttributesFromText(tokens)
+  // Parsing attribute tokens.
+  var markdownAttrs = parseAttributeTokens(attrTokens)
 
-  // Extract title from text.
-  var extractTitleFromText = function(tokens){
-    var token = tokens[0] || {}
-    if(
-      (token.type == 'heading') && (token.depth == 1) &&
-      !exports._isAttributeSectionName(token.text) && _(token.text).isPresent()
-    )
-      return _s.strip(token.text)
+  // If there's no title attribute - trying to extract title from the heading.
+  if(_(markdownAttrs.title).isBlank()){
+    var firstToken = textTokens[0]
+    if(firstToken.type == 'heading' && firstToken.depth == 1 && _(firstToken.text).isPresent()){
+      // Extracting title and removing it from text.
+      textTokens.shift()
+      _(markdownAttrs).extend(baseProcessor.parseAttributes({title: firstToken.text}))
+    }
   }
 
-  // Trying to extract title from heading if it's not specified explicitly.
-  var skipFirstHeading = false
-  if(_(dataAttributes.title).isBlank()){
-    skipFirstHeading     = true
-    dataAttributes.title = extractTitleFromText(tokens)
-  }
+  // Generating html. Marked required `links` to work properly.
+  textTokens.links = tokens.links
+  var html = marked.parser(textTokens, exports.markedOptions)
 
-  // Generating html.
-  var tokensWithoutAttributes = removeAttributesFromTokens(tokens, skipFirstHeading)
-  var html = marked.parser(tokensWithoutAttributes, exports.markedOptions)
-
-  return [html, dataAttributes]
+  return [html, markdownAttrs]
 }
 
 exports.extractYaml = function(text){
