@@ -51,7 +51,7 @@ app.attributeTypes = {
   bottom         : 'lowerCaseString',
   date           : 'date',
   details        : 'string',
-  googleId       : 'lowerCaseString',
+  googleId       : 'string',
   head           : 'lowerCaseString',
   home           : 'string',
   images         : 'hash',
@@ -66,7 +66,9 @@ app.attributeTypes = {
 }
 
 // Attribute translations.
-app.attributeTranslation = {}
+app.attributeTranslation = {
+  googleID: 'googleId'
+}
 
 // Miscellaneous.
 app.configBaseName = 'config'

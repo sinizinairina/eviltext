@@ -177,9 +177,16 @@ proto._findConfigs = function(){
   // Checking first level.
   checkAndAddConfig(this.srcBaseEntries['/'])
 
-  // Checking for second level configs.
-  _(this.srcBaseEntries['/'].children).each(function(entry){
-    if(entry.entry == 'directory') checkAndAddConfig(entry)
+  // Checking for second and third level configs.
+  _(this.srcBaseEntries['/'].children).each(function(entry2){
+    if(entry2.entry == 'directory'){
+      checkAndAddConfig(entry2)
+
+      // Third level.
+      _(entry2.children).each(function(entry3){
+        if(entry3.entry == 'directory') checkAndAddConfig(entry3)
+      })
+    }
   })
 }
 

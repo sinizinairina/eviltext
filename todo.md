@@ -4,29 +4,30 @@
 
 # High
 
-- Add attribute translation.
-- Add russian translation.
-- 12 Add Wiki Applicaton
-- 6  Add Gray Theme.
-- 6  Add Tiny Theme.
+- Add eviltext.com site.
+- Add docs.
 
 # Normal
 
-- 20 Add eCommerce Application.
-- 6  Add Robo Theme.
-- 1  Add index.js / package.json for extensions.
-- 2  Add Comments.
-- 6  Add Sitemap.
-- 3 Add Atom / RSS https://github.com/jpmonette/feed
-- 2 Add main image for every content type.
-- 3 Add general translation.
+- Add Wiki Applicaton
+- Add Gray Theme.
+- Add Tiny Theme.
+- Add warn for not recognised config options.
+- Add eCommerce Application.
+- Add Robo Theme.
+- Add index.js / package.json for extensions.
+- Add Comments.
+- Add Sitemap.
+- Add Atom / RSS https://github.com/jpmonette/feed
+- Add main image for every content type.
+- Add general translation.
 
 # Low
 
-- 3 Convert old CoffeeScript files to JS.
-- 4 Add watermarks and option for not keeping originals.
-- 1 Add eviltext clean
-- 1 Add eviltext regenerate
+- Convert old CoffeeScript files to JS.
+- Add watermarks and option for not keeping originals.
+- Add clean command
+- Add regenerate command
 
 # Themes
 
@@ -37,3 +38,6 @@
 # Done
 
 - Deploy my blog.
+- Add attribute translation.
+- Add russian attribute translation.
+- Add 3d level config lookup.

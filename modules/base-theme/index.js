@@ -26,7 +26,6 @@ module.exports = function(klass, themeName, objectName, objectsName, themeDirect
   }
 
   var _imgStub = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-  var _cachedHeadAndBottomCommons
   var _formatDate = function(date, format){
     return date ? require('moment')(date).format(format) : ''
   }
@@ -40,30 +39,23 @@ module.exports = function(klass, themeName, objectName, objectsName, themeDirect
       navigation         : this.navigation,
       tagCloud           : this.tagCloud
     }
-
+    data = _({}).extend(data, helpers)
     var _this = this
     var readHeadAndBottomCommons = function(cb){
-      if(_cachedHeadAndBottomCommons) cb.apply(null, _cachedHeadAndBottomCommons)
-      else{
-        _cachedHeadAndBottomCommons = []
-        app.render(fspath.join(__dirname, 'templates', 'head-commons.html')
-        , helpers, ecb, function(text){
-          _cachedHeadAndBottomCommons.push(text)
-          app.render(fspath.join(__dirname, 'templates', 'bottom-commons.html')
-          , helpers, ecb, function(text){
-            _cachedHeadAndBottomCommons.push(text)
-            cb.apply(null, _cachedHeadAndBottomCommons)
-          })
+      app.render(fspath.join(__dirname, 'templates', 'head-commons.html')
+      , data, ecb, function(headCommons){
+        app.render(fspath.join(__dirname, 'templates', 'bottom-commons.html')
+        , data, ecb, function(bottomCommons){
+          cb(headCommons, bottomCommons)
         })
-      }
+      })
     }
 
     var _this = this
     readHeadAndBottomCommons(function(headCommons, bottomCommons){
-      cb(_({}).extend(data, helpers, {
-        headCommons        : headCommons,
-        bottomCommons      : bottomCommons
-      }))
+      data.headCommons = headCommons
+      data.bottomCommons = bottomCommons
+      cb(data)
     })
   }
 
