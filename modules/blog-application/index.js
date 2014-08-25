@@ -20,7 +20,7 @@ proto.buildPaths = function(){
       return app.path(post.basePath, params)
     },
 
-    postJson: function(post, params){return app.path(post.path + '.post', params)},
+    // postJson: function(post, params){return app.path(post.path + '.post', params)},
 
     asset: function(path, params){return app.path('/assets' + path, params)},
 
@@ -105,38 +105,35 @@ proto.generate = function(ecb, cb){
 
 proto.generatePostCollection = function(ecb, cb){
   app.debug('[blog] generating post collection for ' + this.mountPath)
-
-  // Generating JSON.
+  var pages = this.paginate(this.posts)
   var _this = this
-  var json = {
-    tagCloud    : this.tagCloud,
-    navigation  : this.navigation,
-    config      : this.config,
-    posts       : _(this.posts).map(function(post){
-      return {
-        title : post.title,
-        path  : _this.paths.post(post),
-        type  : post.type,
-        date  : post.date,
-        tags  : post.tags
-      }
-    })
-  }
+  _(pages).asyncEach(function(page, i, ecb, next){
+    _this.theme().generatePostCollection(null, i + 1, pages.length, page, ecb, next)
+  }, ecb, cb)
 
-  app.writeJson(fspath.join(this.buildPath, this.paths.home({format: 'json'})), json, ecb, function(){
-
-    // Generating HTML.
-    var pages = _this.paginate(_this.posts)
-
-    _(pages).asyncEach(function(page, i, ecb, next){
-      _this.theme().generatePostCollection(null, i + 1, pages.length, page, ecb, next)
-    }, ecb, cb)
-  })
+  // // Generating JSON.
+  // var json = {
+  //   tagCloud    : this.tagCloud,
+  //   navigation  : this.navigation,
+  //   config      : this.config,
+  //   posts       : _(this.posts).map(function(post){
+  //     return {
+  //       title : post.title,
+  //       path  : _this.paths.post(post),
+  //       type  : post.type,
+  //       date  : post.date,
+  //       tags  : post.tags
+  //     }
+  //   })
+  // }
+  //
+  // app.writeJson(fspath.join(this.buildPath, this.paths.home({format: 'json'})), json, ecb, function(){
+  //
+  // })
 }
 
 proto.generatePostCollectionsByTag = function(ecb, cb){
-  app.debug('[blog] generating post collections by tags for ' + this.mountPath + ' in json')
-
+  app.debug('[blog] generating post collections by tags for ' + this.mountPath)
   var tagCloud = this.tagCloud.slice(0, this.config.tagCount)
   var _this = this
   _(tagCloud).asyncEach(function(item, i, ecb, next){
@@ -150,15 +147,14 @@ proto.generatePostCollectionsByTag = function(ecb, cb){
 
 proto.generatePost = function(post, ecb, cb){
   app.debug('[blog] generating post ' + post.path)
+  this.theme().generatePost(post, ecb, cb)
 
-  // Generating JSON.
-  var _this = this
-  app.writeJson(fspath.join(this.buildPath, _this.paths.postJson(post, {format: 'json'}))
-  , post, ecb, function(){
-
-    // Generating HTML.
-    _this.theme().generatePost(post, ecb, cb)
-  })
+  // // Generating JSON.
+  // var _this = this
+  // app.writeJson(fspath.join(this.buildPath, _this.paths.postJson(post, {format: 'json'}))
+  // , post, ecb, function(){
+  //
+  // })
 }
 
 proto.preparePosts = function(ecb, cb){
