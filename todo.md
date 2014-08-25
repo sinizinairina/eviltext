@@ -9,6 +9,7 @@
 
 # Normal
 
+- Navigate to default application from the top-level.
 - Add Wiki Applicaton
 - Add Gray Theme.
 - Add Tiny Theme.

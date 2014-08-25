@@ -1,19 +1,6 @@
 var fspath = require('path')
 
-var Blog = module.exports = function(mountPath, config, srcPath, srcBaseEntries, buildPath
-, buildEntries, ecb, cb){
-  this.config = config
-  this.mountPath = mountPath
-  this.srcPath = srcPath
-  this.srcBaseEntries = srcBaseEntries
-  this.buildPath = buildPath
-  this.buildEntries = buildEntries
-
-  this.mountDirectory = srcBaseEntries[mountPath]
-  this.cachePath = this.mountPath + '/eviltext.json'
-  this.paths = this._paths()
-  cb(this)
-}
+var Blog = module.exports = function(){this.initialize.apply(this, arguments)}
 require('../base-application')(Blog, 'blog', __dirname)
 var proto = Blog.prototype
 
@@ -23,83 +10,55 @@ Blog.defaultConfig = {
   tagsSortBy : {attribute : 'count', order: 'descending'}
 }
 
-Blog.configure = function(mountPath, userConfig){
-  userConfig = Blog.parseSpecialConfigAttributes(mountPath, userConfig)
+proto.buildPaths = function(){
+  var _this = this
+  return {
+    home: function(params){return app.path(_this.mountPath, params)},
 
-  // Merging application, theme and user configs.
-  var themeName = userConfig.theme || Blog.defaultConfig.theme
-  var Theme = app.getTheme('blog', themeName)
-  return Theme.configure(Blog.defaultConfig, userConfig)
-}
+    post: function(post, params){
+      // return app.path(post.path, params)
+      return app.path(post.basePath, params)
+    },
 
-proto._paths = function(){
-  if(!this.cachedPaths){
-    var _this = this
-    this.cachedPaths = {
-      home: function(params){return app.path(_this.mountPath, params)},
+    postJson: function(post, params){return app.path(post.path + '.post', params)},
 
-      post: function(post, params){
-        // return app.path(post.path, params)
-        return app.path(app.pathUtil.relativePath(_this.mountPath, post.basePath), params)
-      },
+    asset: function(path, params){return app.path('/assets' + path, params)},
 
-      postJson: function(post, params){return app.path(post.path + '.post', params)},
+    themeAsset: function(theme, path, params){
+      return app.path('/assets/' + theme + path, params)
+    },
 
-      asset: function(path, params){return app.path('/assets' + path, params)},
-
-      themeAsset: function(theme, path, params){
-        return app.path('/assets/' + theme + path, params)
-      },
-
-      posts: function(params){
-        var tag = null, page = null
-        if(params && (params.page || params.tag || params.pagesCount)){
-          params = _(params).clone()
-          if(params.tag){
-            tag = params.tag
-            delete params.tag
-          }
-          if(params.page){
-            page = params.page
-            delete params.page
-          }
-          delete params.pagesCount
+    posts: function(params){
+      var tag = null, page = null
+      if(params && (params.page || params.tag || params.pagesCount)){
+        params = _(params).clone()
+        if(params.tag){
+          tag = params.tag
+          delete params.tag
         }
-        var path = _this.mountPath + (tag ? '-tag-' + tag : '')
-        + (page ? (page == 1 ? '' : '-page-' + page) : '')
-        return app.path(path, params)
-      },
-
-      nextPosts: function(params){
-        params = params || {}
-        if(!params.page) throw new Error("page parameter required!")
-        if(!params.pagesCount) throw new Error("pagesCount parameter required!")
-        return params.page < params.pagesCount ?
-        this.posts(_({}).extend(params, {page: params.page + 1})) : null
-      },
-      previousPosts: function(params){
-        params = params || {}
-        if(!params.page) throw new Error("page parameter required!")
-        if(!params.pagesCount) throw new Error("pagesCount parameter required!")
-        return params.page > 1 ? this.posts(_({}).extend(params, {page: params.page - 1})) : null
+        if(params.page){
+          page = params.page
+          delete params.page
+        }
+        delete params.pagesCount
       }
-    }
-  }
-  return this.cachedPaths
-}
+      var path = _this.mountPath + (tag ? '-tag-' + tag : '')
+      + (page ? (page == 1 ? '' : '-page-' + page) : '')
+      return app.path(path, params)
+    },
 
-proto.updateIfNeeded = function(ecb, proceed, skip){
-  var cacheEntry = this.buildEntries[this.cachePath]
-  if(
-    !cacheEntry ||
-    (cacheEntry.updatedAt < this.mountDirectory.updatedAt) ||
-    (cacheEntry.updatedAt < this.config.updatedAt)
-  ) proceed()
-  else{
-    if(app.regenerateApplications) proceed()
-    else{
-      app.debug('[blog] skipping ' + this.mountPath + " it's already built")
-      skip()
+    nextPosts: function(params){
+      params = params || {}
+      if(!params.page) throw new Error("page parameter required!")
+      if(!params.pagesCount) throw new Error("pagesCount parameter required!")
+      return params.page < params.pagesCount ?
+      this.posts(_({}).extend(params, {page: params.page + 1})) : null
+    },
+    previousPosts: function(params){
+      params = params || {}
+      if(!params.page) throw new Error("page parameter required!")
+      if(!params.pagesCount) throw new Error("pagesCount parameter required!")
+      return params.page > 1 ? this.posts(_({}).extend(params, {page: params.page - 1})) : null
     }
   }
 }
@@ -107,9 +66,10 @@ proto.updateIfNeeded = function(ecb, proceed, skip){
 proto.prepare = function(ecb, cb){
   app.debug('[blog] preparing ' + this.mountPath)
   var _this = this
-  this.loadPosts(ecb, function(){
+  this.loadObjects('post', 'posts', ecb, function(objects){
+    _this.posts = objects
     _this.preparePosts(ecb, function(){
-      _this.sortAndPaginatePosts()
+      _this.posts = _this.sortAndPaginateObjects(_this.posts, 'posts')
       _this.prepareTagCloud()
       _this.prepareNavigation()
       cb(_this)
@@ -136,19 +96,6 @@ proto.generate = function(ecb, cb){
       })
     })
   }, cb)
-}
-
-proto.theme = function(){
-  if(!this._theme){
-    var Theme = app.getTheme('blog', this.config.theme)
-    this._theme = new Theme(this.config, this.paths, this.navigation, this.tagCloud, this.buildPath
-    , this.buildEntries)
-  }
-  return this._theme
-}
-
-proto.finalize = function(ecb, cb){
-  app.writeJson(fspath.join(this.buildPath, this.cachePath), {}, ecb, cb)
 }
 
 // proto.generateRedirectFromRoot = function(ecb, cb){
@@ -238,55 +185,7 @@ proto.preparePost = function(post, ecb, cb){
     date : null
   })
 
-  if(_(post.html).isPresent()){
-    post.type = 'text'
-  }else{
-    this.tryPrepareGallery(post)
-  }
+  if(_(post.html).isPresent()) post.type = 'text'
+  else this.tryPrepareGallery(post)
   cb(_(post.type).isBlank(), post)
-}
-
-proto.sortAndPaginatePosts = function(){
-  app.debug('[blog] sorting and paginating posts for ' + this.mountPath)
-
-  // Sorting.
-  var attribute = this.config.sortBy.attribute
-  this.posts = _(this.posts).sortBy(function(post){return post[attribute]})
-  if(this.config.sortBy.order == 'descending') this.posts.reverse()
-}
-
-// Posts can be located at level 1 or 2. Searching first in direct children and if
-// nothing found trying to find in grandchildren.
-proto.loadPosts = function(ecb, cb){
-  app.debug('[blog] searching for posts in ' + this.mountPath)
-  this.posts = []
-  var _this = this
-
-  var checkAndAddPosts = function(directory, ecb, cb){
-    _(directory.children).asyncEach(function(entry, name, ecb, next){
-      var entryJsonPath = entry.basePath + '.json'
-      if(
-        (entry.entry == 'file') && (entry.baseName != app.configBaseName) &&
-        (entryJsonPath in _this.buildEntries)
-      ){
-        app.debug('[blog] reading post ' + entryJsonPath)
-        app.readJson(fspath.join(_this.buildPath, entryJsonPath), ecb, function(data){
-          // data.path = app.pathUtil.join(_this.mountPath, entry.baseName)
-          data.basePath = entry.basePath
-          _this.posts.push(data)
-          next()
-        })
-      }else next()
-    }, ecb, cb)
-  }
-
-  // Checking first level.
-  checkAndAddPosts(this.mountDirectory, ecb, function(){
-    // Checking for the second level posts only if there was no posts on the first level.
-    if(_this.posts.length == 0){
-      _(_this.mountDirectory.children).asyncEach(function(entry, path, ecb, next){
-        entry.entry == 'directory' ? checkAndAddPosts(entry, ecb, next) : next()
-      }, ecb, cb)
-    }else cb()
-  })
 }
