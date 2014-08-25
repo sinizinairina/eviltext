@@ -101,7 +101,7 @@ module.exports = function(klass, appName, appDirectory){
   proto.tryPrepareGallery = function(post){
     var images = []
     var _this = this
-    var entry = this.srcBaseEntries[post.filePath]
+    var entry = this.srcBaseEntries[post.basePath]
     _(entry.children).each(function(childEntry){
       if(app.imageExtensions.indexOf(childEntry.extension) >= 0){
         var image = {}

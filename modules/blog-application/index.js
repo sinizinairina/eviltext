@@ -38,7 +38,10 @@ proto._paths = function(){
     this.cachedPaths = {
       home: function(params){return app.path(_this.mountPath, params)},
 
-      post: function(post, params){return app.path(post.path, params)},
+      post: function(post, params){
+        // return app.path(post.path, params)
+        return app.path(app.pathUtil.relativePath(_this.mountPath, post.basePath), params)
+      },
 
       postJson: function(post, params){return app.path(post.path + '.post', params)},
 
@@ -268,8 +271,8 @@ proto.loadPosts = function(ecb, cb){
       ){
         app.debug('[blog] reading post ' + entryJsonPath)
         app.readJson(fspath.join(_this.buildPath, entryJsonPath), ecb, function(data){
-          data.path = app.pathUtil.join(_this.mountPath, entry.baseName)
-          data.filePath = entry.basePath
+          // data.path = app.pathUtil.join(_this.mountPath, entry.baseName)
+          data.basePath = entry.basePath
           _this.posts.push(data)
           next()
         })
