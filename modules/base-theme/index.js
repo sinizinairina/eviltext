@@ -15,26 +15,30 @@ module.exports = function(klass, themeName, objectName, objectsName, themeDirect
     this.buildPath = buildPath
     this.buildEntries = buildEntries
   }
-
-  proto.copyAsset = function(srcPath, targetPath, ecb, cb){
+copyBaseAssets
+  proto._copyAsset = function(basePath, relativePath, ecb, cb){
+    var targetPath = this.paths.asset(relativePath)
     if(targetPath in this.buildEntries) cb()
     else {
-      app.debug('[' + themeName + '] copying asset ' + srcPath)
-      app.copyFile(srcPath, fspath.join(this.buildPath, targetPath), ecb, cb)
+      app.debug('[' + themeName + '] copying asset ' + relativePath)
+      app.copyFile(app.pathUtil.join(basePath, '/assets', relativePath)
+      , fspath.join(this.buildPath, targetPath), ecb, cb)
     }
+  }copyBaseAssets
+  proto.copyAsset = function(relativePath, ecb, cb){
+    this._copyAsset(themeDirectory, relativePath, ecb, cb)
   }
 
-  proto.copyBaseThemeAssets = function(ecb, cb){
+  proto.copyBaseAssets = function(ecb, cb){
     var _this = this
-    _({
-      '/vendor/lazyload-2.0.5.js': '/vendor/lazyload-2.0.5.js',
-      '/vendor/turbolinks-latest.js': '/vendor/turbolinks-latest.js',
-      '/vendor/fastclick-0.6.7.js': '/vendor/fastclick-0.6.7.js',
-      '/vendor/prettify/prettify.js': '/vendor/prettify/prettify.js',
-      '/vendor/prettify/prettify.css': '/vendor/prettify/prettify.css',
-    }).asyncEach(function(targetPath, srcPath, ecb, next){
-      _this.copyAsset(app.pathUtil.join(__dirname, '/assets', srcPath)
-      , _this.paths.asset(targetPath), ecb, next)
+    _([
+      '/vendor/lazyload-2.0.5.js',
+      '/vendor/turbolinks-latest.js',
+      '/vendor/fastclick-0.6.7.js',
+      '/vendor/prettify/prettify.js',
+      '/vendor/prettify/prettify.css'
+    ]).asyncEach(function(path, i, ecb, next){
+      _this._copyAsset(__dirname, path, ecb, next)
     }, ecb, cb)
   }
 

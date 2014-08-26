@@ -14,9 +14,8 @@ Svbtle.defaultConfig = {
 
 proto.generate = function(ecb, cb){
   var _this = this
-  this.copyBaseThemeAssets(ecb, function(){
-    _this.copyAsset(app.pathUtil.join(__dirname, 'assets', '/style.css')
-    , _this.paths.themeAsset(themeName, '/style.css'), ecb, cb)
+  this.copyBaseAssets(ecb, function(){
+    _this.copyAsset('/style.css', ecb, cb)
   })
 }
 
