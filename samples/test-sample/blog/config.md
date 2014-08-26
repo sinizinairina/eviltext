@@ -1,5 +1,3 @@
-# Attributes
-
 - Application : Blog
 - Title       : Alexey Petrushin
 - About       : Programming, Statistics,<br/>Data Mining

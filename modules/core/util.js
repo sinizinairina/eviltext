@@ -12,7 +12,7 @@ app.getTheme = function(applicationName, themeName){
 }
 
 app.generate = function(srcPath, buildPath, ecb, cb){
-  new app.Static(srcPath, buildPath, ecb, function(application){
-    application.generate(ecb, cb)
+  new app.Static(srcPath, buildPath, ecb, function(_static){
+    _static.generate(ecb, cb)
   })
 }

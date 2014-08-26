@@ -73,7 +73,7 @@ exports.parseMarkdown = function(markdown){
   var markdownAttrs = parseAttributeTokens(attrTokens)
 
   // If there's no title attribute - trying to extract title from the heading.
-  if(_(markdownAttrs.title).isBlank()){
+  if((textTokens.length > 0) && _(markdownAttrs.title).isBlank()){
     var firstToken = textTokens[0]
     if(firstToken.type == 'heading' && firstToken.depth == 1 && _(firstToken.text).isPresent()){
       // Extracting title and removing it from text.

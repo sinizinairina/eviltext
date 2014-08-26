@@ -31,6 +31,7 @@ proto.generate = function(ecb, cb){
     var proceed = function(){_this._generateApplications(ecb, cb)}
     // After generating files we need update `buildEntries` if there was any update.
     // TODO improve performance, keep track of updated files and update `buildEntries` without
+    // re-reading it from the disk.
     if(anyFileBeenUpdated){
       app.readEntries(_this.buildPath, ecb, function(buildEntries){
         _this.buildEntries = buildEntries
@@ -53,7 +54,7 @@ proto._generateApplications = function(ecb, cb){
       , _this.buildPath, _this.buildEntries, ecb, function(application){
         application.generate(ecb, next)
       })
-    }
+    }else next()
   }, ecb, cb)
 }
 
