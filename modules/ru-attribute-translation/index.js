@@ -5,6 +5,7 @@ _(app.attributeTranslation).extend({
   'подвал'           : 'bottom',
   'дата'             : 'date',
   'детали'           : 'details',
+  'черновик'         : 'draft',
   'шапка'            : 'head',
   'домашняяСтраница' : 'home',
   'картинки'         : 'images',

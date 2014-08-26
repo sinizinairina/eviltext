@@ -70,6 +70,7 @@ proto.prepare = function(ecb, cb){
     _this.posts = objects
     _this.preparePosts(ecb, function(){
       _this.posts = _this.sortAndPaginateObjects(_this.posts, 'posts')
+      _this.publishedPosts = _this.publishedObjects(_this.posts)
       _this.prepareTagCloud()
       _this.prepareNavigation()
       cb(_this)
@@ -105,7 +106,7 @@ proto.generate = function(ecb, cb){
 
 proto.generatePostCollection = function(ecb, cb){
   app.debug('[blog] generating post collection for ' + this.mountPath)
-  var pages = this.paginate(this.posts)
+  var pages = this.paginate(this.publishedPosts)
   var _this = this
   _(pages).asyncEach(function(page, i, ecb, next){
     _this.theme().generatePostCollection(null, i + 1, pages.length, page, ecb, next)
@@ -137,7 +138,9 @@ proto.generatePostCollectionsByTag = function(ecb, cb){
   var tagCloud = this.tagCloud.slice(0, this.config.tagCount)
   var _this = this
   _(tagCloud).asyncEach(function(item, i, ecb, next){
-    var postsByTag = _(_this.posts).filter(function(post){return post.tags.indexOf(item.name) >= 0})
+    var postsByTag = _(_this.publishedPosts).filter(function(post){
+      return post.tags.indexOf(item.name) >= 0
+    })
     var pages = _this.paginate(postsByTag)
     _(pages).asyncEach(function(page, i, ecb, next){
       _this.theme().generatePostCollection(item.name, i + 1, pages.length, page, ecb, next)

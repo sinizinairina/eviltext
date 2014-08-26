@@ -51,6 +51,7 @@ app.attributeTypes = {
   bottom         : 'lowerCaseString',
   date           : 'date',
   details        : 'string',
+  draft          : 'boolean',
   googleId       : 'string',
   head           : 'lowerCaseString',
   home           : 'string',

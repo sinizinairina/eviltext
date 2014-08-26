@@ -171,6 +171,11 @@ module.exports = function(klass, appName, appDirectory){
     return sorted
   }
 
+  // Draft posts are published but hidden from listing.
+  proto.publishedObjects = function(collection){
+    return _(collection).filter(function(object){return object.draft != true})
+  }
+
   proto.updateIfNeeded = function(ecb, proceed, skip){
     var cacheEntry = this.buildEntries[this.cachePath]
     if(

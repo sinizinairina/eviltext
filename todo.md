@@ -42,3 +42,5 @@
 - Add attribute translation.
 - Add russian attribute translation.
 - Add 3d level config lookup.
+- Removed attribute named section from markdown.
+- Added draft posts.
