@@ -3,6 +3,19 @@ var fspath = require('path')
 module.exports = function(klass, themeName, objectName, objectsName, themeDirectory){
   var proto = klass.prototype
 
+  klass.configure = function(applicationConfig, userConfig){
+    return _({}).extend(applicationConfig, klass.defaultConfig, userConfig)
+  }
+
+  proto.initialize = function(config, paths, navigation, tagCloud, buildPath, buildEntries){
+    this.config = config
+    this.paths = paths
+    this.navigation = navigation
+    this.tagCloud = tagCloud
+    this.buildPath = buildPath
+    this.buildEntries = buildEntries
+  }
+
   proto.copyAsset = function(srcPath, targetPath, ecb, cb){
     if(targetPath in this.buildEntries) cb()
     else {
@@ -39,7 +52,11 @@ module.exports = function(klass, themeName, objectName, objectsName, themeDirect
       navigation         : this.navigation,
       tagCloud           : this.tagCloud
     }
+
     data = _({}).extend(data, helpers)
+    var layout = data.layout
+    delete data.layout
+
     var _this = this
     var readHeadAndBottomCommons = function(cb){
       app.render(fspath.join(__dirname, 'templates', 'head-commons.html')
@@ -55,14 +72,20 @@ module.exports = function(klass, themeName, objectName, objectsName, themeDirect
     readHeadAndBottomCommons(function(headCommons, bottomCommons){
       data.headCommons = headCommons
       data.bottomCommons = bottomCommons
+      data.layout = layout
       cb(data)
     })
+  }
+
+  var absoluteTemplatePath = function(template){
+    return fspath.join(themeDirectory, 'templates', template)
   }
 
   proto.render = function(template, data, ecb, cb){
     app.debug('[' + themeName + '] rendering ' + template)
     this.addCommonAttributesAndHelpers(data, ecb, function(data){
-      app.render(fspath.join(themeDirectory, 'templates', template), data, ecb, cb)
+      if(data.layout) data = _({}).extend(data, {layout: absoluteTemplatePath(data.layout)})
+      app.render(absoluteTemplatePath(template), data, ecb, cb)
     })
   }
 
@@ -70,9 +93,8 @@ module.exports = function(klass, themeName, objectName, objectsName, themeDirect
     app.debug('[' + themeName + '] rendering ' + template + ' to ' + path)
     var _this = this
     this.addCommonAttributesAndHelpers(data, ecb, function(data){
-      app.renderTo(fspath.join(themeDirectory, 'templates', template), data
-      , fspath.join(_this.buildPath, path), ecb, cb)
+      if(data.layout) data = _({}).extend(data, {layout: absoluteTemplatePath(data.layout)})
+      app.renderTo(absoluteTemplatePath(template), data, fspath.join(_this.buildPath, path), ecb, cb)
     })
   }
-
 }

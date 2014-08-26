@@ -1,6 +1,6 @@
 // Render.
 app.compiledTemplates = {}
-app.render = function(path, data, ecb, cb){
+app.renderWithoutLayout = function(path, data, ecb, cb){
   var _this = this
   var proceed = function(){cb(_this.compiledTemplates[path](data))}
   if(path in this.compiledTemplates) proceed()
@@ -12,6 +12,17 @@ app.render = function(path, data, ecb, cb){
       proceed()
     })
   }
+}
+app.render = function(path, data, ecb, cb){
+  var layout = data.layout
+  if(layout){
+    data = _(data).clone()
+    delete data.layout
+    app.renderWithoutLayout(path, data, ecb, function(content){
+      data.content = content
+      app.renderWithoutLayout(layout, data, ecb, cb)
+    })
+  }else app.renderWithoutLayout(path, data, ecb, cb)
 }
 
 app.renderTo = function(path, options, targetPath, ecb, cb){
