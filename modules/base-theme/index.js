@@ -15,30 +15,37 @@ module.exports = function(klass, themeName, objectName, objectsName, themeDirect
     this.buildPath = buildPath
     this.buildEntries = buildEntries
   }
-copyBaseAssets
-  proto._copyAsset = function(basePath, relativePath, ecb, cb){
-    var targetPath = this.paths.asset(relativePath)
+
+  proto.copyAsset = function(themeDirectory, themeName, relativePath, ecb, cb){
+    var targetPath = this.paths.asset('/' + themeName + '/' + relativePath)
     if(targetPath in this.buildEntries) cb()
     else {
       app.debug('[' + themeName + '] copying asset ' + relativePath)
-      app.copyFile(app.pathUtil.join(basePath, '/assets', relativePath)
+      app.copyFile(fspath.join(themeDirectory, 'assets', relativePath)
       , fspath.join(this.buildPath, targetPath), ecb, cb)
     }
-  }copyBaseAssets
-  proto.copyAsset = function(relativePath, ecb, cb){
-    this._copyAsset(themeDirectory, relativePath, ecb, cb)
+  }
+
+  proto.copyVendorAsset = function(themeDirectory, relativePath, ecb, cb){
+    var targetPath = this.paths.asset('/vendor' + relativePath)
+    if(targetPath in this.buildEntries) cb()
+    else {
+      app.debug('[' + themeName + '] copying asset ' + relativePath)
+      app.copyFile(fspath.join(themeDirectory, 'assets', 'vendor', relativePath)
+      , fspath.join(this.buildPath, targetPath), ecb, cb)
+    }
   }
 
   proto.copyBaseAssets = function(ecb, cb){
     var _this = this
     _([
-      '/vendor/lazyload-2.0.5.js',
-      '/vendor/turbolinks-latest.js',
-      '/vendor/fastclick-0.6.7.js',
-      '/vendor/prettify/prettify.js',
-      '/vendor/prettify/prettify.css'
+      '/lazyload-2.0.5.js',
+      '/turbolinks-latest.js',
+      '/fastclick-0.6.7.js',
+      '/prettify/prettify.js',
+      '/prettify/prettify.css'
     ]).asyncEach(function(path, i, ecb, next){
-      _this._copyAsset(__dirname, path, ecb, next)
+      _this.copyVendorAsset(__dirname, path, ecb, next)
     }, ecb, cb)
   }
 
@@ -47,14 +54,23 @@ copyBaseAssets
     return date ? require('moment')(date).format(format) : ''
   }
   proto.addCommonAttributesAndHelpers = function(data, ecb, cb){
+    var _this = this
     var helpers = {
-      imgStub            : _imgStub,
+      // imgStub            : _imgStub,
       formatDateForHuman : function(date){return _formatDate(date, 'MMMM DD, YYYY')},
       formatDateForWeb   : function(date){return _formatDate(date, 'YYYY-MM-DD')},
       paths              : this.paths,
       config             : this.config,
       navigation         : this.navigation,
-      tagCloud           : this.tagCloud
+      tagCloud           : this.tagCloud,
+      imageTag           : function(image){
+        if(_this.config.lazyImages){
+          return '<img src="' + _imgStub + '" data-src="' + image.default.path + '" title="' +
+          image.default.title + '" onload="lazyImage(this)"></img>'
+        }else{
+          return '<img src="' + image.default.path + '" title="' + image.default.title + '"></img>'
+        }
+      }
     }
 
     data = _({}).extend(data, helpers)

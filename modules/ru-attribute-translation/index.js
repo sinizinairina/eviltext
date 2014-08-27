@@ -3,6 +3,7 @@ _(app.attributeTranslation).extend({
   'количество'       : 'amount',
   'приложение'       : 'application',
   'подвал'           : 'bottom',
+  'charset'          : 'charset',
   'дата'             : 'date',
   'детали'           : 'details',
   'черновик'         : 'draft',

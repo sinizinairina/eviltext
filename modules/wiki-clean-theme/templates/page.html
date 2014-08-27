@@ -1,0 +1,14 @@
+<div id='content'>
+  <h1><%- page.title %></h1>
+
+  <!-- Content. -->
+  <% if(page.type == 'text'){ %>
+    <%- page.html %>
+  <% }else if(page.type == 'gallery'){ %>
+    <% _(page.images).each(function(image){ %>
+      <p>
+        <%- imageTag(image) %>
+      </p>
+    <% }) %>
+  <% } %>
+</div>

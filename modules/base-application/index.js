@@ -71,6 +71,19 @@ module.exports = function(klass, appName, appDirectory){
     cb(this)
   }
 
+  proto.buildBasePaths = function(){
+    var _this = this
+    return {
+      home: function(params){return app.path(_this.mountPath, params)},
+
+      asset: function(path, params){return app.path('/assets' + path, params)},
+
+      themeAsset: function(theme, path, params){
+        return app.path('/assets/' + theme + path, params)
+      },
+    }
+  }
+
   proto.renderTo = function(template, options, path, ecb, cb){
     app.debug('[' + appName + '] rendering ' + template + ' to ' + path)
     app.renderTo(fspath.join(appDirectory, 'templates', template), options
@@ -194,7 +207,7 @@ module.exports = function(klass, appName, appDirectory){
 
   proto.theme = function(){
     if(!this._theme){
-      var Theme = app.getTheme('blog', this.config.theme)
+      var Theme = app.getTheme(appName, this.config.theme)
       this._theme = new Theme(this.config, this.paths, this.navigation, this.tagCloud, this.buildPath
       , this.buildEntries)
     }
@@ -241,4 +254,9 @@ module.exports = function(klass, appName, appDirectory){
     })
   }
 
+
+  // proto.generateRedirectFromRoot = function(ecb, cb){
+  //   this.renderTo('redirect-page.html', {name: 'Posts', path: '/posts'}
+  //   , fspath.join(this.mountPath, 'index.html'), ecb, cb)
+  // }
 }

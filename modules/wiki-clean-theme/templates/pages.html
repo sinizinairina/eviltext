@@ -1,0 +1,47 @@
+<div id='content'>
+  <!-- Title. -->
+  <!-- <h1 class='page-title'>{{_pageTitle}}</h1> -->
+
+  <!-- Pages. -->
+  <% _(pages).each(function(page){ %>
+
+    <!-- Page. -->
+    <div class='page-item'>
+      <!-- Title. -->
+      <h1 class='page-item-title'>
+        <a href="<%= paths.page(page) %>"><%= page.title %></a>
+      </h1>
+
+      <div class='page-item-body'>
+        <% if(page.type == 'text'){ %>
+          <%- page.htmlPreview %>
+          <% if(page.htmlPreviewTruncated){ %>
+            <p><a href='<%= paths.page(page) %>'>Read more ...</a></p>
+          <% } %>
+        <% }else if(page.type == 'gallery'){ %>
+          <% _(page.imagesPreview).each(function(image){ %>
+            <p>
+              <%- imageTag(image) %>
+            </p>
+          <% }) %>
+          <% if(page.imagesPreviewTruncated){ %>
+            <p><a href='<%= paths.page(page) %>'>Read more ...</a></p>
+          <% } %>
+        <% } %>
+      </div>
+    </div>
+  <% }) %>
+
+
+  <!-- Pagination. -->
+  <% if(previousPath || nextPath){ %>
+    <div class='pagination'>
+      <% if(previousPath){ %>
+        <a href="<%= previousPath %>" rel="prev">←&nbsp;&nbsp;&nbsp;Newer</a>
+      <% } %>
+      <% if(nextPath){ %>
+        <a href="<%= nextPath %>" rel="next">Continue&nbsp;&nbsp;&nbsp;→</a>
+      <% } %>
+    </div>
+  <% } %>
+</div>

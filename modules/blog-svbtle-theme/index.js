@@ -4,6 +4,7 @@ var themeName = 'blog-svbtle-theme'
 require('../base-theme')(Svbtle, themeName, 'post', 'posts', __dirname)
 
 Svbtle.defaultConfig = {
+  charset       : 'utf-8',
   perPage       : 25,
   previewLength : 1200,
   tagCount      : 7,
@@ -15,7 +16,7 @@ Svbtle.defaultConfig = {
 proto.generate = function(ecb, cb){
   var _this = this
   this.copyBaseAssets(ecb, function(){
-    _this.copyAsset('/style.css', ecb, cb)
+    _this.copyAsset(__dirname, themeName, '/style.css', ecb, cb)
   })
 }
 

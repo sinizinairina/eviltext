@@ -1,0 +1,91 @@
+<html lang="<%= config.language %>" >
+  <head>
+    <meta charset="<%= config.charset %>"/>
+    <meta content='text/html;charset=UTF-8' http-equiv='Content-Type'>
+    <title><%= title %></title>
+
+    <!-- Styles. -->
+    <link rel="stylesheet" type="text/css" media="all" href="<%= paths.themeAsset(themeName, '/style.css?cache=true') %>"/>
+
+    <%- headCommons %>
+  </head>
+  <body>
+    <div id='wrap'>
+
+      <!-- Header. -->
+      <!-- <div id='header'>
+        {{#config.logo %>
+        <a href='{{homePath %> '>
+          <img src='{{config.logo %> '>
+        </a>
+        {{/config.logo %>
+        <div class='tagline'>{{{config.about %> </div>
+      </div>      -->
+
+      <!-- Panel. -->
+      <div id='pages'>
+        <% if(config.logo){ %>
+          <a href='<%= paths.home() %>'>
+            <img src='<%= config.logo %>'>
+          </a>
+        <% }else{ %>
+          <h1 class='logo'><a href="<%= paths.home() %>"><%- config.title %></a></h1>
+        <% } %>
+
+        <ol class='toc'>
+          <% if(navigation.length > 0){ %>
+            <li>
+              <!-- Navigation -->
+              <ol class="toc">
+                <% _(navigation).each(function(item){ %>
+                  <li>
+                    <% if(item.path == currentPath){ %>
+                      <a href="<%= item.path %>" class="selected"><%= item.title %></a>
+                    <% }else{ %>
+                      <a href="<%= item.path %>"><%= item.title %></a>
+                    <% } %>
+                  </li>
+                <% }) %>
+              </ol>
+            </li>
+          <% } %>
+
+          <% if(tagCloud.length > 0){%>
+            <li>
+              <!-- Tags -->
+              <ol class="toc">
+                <% var truncatedTagCloud = tagCloud.slice(0, config.tagCount) %>
+                <% _(truncatedTagCloud).each(function(item){ %>
+                  <li>
+                    <% var tagPath = paths.posts({tag: item.name}) %>
+                    <% var humanizedCount = _s.pluralizeCount(item.count, 'post', 'posts') %>
+                    <% var tagTitle = item.count > 1 ? item.name + ' ' + item.count : item.name %>
+                    <% if(tagPath == currentPath){ %>
+                      <a href="<%= tagPath %>" class="selected" title="<%= humanizedCount %>"><%= tagTitle %></a>
+                    <% }else{ %>
+                      <a href="<%= tagPath %>" title="<%= humanizedCount %>"><%= tagTitle %></a>
+                    <% } %>
+                  </li>
+                <% }) %>
+              </ol>
+            </li>
+          <% } %>
+        </ol>
+      </div>
+
+      <!-- Content. -->
+      <%- content %>
+
+      <!-- Footer. -->
+      <div id='footer'>
+        <% if(app.brand){ %>
+          <div class='powered-by'>
+            Powered by <a href="<%= app.brandPath %>"><%- app.brand %></a>
+          </div>
+        <% } %>
+      </div>
+    </div>
+
+    <%- bottomCommons %>
+  </body>
+</html>

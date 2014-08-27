@@ -33,13 +33,17 @@ app.configProcessors = {
 
 // Applications.
 app.applications = {
-  blog: function(){return require('../blog-application')}
+  blog : function(){return require('../blog-application')},
+  wiki : function(){return require('../wiki-application')}
 }
 
 // Themes.
 app.themes = {
   blog: {
     svbtle: function(){return require('../blog-svbtle-theme')}
+  },
+  wiki: {
+    clean: function(){return require('../wiki-clean-theme')}
   }
 }
 
@@ -48,14 +52,16 @@ app.attributeTypes = {
   about          : 'string',
   amount         : 'number',
   application    : 'lowerCaseString',
-  bottom         : 'lowerCaseString',
+  bottom         : 'string',
+  charset        : 'string',
   date           : 'date',
   details        : 'string',
   draft          : 'boolean',
   googleId       : 'string',
-  head           : 'lowerCaseString',
+  head           : 'string',
   home           : 'string',
   images         : 'hash',
+  lazyImages     : 'boolean',
   language       : 'lowerCaseString',
   logo           : 'string',
   navigation     : 'orderedHash',

@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<% var lang = config.lang || 'en' %>
-<!--[if lt IE 7 ]><html lang="<%= lang %>" class="no-js ie ie6 lte7 lte8 lte9"><![endif]-->
-<!--[if IE 7 ]><html lang="<%= lang %>" class="no-js ie ie7 lte7 lte8 lte9"><![endif]-->
-<!--[if IE 8 ]><html lang="<%= lang %>" class="no-js ie ie8 lte8 lte9"><![endif]-->
-<!--[if IE 9 ]><html lang="<%= lang %>" class="no-js ie ie9 lte9"><![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--><html lang="<%= lang %>" class="no-js"><!--<![endif]-->
+<!--[if lt IE 7 ]><html lang="<%= config.language %>" class="no-js ie ie6 lte7 lte8 lte9"><![endif]-->
+<!--[if IE 7 ]><html lang="<%= config.language %>" class="no-js ie ie7 lte7 lte8 lte9"><![endif]-->
+<!--[if IE 8 ]><html lang="<%= config.language %>" class="no-js ie ie8 lte8 lte9"><![endif]-->
+<!--[if IE 9 ]><html lang="<%= config.language %>" class="no-js ie ie9 lte9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="<%= config.language %>" class="no-js"><!--<![endif]-->
   <head>
-    <meta charset="<%= config.charset || 'utf-8' %>"/>
+    <meta charset="<%= config.charset %>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.5, minimum-scale=0.5">
     <title><%= title %></title>
 
@@ -21,6 +20,7 @@
       <% if(config.logo){ %>
         <aside id="logo" class="clearfix">
           <div class="clearfix">
+            <!-- TODO use proper logo instead of title. -->
             <a href="<%= paths.home() %>"><%- config.title %></a>
           </div>
         </aside>

@@ -22,9 +22,12 @@
 - Add Atom / RSS https://github.com/jpmonette/feed
 - Add main image for every content type.
 - Add general translation.
+- Add config inheritance.
+- Add home attribute.
 
 # Low
 
+- Change root in samples /blog -> /
 - Convert old CoffeeScript files to JS.
 - Add watermarks and option for not keeping originals.
 - Add clean command

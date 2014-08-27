@@ -5,6 +5,7 @@ require('../base-application')(Blog, 'blog', __dirname)
 var proto = Blog.prototype
 
 Blog.defaultConfig = {
+  language   : 'en',
   theme      : 'svbtle',
   sortBy     : {attribute : 'date', order: 'descending'},
   tagsSortBy : {attribute : 'count', order: 'descending'}
@@ -12,21 +13,8 @@ Blog.defaultConfig = {
 
 proto.buildPaths = function(){
   var _this = this
-  return {
-    home: function(params){return app.path(_this.mountPath, params)},
-
-    post: function(post, params){
-      // return app.path(post.path, params)
-      return app.path(post.basePath, params)
-    },
-
-    // postJson: function(post, params){return app.path(post.path + '.post', params)},
-
-    asset: function(path, params){return app.path('/assets' + path, params)},
-
-    themeAsset: function(theme, path, params){
-      return app.path('/assets/' + theme + path, params)
-    },
+  return _({}).extend(this.buildBasePaths(), {
+    post: function(post, params){return app.path(post.basePath, params)},
 
     posts: function(params){
       var tag = null, page = null
@@ -60,7 +48,7 @@ proto.buildPaths = function(){
       if(!params.pagesCount) throw new Error("pagesCount parameter required!")
       return params.page > 1 ? this.posts(_({}).extend(params, {page: params.page - 1})) : null
     }
-  }
+  })
 }
 
 proto.prepare = function(ecb, cb){
@@ -98,11 +86,6 @@ proto.generate = function(ecb, cb){
     })
   }, cb)
 }
-
-// proto.generateRedirectFromRoot = function(ecb, cb){
-//   this.renderTo('redirect-page.html', {name: 'Posts', path: '/posts'}
-//   , fspath.join(this.mountPath, 'index.html'), ecb, cb)
-// }
 
 proto.generatePostCollection = function(ecb, cb){
   app.debug('[blog] generating post collection for ' + this.mountPath)

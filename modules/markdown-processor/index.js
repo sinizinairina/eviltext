@@ -121,7 +121,7 @@ exports.process = function(srcDir, buildDir, file, config, ecb, cb, dontWrite){
     html = textUtil.postprocessHtml(html, {
       path                 : file.basePath,
       replaceRelativePaths : true,
-      lazyImages           : true
+      lazyImages           : config.lazyImages
     })
 
     // Truncating

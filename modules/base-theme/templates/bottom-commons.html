@@ -3,9 +3,11 @@
   <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/1.2.4/es5-shim.min.js"></script>
 <![endif]-->
 
-<!-- Lazy images. -->
-<script src="<%= paths.asset('/vendor/lazyload-2.0.5.js?cache=true') %>" data-turbolinks-eval="false"></script>
-<script data-turbolinks-eval="false">lazyImage.implement(lzld)</script>
+<% if(config.lazyImages){ %>
+  <!-- Lazy images. -->
+  <script src="<%= paths.asset('/vendor/lazyload-2.0.5.js?cache=true') %>" data-turbolinks-eval="false"></script>
+  <script data-turbolinks-eval="false">lazyImage.implement(lzld)</script>
+<% } %>
 
 <!-- Make navigation faster. -->
 <script src="<%= paths.asset('/vendor/turbolinks-latest.js?cache=true') %>" data-turbolinks-eval="false"></script>
