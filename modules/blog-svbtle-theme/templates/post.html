@@ -21,6 +21,9 @@
           </p>
         <% }) %>
       <% } %>
+      <% if(post.link){ %>
+        <p><a href='<%= post.link %>'>Read more ...</a></p>
+      <% } %>
     </div>
   </article>
 

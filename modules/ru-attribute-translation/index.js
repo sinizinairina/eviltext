@@ -11,6 +11,8 @@ _(app.attributeTranslation).extend({
   'домашняяСтраница' : 'home',
   'картинки'         : 'images',
   'язык'             : 'language',
+  'lazyImages'       : 'lazyImages',
+  'ссылка'           : 'link',
   'лого'             : 'logo',
   'навигация'        : 'navigation',
   'наСтранице'       : 'perPage',
@@ -18,5 +20,5 @@ _(app.attributeTranslation).extend({
   'теги'             : 'tags',
   'тэги'             : 'tags',
   'тема'             : 'theme',
-  'заголовок'        : 'title'
+  'заголовок'        : 'title',
 })

@@ -9,4 +9,7 @@
       <%- imageTag(image) %>
     </p>
   <% }) %>
+  <% if(page.link){ %>
+    <p><a href='<%= page.link %>'>Read more ...</a></p>
+  <% } %>
 <% } %>

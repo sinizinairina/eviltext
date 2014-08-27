@@ -19,7 +19,9 @@
       <div class="entry-content">
         <% if(post.type == 'text'){ %>
           <%- post.htmlPreview %>
-          <% if(post.htmlPreviewTruncated){ %>
+          <% if(post.link){ %>
+            <p><a href='<%= post.link %>'>Read more ...</a></p>
+          <% }else if(post.htmlPreviewTruncated){ %>
             <p><a href='<%= paths.post(post) %>'>Read more ...</a></p>
           <% } %>
         <% }else if(post.type == 'gallery'){ %>
@@ -28,7 +30,9 @@
               <%- imageTag(image) %>
             </p>
           <% }) %>
-          <% if(post.imagesPreviewTruncated){ %>
+          <% if(post.link){ %>
+            <p><a href='<%= post.link %>'>Read more ...</a></p>
+          <% }else if(post.imagesPreviewTruncated){ %>
             <p><a href='<%= paths.post(post) %>'>Read more ...</a></p>
           <% } %>
         <% } %>

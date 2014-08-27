@@ -1,3 +1,4 @@
 - Title : Photos
 - Tags  : Spain
 - Date  : 2014/1/7
+- Link  : http://ya.ru

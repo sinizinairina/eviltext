@@ -15,7 +15,9 @@
       <div class='page-item-body'>
         <% if(page.type == 'text'){ %>
           <%- page.htmlPreview %>
-          <% if(page.htmlPreviewTruncated){ %>
+          <% if(page.link){ %>
+            <p><a href='<%= page.link %>'>Read more ...</a></p>
+          <% }else if(page.htmlPreviewTruncated){ %>
             <p><a href='<%= paths.page(page) %>'>Read more ...</a></p>
           <% } %>
         <% }else if(page.type == 'gallery'){ %>
@@ -24,7 +26,9 @@
               <%- imageTag(image) %>
             </p>
           <% }) %>
-          <% if(page.imagesPreviewTruncated){ %>
+          <% if(page.link){ %>
+            <p><a href='<%= page.link %>'>Read more ...</a></p>
+          <% }else if(page.imagesPreviewTruncated){ %>
             <p><a href='<%= paths.page(page) %>'>Read more ...</a></p>
           <% } %>
         <% } %>
