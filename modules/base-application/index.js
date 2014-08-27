@@ -283,7 +283,7 @@ module.exports = function(klass, appName, appDirectory){
   proto.generateRedirectToHomePage = function(ecb, cb){
     if(this.config.home){
       this.renderTo(__dirname + '/templates/redirect-page.html'
-      , {name: 'Home', path: this.config.home}, fspath.join(this.mountPath, 'index.html'), ecb, cb)
+      , {name: 'Home', path: this.config.home}, (this.mountPath + '.html'), ecb, cb)
     }else return cb()
   }
 }
