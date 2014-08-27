@@ -1,0 +1,24 @@
+<!-- Title -->
+<% if(config.title){ %>
+  <h1><a href="<%= paths.home() %>"><%- config.title %></a></h1>
+<% } %>
+
+<!-- Navigation -->
+<% if(navigation.length > 0){ %>
+  <p>
+    <% _(navigation).each(function(item){ %>
+      <% if(item.path == currentPath){ %>
+        <a href="<%= item.path %>" class="selected"><%= item.title %></a>
+      <% }else{ %>
+        <a href="<%= item.path %>"><%= item.title %></a>
+      <% } %>
+    <% }) %>
+  </p>
+<% } %>
+
+<!-- Posts. -->
+<ul>
+  <% _(pages).each(function(page){ %>
+    <li><a href='<%= paths.page(page) %>'><%= page.title %></a></li>
+  <% }) %>
+</ul>

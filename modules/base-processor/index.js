@@ -10,7 +10,7 @@ exports.parseAttributeValue = function(name, value){
 }
 
 exports.extractAttributesFromFileStats = function(file){
-  return {title: file.base}
+  return {title: _s.humanize(file.baseName)}
 }
 
 exports.parseAttributes = function(data){

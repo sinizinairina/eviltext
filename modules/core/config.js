@@ -43,7 +43,8 @@ app.themes = {
     svbtle: function(){return require('../blog-svbtle-theme')}
   },
   wiki: {
-    clean: function(){return require('../wiki-clean-theme')}
+    clean : function(){return require('../wiki-clean-theme')},
+    gray  : function(){return require('../wiki-gray-theme')}
   }
 }
 

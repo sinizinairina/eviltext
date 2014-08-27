@@ -20,12 +20,14 @@ module.exports = function(klass, appName, appDirectory){
     }
 
     // Home.
-    if(userConfig.home) config.home = app.pathUtil.absolutePathIfNotAbsolute(mountPath, userConfig.home)
+    if(userConfig.home){
+      userConfig.home = app.pathUtil.absolutePathIfNotAbsolute(mountPath, userConfig.home)
+    }
 
     // Logo.
     if(app.pathUtil.isImagePath(userConfig.logo)){
-      config.logo = app.pathUtil.absolutePathIfNotAbsolute(mountPath, userConfig.logo)
-      config.isLogoPath = true
+      userConfig.logo = app.pathUtil.absolutePathIfNotAbsolute(mountPath, userConfig.logo)
+      userConfig.isLogoPath = true
     }
 
     // Sort by.
