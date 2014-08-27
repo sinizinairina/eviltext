@@ -76,7 +76,10 @@ module.exports = function(klass, appName, appDirectory){
   proto.buildBasePaths = function(){
     var _this = this
     return {
-      home: function(params){return app.path(_this.mountPath, params)},
+      home: function(params){
+        // Home path from config can override default home path.
+        return app.path(_this.config.home || _this.mountPath, params)
+      },
 
       asset: function(path, params){return app.path('/assets' + path, params)},
 
@@ -86,9 +89,30 @@ module.exports = function(klass, appName, appDirectory){
     }
   }
 
+  proto.pathWithTagsAndPage = function(path, params){
+    var tag = null, page = null
+    if(params && (params.page || params.tag || params.pagesCount)){
+      params = _(params).clone()
+      if(params.tag){
+        tag = params.tag
+        delete params.tag
+      }
+      if(params.page){
+        page = params.page
+        delete params.page
+      }
+      delete params.pagesCount
+      path = path + (tag ? '-tag-' + tag : '') + (page ? (page == 1 ? '' : '-page-' + page) : '')
+    }
+    return app.path(path, params)
+  }
+
   proto.renderTo = function(template, options, path, ecb, cb){
+    var templateDir = fspath.join(appDirectory, 'templates')
+    var templatePath = app.pathUtil.absolutePathIfNotAbsolute(templateDir, template)
+
     app.debug('[' + appName + '] rendering ' + template + ' to ' + path)
-    app.renderTo(fspath.join(appDirectory, 'templates', template), options
+    app.renderTo(templatePath, options
     , fspath.join(this.buildPath, path), ecb, cb)
   }
 
@@ -106,11 +130,11 @@ module.exports = function(klass, appName, appDirectory){
     return pages
   }
 
-  proto.prepareTagCloud = function(){
-    app.debug('[blog] preparing tag cloud for ' + this.mountPath)
+  proto.prepareTagCloud = function(objects){
+    app.debug('[' + appName + '] preparing tag cloud for ' + this.mountPath)
 
     var tagCounts = {}
-    _(this.posts).each(function(post){
+    _(objects).each(function(post){
       _(post.tags).each(function(tag){
         tagCounts[tag] = (tagCounts[tag] || 0) + 1
       })
@@ -186,7 +210,7 @@ module.exports = function(klass, appName, appDirectory){
     return sorted
   }
 
-  // Draft posts are published but hidden from listing.
+  // Draft objects are published but hidden from listing.
   proto.publishedObjects = function(collection){
     return _(collection).filter(function(object){return object.draft != true})
   }
@@ -256,9 +280,10 @@ module.exports = function(klass, appName, appDirectory){
     })
   }
 
-
-  // proto.generateRedirectFromRoot = function(ecb, cb){
-  //   this.renderTo('redirect-page.html', {name: 'Posts', path: '/posts'}
-  //   , fspath.join(this.mountPath, 'index.html'), ecb, cb)
-  // }
+  proto.generateRedirectToHomePage = function(ecb, cb){
+    if(this.config.home){
+      this.renderTo(__dirname + '/templates/redirect-page.html'
+      , {name: 'Home', path: this.config.home}, fspath.join(this.mountPath, 'index.html'), ecb, cb)
+    }else return cb()
+  }
 }

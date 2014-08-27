@@ -27,13 +27,22 @@ exports.parseMarkdown = function(markdown){
     var textTokens = []
     var attrTokens = []
     var inList = false
+    var listTerminationTokens = ['list_start', 'loose_item_start', 'space']
     _(tokens).each(function(token, i){
       if(i == 0 && token.type == 'list_end') inList = true
       if(inList){
         if(token.type == 'text') attrTokens.push(token)
       }else textTokens.push(token)
-      if(inList && token.type == 'list_start') inList = false
+      if(inList){
+        if(token.type == 'list_start') inList = false
+        if(token.type == 'loose_item_start') {
+          inList = false
+          textTokens.push({type: 'list_end'})
+        }
+      }
     })
+
+
     textTokens.reverse()
     attrTokens.reverse()
     return [textTokens, attrTokens]
@@ -85,7 +94,6 @@ exports.parseMarkdown = function(markdown){
   // Generating html. Marked required `links` to work properly.
   textTokens.links = tokens.links
   var html = marked.parser(textTokens, exports.markedOptions)
-
   return [html, markdownAttrs]
 }
 

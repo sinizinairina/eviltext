@@ -29,7 +29,12 @@
             <img src='<%= config.logo %>'>
           </a>
         <% }else{ %>
-          <h1 class='logo'><a href="<%= paths.home() %>"><%- config.title %></a></h1>
+          <!-- If title is too long there's not enough space, using smaller font. -->
+          <% if(config.title.length > 8){ %>
+            <h1 class='logo' style='font-size: 1.6em;'><a href="<%= paths.home() %>"><%- config.title %></a></h1>
+          <% }else{ %>
+            <h1 class='logo'><a href="<%= paths.home() %>"><%- config.title %></a></h1>
+          <% } %>
         <% } %>
 
         <ol class='toc'>
@@ -50,20 +55,19 @@
             </li>
           <% } %>
 
-          <% if(tagCloud.length > 0){%>
+          <% if(tagCloud.length > 0){ %>
             <li>
               <!-- Tags -->
               <ol class="toc">
                 <% var truncatedTagCloud = tagCloud.slice(0, config.tagCount) %>
                 <% _(truncatedTagCloud).each(function(item){ %>
                   <li>
-                    <% var tagPath = paths.posts({tag: item.name}) %>
+                    <% var tagPath = paths.pages({tag: item.name}) %>
                     <% var humanizedCount = _s.pluralizeCount(item.count, 'post', 'posts') %>
-                    <% var tagTitle = item.count > 1 ? item.name + ' ' + item.count : item.name %>
                     <% if(tagPath == currentPath){ %>
-                      <a href="<%= tagPath %>" class="selected" title="<%= humanizedCount %>"><%= tagTitle %></a>
+                      <a href="<%= tagPath %>" class="selected" title="<%= humanizedCount %>"><%= item.name %></a>
                     <% }else{ %>
-                      <a href="<%= tagPath %>" title="<%= humanizedCount %>"><%= tagTitle %></a>
+                      <a href="<%= tagPath %>" title="<%= humanizedCount %>"><%= item.name %></a>
                     <% } %>
                   </li>
                 <% }) %>

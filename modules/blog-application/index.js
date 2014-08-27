@@ -17,22 +17,11 @@ proto.buildPaths = function(){
     post: function(post, params){return app.path(post.basePath, params)},
 
     posts: function(params){
-      var tag = null, page = null
-      if(params && (params.page || params.tag || params.pagesCount)){
-        params = _(params).clone()
-        if(params.tag){
-          tag = params.tag
-          delete params.tag
-        }
-        if(params.page){
-          page = params.page
-          delete params.page
-        }
-        delete params.pagesCount
-      }
-      var path = _this.mountPath + (tag ? '-tag-' + tag : '')
-      + (page ? (page == 1 ? '' : '-page-' + page) : '')
-      return app.path(path, params)
+      var path = _this.mountPath
+      // If home path defined in config the `mountPath` can't be used because there will be redirect
+      // page to home, some other path should be used.
+      if(_this.config.home) path = path + '/posts'
+      return _this.pathWithTagsAndPage(path, params)
     },
 
     nextPosts: function(params){
@@ -42,6 +31,7 @@ proto.buildPaths = function(){
       return params.page < params.pagesCount ?
       this.posts(_({}).extend(params, {page: params.page + 1})) : null
     },
+
     previousPosts: function(params){
       params = params || {}
       if(!params.page) throw new Error("page parameter required!")
@@ -59,7 +49,7 @@ proto.prepare = function(ecb, cb){
     _this.preparePosts(ecb, function(){
       _this.posts = _this.sortAndPaginateObjects(_this.posts, 'posts')
       _this.publishedPosts = _this.publishedObjects(_this.posts)
-      _this.prepareTagCloud()
+      _this.prepareTagCloud(_this.posts)
       _this.prepareNavigation()
       cb(_this)
     })
@@ -71,14 +61,16 @@ proto.generate = function(ecb, cb){
   var _this = this
   this.updateIfNeeded(ecb, function(){
     _this.prepare(ecb, function(){
-      _this.generatePostCollection(ecb, function(){
-        _this.generatePostCollectionsByTag(ecb, function(){
-          app.debug('[blog] generating posts for ' + _this.mountPath)
-          _(_this.posts).asyncEach(function(post, i, ecb, next){
-            _this.generatePost(post, ecb, next)
-          }, ecb, function(){
-            _this.theme().generate(ecb, function(){
-              _this.finalize(ecb, cb)
+      _this.generateRedirectToHomePage(ecb, function(){
+        _this.generatePostCollection(ecb, function(){
+          _this.generatePostCollectionsByTag(ecb, function(){
+            app.debug('[blog] generating posts for ' + _this.mountPath)
+            _(_this.posts).asyncEach(function(post, i, ecb, next){
+              _this.generatePost(post, ecb, next)
+            }, ecb, function(){
+              _this.theme().generate(ecb, function(){
+                _this.finalize(ecb, cb)
+              })
             })
           })
         })

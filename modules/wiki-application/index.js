@@ -17,22 +17,11 @@ proto.buildPaths = function(){
     page: function(page, params){return app.path(page.basePath, params)},
 
     pages: function(params){
-      var tag = null, page = null
-      if(params && (params.page || params.tag || params.pagesCount)){
-        params = _(params).clone()
-        if(params.tag){
-          tag = params.tag
-          delete params.tag
-        }
-        if(params.page){
-          page = params.page
-          delete params.page
-        }
-        delete params.pagesCount
-      }
-      var path = _this.mountPath + (tag ? '-tag-' + tag : '')
-      + (page ? (page == 1 ? '' : '-page-' + page) : '')
-      return app.path(path, params)
+      var path = _this.mountPath
+      // If home path defined in config the `mountPath` can't be used because there will be redirect
+      // page to home, some other path should be used.
+      if(_this.config.home) path = path + '/pages'
+      return _this.pathWithTagsAndPage(path, params)
     },
 
     nextPages: function(params){
@@ -42,6 +31,7 @@ proto.buildPaths = function(){
       return params.page < params.pagesCount ?
       this.pages(_({}).extend(params, {page: params.page + 1})) : null
     },
+
     previousPages: function(params){
       params = params || {}
       if(!params.page) throw new Error("page parameter required!")
@@ -59,7 +49,7 @@ proto.prepare = function(ecb, cb){
     _this.preparePages(ecb, function(){
       _this.pages = _this.sortAndPaginateObjects(_this.pages, 'pages')
       _this.publishedPages = _this.publishedObjects(_this.pages)
-      _this.prepareTagCloud()
+      _this.prepareTagCloud(_this.pages)
       _this.prepareNavigation()
       cb(_this)
     })
@@ -71,14 +61,16 @@ proto.generate = function(ecb, cb){
   var _this = this
   this.updateIfNeeded(ecb, function(){
     _this.prepare(ecb, function(){
-      _this.generatePageCollection(ecb, function(){
-        _this.generatePageCollectionsByTag(ecb, function(){
-          app.debug('[wiki] generating pages for ' + _this.mountPath)
-          _(_this.pages).asyncEach(function(page, i, ecb, next){
-            _this.generatePage(page, ecb, next)
-          }, ecb, function(){
-            _this.theme().generate(ecb, function(){
-              _this.finalize(ecb, cb)
+      _this.generateRedirectToHomePage(ecb, function(){
+        _this.generatePageCollection(ecb, function(){
+          _this.generatePageCollectionsByTag(ecb, function(){
+            app.debug('[wiki] generating pages for ' + _this.mountPath)
+            _(_this.pages).asyncEach(function(page, i, ecb, next){
+              _this.generatePage(page, ecb, next)
+            }, ecb, function(){
+              _this.theme().generate(ecb, function(){
+                _this.finalize(ecb, cb)
+              })
             })
           })
         })
