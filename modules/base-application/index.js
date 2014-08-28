@@ -68,7 +68,7 @@ module.exports = function(klass, appName, appDirectory){
     this.buildEntries = buildEntries
 
     this.mountDirectory = this.srcBaseEntries[this.mountPath]
-    this.cachePath = this.mountPath + '/eviltext.json'
+    this.cachePath = app.pathUtil.join(this.mountPath, '/eviltext.json')
     this.paths = this.buildPaths()
     cb(this)
   }

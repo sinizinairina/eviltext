@@ -16,7 +16,7 @@ var _propagateUpdatedAt = function(entry){
   var parent = entry.parent
   if(!parent.updatedAt || parent.updatedAt < entry.updatedAt){
     parent.updatedAt = entry.updatedAt
-    if(entry.parent) _propagateUpdatedAt(entry)
+    if(parent.parent) _propagateUpdatedAt(parent)
   }
 }
 var _readEntries = function(directory, path, entries, parent, ecb, cb){

@@ -153,7 +153,7 @@ proto.preparePosts = function(ecb, cb){
 }
 
 proto.preparePost = function(post, ecb, cb){
-  app.debug('[blog] preparing post ' + post.path)
+  app.debug('[blog] preparing post ' + post.basePath)
 
   _(post).extendIfBlank({
     tags : [],

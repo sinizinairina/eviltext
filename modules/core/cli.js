@@ -63,8 +63,11 @@ exports.run = function(){
   var host      = process.env['host'] || 'localhost'
   var port      = parseInt(process.env['port'] || 3000)
 
+  srcPath = require('path').resolve(srcPath)
+  buildPath = require('path').resolve(buildPath)
+
   if(command == 'build'){
-    app.info('Generating site ' + require('path').resolve(srcPath))
+    app.info('Generating site ' + srcPath)
     new app.generate(srcPath, buildPath, app.error, function(){
       app.info('Site generated to ' + buildPath)
       app.info('Type `eviltext serve` if you want to serve it locally.')

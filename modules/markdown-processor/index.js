@@ -1,8 +1,6 @@
 var fs = require('fs')
 var fspath = require('path')
-var marked = require('marked')
 var baseProcessor = require('../base-processor')
-var textUtil = require('../text-util')
 
 var targetMd = function(file){return file.basePath + '.' + file.extension}
 var targetJson = function(file){return file.basePath + '.json'}
@@ -21,6 +19,8 @@ exports.markedOptions = {
 }
 
 exports.parseMarkdown = function(markdown){
+  var marked = require('marked')
+
   var splitMarkdownIntoTextAndAttributes = function(tokens){
     tokens = _(tokens).clone()
     tokens.reverse()
@@ -109,6 +109,8 @@ exports.extractYaml = function(text){
 }
 
 exports.process = function(srcDir, buildDir, file, config, ecb, cb, dontWrite){
+  var textUtil = require('../text-util')
+
   // Parsing markdown text into tokens.
   app.readFile(fspath.join(srcDir, file.path), ecb, function(text){
     // Parsing YAML options.

@@ -12,7 +12,6 @@ proto.initialize = function(ecb, cb){
   app.readEntries(this.srcPath, ecb, function(srcEntries){
     _this.srcEntries = srcEntries
     _this._calculateBaseEntries()
-
     app.readEntries(_this.buildPath, ecb, function(buildEntries){
       _this.buildEntries = buildEntries
 

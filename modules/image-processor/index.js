@@ -1,7 +1,5 @@
-var yaml = require('js-yaml')
 var fs = require('fs')
 var fspath = require('path')
-var gm = require('gm')
 
 var target = function(file){return file.path}
 
@@ -61,7 +59,7 @@ exports.process = function(srcDir, buildDir, file, config, ecb, cb){
       var targetPath = fspath.join(buildDir, resizedTarget(file, sizeAlias))
       app.ensurePathInBuildDirectory(targetPath)
 
-      gm(originalPath)
+      require('gm')(originalPath)
       .resize(sizeFormat.width, sizeFormat.height, sizeFormat.format)
       .noProfile()
       .write(targetPath, _.fork(function(err){
