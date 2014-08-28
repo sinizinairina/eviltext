@@ -20,6 +20,11 @@ proto.buildPaths = function(){
       return _this.pathWithTagsAndPage(app.pathUtil.join(_this.mountPath, '/pages'), params)
     },
 
+    home: function(params){
+      // Home path from config can override default home path.
+      return _this.config.home ? app.path(_this.config.home, params) : this.pages(params)
+    },
+
     nextPages: function(params){
       params = params || {}
       if(!params.page) throw new Error("page parameter required!")

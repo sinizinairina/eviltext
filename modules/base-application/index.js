@@ -76,10 +76,10 @@ module.exports = function(klass, appName, appDirectory){
   proto.buildBasePaths = function(){
     var _this = this
     return {
-      home: function(params){
-        // Home path from config can override default home path.
-        return app.path(_this.config.home || _this.mountPath, params)
-      },
+      // home: function(params){
+      //   // Home path from config can override default home path.
+      //   return app.path(_this.config.home || _this.mountPath, params)
+      // },
 
       asset: function(path, params){return app.path('/assets' + path, params)},
 
