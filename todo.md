@@ -1,18 +1,15 @@
 # Bugs
 
-- Check "done" messages when building and skipping build.
-
 # High
 
-- Add eviltext.com site.
-- Add docs.
+- Add blog with iphone image to readme.md and link to the site.
+- Add example.
+- Change root in samples and ensure it works properly /blog -> /
 
 # Normal
 
+- Add docs.
 - Navigate to default application from the top-level.
-- Add Wiki Applicaton
-- Add Gray Theme.
-- Add Tiny Theme.
 - Add warn for not recognised config options.
 - Add eCommerce Application.
 - Add Robo Theme.
@@ -23,11 +20,9 @@
 - Add main image for every content type.
 - Add general translation.
 - Add config inheritance.
-- Add home attribute.
 
 # Low
 
-- Change root in samples /blog -> /
 - Convert old CoffeeScript files to JS.
 - Add watermarks and option for not keeping originals.
 - Add clean command
@@ -39,6 +34,10 @@
 - https://github.com/poole/lanyon
 - http://hyde.getpoole.com/
 
+# Slideshow
+
+- https://github.com/gnab/remark
+
 # Done
 
 - Deploy my blog.
@@ -47,3 +46,8 @@
 - Add 3d level config lookup.
 - Removed attribute named section from markdown.
 - Added draft posts.
+- Add Wiki Applicaton
+- Add Gray Theme.
+- Add Clean Theme.
+- Add home attribute.
+- Add eviltext.com site.

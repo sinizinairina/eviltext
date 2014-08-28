@@ -17,11 +17,7 @@ proto.buildPaths = function(){
     post: function(post, params){return app.path(post.basePath, params)},
 
     posts: function(params){
-      var path = _this.mountPath
-      // If home path defined in config the `mountPath` can't be used because there will be redirect
-      // page to home, some other path should be used.
-      if(_this.config.home) path = path + '/posts'
-      return _this.pathWithTagsAndPage(path, params)
+      return _this.pathWithTagsAndPage(app.pathUtil.join(_this.mountPath, '/posts'), params)
     },
 
     nextPosts: function(params){
@@ -61,7 +57,7 @@ proto.generate = function(ecb, cb){
   var _this = this
   this.updateIfNeeded(ecb, function(){
     _this.prepare(ecb, function(){
-      _this.generateRedirectToHomePage(ecb, function(){
+      _this.generateRedirectToHomePage(_this.paths.posts(), ecb, function(){
         _this.generatePostCollection(ecb, function(){
           _this.generatePostCollectionsByTag(ecb, function(){
             app.debug('[blog] generating posts for ' + _this.mountPath)

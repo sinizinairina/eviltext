@@ -62,7 +62,7 @@ proto._generateFiles = function(ecb, cb){
   app.debug('[core] processing files')
   var _this = this
   var anyFileBeenUpdated = false
-  _(this.srcBaseEntries).asyncEach(function(entry, basePath, ecb, next){
+  _(this.srcEntries).asyncEach(function(entry, tmp, ecb, next){
     if(entry.entry == 'directory') return next()
 
     if((entry.baseName == app.configBaseName) && (entry.parent.basePath in _this.configs)){

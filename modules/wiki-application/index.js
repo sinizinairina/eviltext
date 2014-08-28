@@ -17,11 +17,7 @@ proto.buildPaths = function(){
     page: function(page, params){return app.path(page.basePath, params)},
 
     pages: function(params){
-      var path = _this.mountPath
-      // If home path defined in config the `mountPath` can't be used because there will be redirect
-      // page to home, some other path should be used.
-      if(_this.config.home) path = path + '/pages'
-      return _this.pathWithTagsAndPage(path, params)
+      return _this.pathWithTagsAndPage(app.pathUtil.join(_this.mountPath, '/pages'), params)
     },
 
     nextPages: function(params){
@@ -61,7 +57,7 @@ proto.generate = function(ecb, cb){
   var _this = this
   this.updateIfNeeded(ecb, function(){
     _this.prepare(ecb, function(){
-      _this.generateRedirectToHomePage(ecb, function(){
+      _this.generateRedirectToHomePage(_this.paths.pages(), ecb, function(){
         _this.generatePageCollection(ecb, function(){
           _this.generatePageCollectionsByTag(ecb, function(){
             app.debug('[wiki] generating pages for ' + _this.mountPath)

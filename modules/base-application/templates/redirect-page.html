@@ -1,13 +1,13 @@
 <html>
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="1;url=http:/blog">
-  <script language="javascript">
-      window.location.href = "<%= path %>"
-  </script>
-  <title>Redirecting to <%= name %></title>
-</head>
-<body>
-  If you are not redirected automatically, follow the <a href='<%= path %>'>link to <%= name %></a>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="1;url=http:/<%= path %>">
+    <script language="javascript">
+        window.location.href = "<%= path %>"
+    </script>
+    <title>Redirecting to <%= name %></title>
+  </head>
+  <body>
+    If you are not redirected automatically, follow the <a href='<%= path %>'>link to <%= name %></a>
+  </body>
 </html>

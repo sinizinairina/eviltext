@@ -29,7 +29,8 @@ app.pathUtil =
   #   parts[0] = '/' if parts[0] == ''
   #   parts
 
-  join: (args...) -> args.join('/').replace(/\/\//g, '/')
+  join: (args...) ->
+    args.join('/').replace(/\/\/\/?/g, '/')
 
   # nextChildPath: (currentPath, path) ->
   #   return null if currentPath == path
@@ -122,6 +123,9 @@ app.pathUtil =
       path = "#{protocol}://#{host}#{portStr}#{if path == '/' then '' else path}#{}"
 
     path = "#{path}.#{format}" if format #!= 'html'
+
+    # Removing index, because we don't need it, the path without index is the same.
+    # path = path.replace(/\/index$/, '') if !format && /\/index$/.test(path)
 
     if _(params).size() > 0
       delimiter = if /\?/.test(path) then '&' else '?'

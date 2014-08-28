@@ -34,7 +34,7 @@
     join: function() {
       var args;
       args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-      return args.join('/').replace(/\/\//g, '/');
+      return args.join('/').replace(/\/\/\/?/g, '/');
     },
     parentPath: function(path) {
       if (!path || path === '/') {
