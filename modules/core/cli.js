@@ -14,14 +14,15 @@ var printHelp = function(){
 }
 
 // Serving static content.
-var serve = function(path, host, port){
-  app.debug('[core] serving ' + path)
+var serve = function(mountPath, host, port){
+  app.debug('[core] serving ' + mountPath)
   var fspath = require('path')
   var fs = require('fs')
   var express = require('express')
   var server = express()
   server.use(function(req, res){
-    app.debug("serving file " + req.path)
+    var path = decodeURI(req.path)
+    app.debug("serving file " + path)
     // Setting cache.
     if(req.query.cache){
       var maxAge = /^[0-9]+$/.test(req.query.cache) ? parseInt(req.query.cache) : 31536000
@@ -29,11 +30,11 @@ var serve = function(path, host, port){
     }
 
     // Sending file.
-    var relativePath = req.path
-    var absolutePath = fspath.join(path, req.path)
+    var relativePath = path
+    var absolutePath = fspath.join(mountPath, path)
     fs.stat(absolutePath, function(err, stat){
       var ecb = function(err){
-        app.error("can't serve " + req.path)
+        app.error("can't serve " + path)
         res.send(404)
       }
       if((err || !stat.isFile()) && !fspath.extname(relativePath)){

@@ -3,8 +3,6 @@
 # High
 
 - Add blog with iphone image to readme.md and link to the site.
-- Add example.
-- Change root in samples and ensure it works properly /blog -> /
 
 # Normal
 
@@ -51,3 +49,5 @@
 - Add Clean Theme.
 - Add home attribute.
 - Add eviltext.com site.
+- Add example.
+- Change root in samples and ensure it works properly /blog -> /

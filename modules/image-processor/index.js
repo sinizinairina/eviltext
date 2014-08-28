@@ -61,6 +61,7 @@ exports.process = function(srcDir, buildDir, file, config, ecb, cb){
 
       require('gm')(originalPath)
       .resize(sizeFormat.width, sizeFormat.height, sizeFormat.format)
+      .autoOrient()
       .noProfile()
       .write(targetPath, _.fork(function(err){
         // If no GraphicsMagick installed, just copying the same image.
