@@ -83,8 +83,17 @@
               type: 'text',
               text: ''
             };
+          case 'comment':
+            return {
+              type: 'text',
+              text: ''
+            };
           default:
-            throw new Error("unknown element type '" + e.type + "'!}");
+            app.warn("unknown element type '" + e.type + "'!");
+            return {
+              type: 'text',
+              text: ''
+            };
         }
       };
       cheerio = require('cheerio');

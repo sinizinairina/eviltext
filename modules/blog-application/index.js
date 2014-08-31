@@ -160,7 +160,8 @@ proto.preparePost = function(post, ecb, cb){
     date : null
   })
 
-  if(_(post.html).isPresent()) post.type = 'text'
-  else this.tryPrepareGallery(post)
-  cb(_(post.type).isBlank(), post)
+  if((post.type == 'gallery') || _(post.html).isBlank()) this.tryPrepareGallery(post)
+  if(!post.type && _(post.html).isPresent()) post.type = 'text'
+
+  cb(!post.type, post)
 }

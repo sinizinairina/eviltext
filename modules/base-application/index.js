@@ -189,8 +189,8 @@ module.exports = function(klass, appName, appDirectory){
       }
     })
 
-    if(images.length > 0){
-      post.type = 'gallery'
+    if((images.length > 0) || (post.type == 'gallery')){
+      if(!post.type) post.type = 'gallery'
       post.images = _(images).sortBy(function(image){return image.original.title})
 
       // Truncating.

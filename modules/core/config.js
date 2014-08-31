@@ -71,7 +71,8 @@ app.attributeTypes = {
   sortBy         : 'string',
   tags           : 'sortedArray',
   theme          : 'lowerCaseString',
-  title          : 'string'
+  title          : 'string',
+  type           : 'lowerCaseString'
 }
 
 // Attribute translations.

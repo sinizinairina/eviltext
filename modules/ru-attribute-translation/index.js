@@ -21,4 +21,5 @@ _(app.attributeTranslation).extend({
   'тэги'             : 'tags',
   'тема'             : 'theme',
   'заголовок'        : 'title',
+  'тип'              : 'type'
 })

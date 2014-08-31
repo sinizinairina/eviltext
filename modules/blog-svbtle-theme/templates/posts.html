@@ -25,6 +25,7 @@
             <p><a href='<%= paths.post(post) %>'>Read more ...</a></p>
           <% } %>
         <% }else if(post.type == 'gallery'){ %>
+          <% if(post.htmlPreview){ %><%- post.htmlPreview %><% } %>
           <% _(post.imagesPreview).each(function(image){ %>
             <p>
               <%- imageTag(image) %>
@@ -32,7 +33,7 @@
           <% }) %>
           <% if(post.link){ %>
             <p><a href='<%= post.link %>'>Read more ...</a></p>
-          <% }else if(post.imagesPreviewTruncated){ %>
+          <% }else if(post.imagesPreviewTruncated || post.htmlPreviewTruncated){ %>
             <p><a href='<%= paths.post(post) %>'>Read more ...</a></p>
           <% } %>
         <% } %>

@@ -5,6 +5,7 @@
   <% if(page.type == 'text'){ %>
     <%- page.html %>
   <% }else if(page.type == 'gallery'){ %>
+    <% if(page.html){ %><%- page.html %><% } %>
     <% _(page.images).each(function(image){ %>
       <p>
         <%- imageTag(image) %>

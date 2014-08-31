@@ -133,7 +133,8 @@ proto.preparePage = function(page, ecb, cb){
     date : null
   })
 
-  if(_(page.html).isPresent()) page.type = 'text'
-  else this.tryPrepareGallery(page)
-  cb(_(page.type).isBlank(), page)
+  if((page.type == 'gallery') || _(page.html).isBlank()) this.tryPrepareGallery(page)
+  if(!page.type && _(page.html).isPresent()) page.type = 'text'
+
+  cb(!page.type, page)
 }

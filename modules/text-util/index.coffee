@@ -44,7 +44,13 @@ module.exports =
         when 'script'
           type : 'text'
           text : ''
-        else throw new Error "unknown element type '#{e.type}'!}"
+        when 'comment'
+          type : 'text'
+          text : ''
+        else
+          app.warn "unknown element type '#{e.type}'!"
+          type : 'text'
+          text : ''
 
     cheerio  = require 'cheerio'
     $ = cheerio.load html

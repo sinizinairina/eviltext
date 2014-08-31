@@ -3,6 +3,7 @@
 # High
 
 - Add blog with iphone image to readme.md and link to the site.
+- Add main image for every content type.
 
 # Normal
 
@@ -15,7 +16,6 @@
 - Add Comments.
 - Add Sitemap.
 - Add Atom / RSS https://github.com/jpmonette/feed
-- Add main image for every content type.
 - Add general translation.
 - Add config inheritance.
 
@@ -51,3 +51,5 @@
 - Add eviltext.com site.
 - Add example.
 - Change root in samples and ensure it works properly /blog -> /
+- Add `type` attribute, lowercased for gallery and others.
+- Allow text in gallery.
