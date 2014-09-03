@@ -2,8 +2,9 @@
 
 # High
 
-- Add blog with iphone image to readme.md and link to the site.
 - Add main image for every content type.
+- Add portfolio theme.
+- Video tutorial.
 
 # Normal
 
@@ -53,3 +54,7 @@
 - Change root in samples and ensure it works properly /blog -> /
 - Add `type` attribute, lowercased for gallery and others.
 - Allow text in gallery.
+- Add blog with iphone image to readme.md and link to the site.
+- Invalid sorting in wiki, Z -> A
+- Disable turbolinks, it brokes styles when navigating from wiki to blog.
+- Instead of redirect to home page copy that page to the home location (discarded, too complicated).

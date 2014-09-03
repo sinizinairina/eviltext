@@ -7,7 +7,7 @@ var proto = Wiki.prototype
 Wiki.defaultConfig = {
   language   : 'en',
   theme      : 'clean',
-  sortBy     : {attribute : 'title', order: 'descending'},
+  sortBy     : {attribute : 'title', order: 'ascending'},
   tagsSortBy : {attribute : 'count', order: 'descending'}
 }
 

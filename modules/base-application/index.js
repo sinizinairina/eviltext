@@ -68,7 +68,7 @@ module.exports = function(klass, appName, appDirectory){
     this.buildEntries = buildEntries
 
     this.mountDirectory = this.srcBaseEntries[this.mountPath]
-    this.cachePath = app.pathUtil.join(this.mountPath, '/eviltext.json')
+    this.cachePath = app.pathUtil.join(this.mountPath, '/eviltext-cache.json')
     this.paths = this.buildPaths()
     cb(this)
   }
@@ -281,8 +281,12 @@ module.exports = function(klass, appName, appDirectory){
   }
 
   proto.generateRedirectToHomePage = function(homePath, ecb, cb){
+    var indexBasePath = app.pathUtil.join(this.mountPath, '/index')
+    // If there's `index.html` file created by user don't owerwritting it.
+    if(indexBasePath in this.srcBaseEntries) return cb()
     if(this.config.home) homePath = this.config.home
+    // Generating index with redirect to home path.
     this.renderTo(__dirname + '/templates/redirect-page.html'
-    , {name: 'Home', path: homePath}, app.pathUtil.join(this.mountPath, '/index.html'), ecb, cb)
+    , {name: 'Home', path: homePath}, indexPath + '.html', ecb, cb)
   }
 }
