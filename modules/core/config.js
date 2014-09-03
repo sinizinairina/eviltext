@@ -86,6 +86,12 @@ app.configTargetPath = function(basePath){return basePath + '.json'}
 
 app.regenerateFiles        = (process.env.regenerateFiles == 'true') || false
 app.regenerateApplications = (process.env.regenerateApplications == 'true') || false
+app.regenerateAssets       = (process.env.regenerateAssets == 'true') || false
+if(process.env.regenerate == 'true'){
+  app.regenerateFiles        = true
+  app.regenerateApplications = true
+  app.regenerateAssets       = true
+}
 
 app.brand = 'eviltext'
 app.brandPath = 'http://eviltext.com'

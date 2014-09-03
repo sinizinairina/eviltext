@@ -18,7 +18,7 @@ module.exports = function(klass, themeName, objectName, objectsName, themeDirect
 
   proto.copyAsset = function(themeDirectory, themeName, relativePath, ecb, cb){
     var targetPath = this.paths.asset('/' + themeName + '/' + relativePath)
-    if(targetPath in this.buildEntries) cb()
+    if((targetPath in this.buildEntries) && !app.regenerateAssets) cb()
     else {
       app.debug('[' + themeName + '] copying asset ' + relativePath)
       app.copyFile(fspath.join(themeDirectory, 'assets', relativePath)

@@ -164,3 +164,7 @@ li.share-end{display: none !important; clear: none !important;}
   padding-left: 0px;
   font-size: 10px;
 }
+ul#user_meta a.selected {
+  color: #000;
+  border-color: #000;
+}
