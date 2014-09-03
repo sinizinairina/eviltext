@@ -282,11 +282,17 @@ module.exports = function(klass, appName, appDirectory){
 
   proto.generateRedirectToHomePage = function(homePath, ecb, cb){
     var indexBasePath = app.pathUtil.join(this.mountPath, '/index')
+    var indexPath = indexBasePath + '.html'
     // If there's `index.html` file created by user don't owerwritting it.
     if(indexBasePath in this.srcBaseEntries) return cb()
-    if(this.config.home) homePath = this.config.home
-    // Generating index with redirect to home path.
-    this.renderTo(__dirname + '/templates/redirect-page.html'
-    , {name: 'Home', path: homePath}, indexPath + '.html', ecb, cb)
+    if(this.config.home){
+      // Generating index with redirect to home path.
+      this.renderTo(__dirname + '/templates/redirect-page.html'
+      , {name: 'Home', path: this.config.home}, indexPath, ecb, cb)
+    }else{
+      // Copying home page to index.
+      app.copyFile(app.pathUtil.join(this.buildPath, homePath + '.html')
+      , app.pathUtil.join(this.buildPath, indexPath), ecb, cb)
+    }
   }
 }
