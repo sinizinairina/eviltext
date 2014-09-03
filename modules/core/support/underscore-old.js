@@ -152,7 +152,7 @@
         source = list[_i];
         for (k in source) {
           v = source[k];
-          if (_(v).isPresent()) {
+          if (v != null) {
             obj[k] = v;
           }
         }

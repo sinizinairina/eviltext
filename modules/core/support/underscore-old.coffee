@@ -66,7 +66,7 @@ _.mixin
 
   extendIfNotBlank: (obj, list...) ->
     for source in list
-      obj[k] = v for k, v of source when _(v).isPresent()
+      obj[k] = v for k, v of source when v?
     obj
 
   extendIfBlank: (obj, list...) ->

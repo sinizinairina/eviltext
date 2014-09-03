@@ -1,13 +1,17 @@
 # Bugs
 
+- Tags with dots not listed in local hosting mode (try Node.js tag).
+
 # High
 
+- Add gallery capabilities for the Svbtle theme, use http://imbalance2.wpshower.com as inspiration.
 - Add main image for every content type.
 - Add portfolio theme.
 - Video tutorial.
 
 # Normal
 
+- Add featured, and style Svbtle accordingly.
 - Add docs.
 - Navigate to default application from the top-level.
 - Add warn for not recognised config options.
@@ -29,9 +33,9 @@
 
 # Themes
 
-- https://github.com/muan/scribble
-- https://github.com/poole/lanyon
-- http://hyde.getpoole.com/
+- [blog] https://github.com/muan/scribble
+- [blog] https://github.com/poole/lanyon
+- [blog, docs] http://hyde.getpoole.com/
 
 # Slideshow
 

@@ -24,7 +24,7 @@
       return _results;
     },
     postprocessHtml: function(html, _arg) {
-      var $, base, cheerio, emptyImage, lazyImages, path, replaceRelativePaths;
+      var $, base, cheerio, emptyImage, images, lazyImages, path, replaceRelativePaths;
       path = _arg.path, replaceRelativePaths = _arg.replaceRelativePaths, lazyImages = _arg.lazyImages;
       cheerio = require('cheerio');
       $ = cheerio.load(html);
@@ -41,6 +41,12 @@
           return e.attr('src', app.pathUtil.expandRelativePath(e.attr('src'), base));
         });
       }
+      images = [];
+      $('img').each(function() {
+        var e;
+        e = $(this);
+        return images.push(e.attr('src'));
+      });
       if (lazyImages) {
         emptyImage = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
         $('img').each(function() {
@@ -51,7 +57,7 @@
           return e.attr('onload', "lazyImage(this)");
         });
       }
-      return html = $.html();
+      return [$.html(), images];
     },
     parseHtml: function(html) {
       var $, cheerio, child, convert;

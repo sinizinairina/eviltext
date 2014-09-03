@@ -10,7 +10,7 @@ module.exports =
       tag.weight = Math.round(weight)
 
   postprocessHtml: (html, {path, replaceRelativePaths, lazyImages}) ->
-    cheerio  = require 'cheerio'
+    cheerio = require 'cheerio'
     $ = cheerio.load html
 
     # Replacing paths.
@@ -18,6 +18,10 @@ module.exports =
     if replaceRelativePaths and not (base == '/' or base == '')
       $('a').each -> e = $(@); e.attr 'href', app.pathUtil.expandRelativePath(e.attr('href'), base)
       $('img').each -> e = $(@); e.attr 'src', app.pathUtil.expandRelativePath(e.attr('src'), base)
+
+    # Extracting images.
+    images = []
+    $('img').each -> e = $(@); images.push(e.attr('src'))
 
     # Making images lazy.
     if lazyImages
@@ -28,7 +32,7 @@ module.exports =
         e.attr 'src', emptyImage
         e.attr 'onload', "lazyImage(this)"
 
-    html = $.html()
+    return [$.html(), images]
 
   parseHtml: (html) ->
     convert = (e) ->
