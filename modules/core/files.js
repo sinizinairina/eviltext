@@ -111,18 +111,27 @@ app.writeFile = function(path, content, ecb, cb){
 // Creates parent dirs and overwrites existing content.
 app.copyFile = function(from, to, ecb, cb){
   // app.debug('[core] copying ' + from + ' to ' + to)
-  fs.copy(from, app.ensurePathInBuildDirectory(to), _.fork(function(err){
-    // For some reason error returned as array, unwrapping it.
-    if(_(err).isArray()) err = err[0]
 
-    // It cannot overwrite directory with file or file with directory, deleting it and
-    // trying to copy one more time.
-    if(err.code == 'EPERM' || err.code == 'ENOTDIR'){
-      // TODO clear build directory automatically.
-      app.error("can't copy file to " + to + " clear build directory and try one more time.")
-    }
-    ecb(err)
-  }, cb))
+  // Just an extra check that it's a file, to early discover errors, because `fs.copy`
+  // copies dirs also.
+  fs.stat(from, function(err, stat){
+    if(err) return ecb(err)
+    if(!stat.isFile()) return ecb(new Error("from path isn't file " + from))
+
+    // Copying.
+    fs.copy(from, app.ensurePathInBuildDirectory(to), _.fork(function(err){
+      // For some reason error returned as array, unwrapping it.
+      if(_(err).isArray()) err = err[0]
+
+      // It cannot overwrite directory with file or file with directory, deleting it and
+      // trying to copy one more time.
+      if(err.code == 'EPERM' || err.code == 'ENOTDIR'){
+        // TODO clear build directory automatically.
+        app.error("can't copy file to " + to + " clear build directory and try one more time.")
+      }
+      ecb(err)
+    }, cb))
+  })
 }
 
 app.readJson = function(path, ecb, cb){fs.readJson(path, _.fork(ecb, cb))}

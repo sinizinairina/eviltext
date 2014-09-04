@@ -37,7 +37,7 @@ var serve = function(mountPath, host, port){
         app.error("can't serve " + path)
         res.send(404)
       }
-      if(err){
+      if(err || !stat.isFile()){
         // Trying to add `.html` as extension.
         _(['.html', '/index.html', '.htm', '/index.htm']).asyncEach(function(addon, i, ecb, next){
           var htmlRelativePath = (relativePath + addon).replace(/\/\//, '/')
