@@ -11,6 +11,7 @@
 
 # Normal
 
+- Link type should also redirect to link when clicking on the title.
 - Add featured, and style Svbtle accordingly.
 - Add docs.
 - Navigate to default application from the top-level.

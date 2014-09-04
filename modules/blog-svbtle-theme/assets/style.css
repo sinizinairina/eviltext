@@ -168,3 +168,43 @@ ul#user_meta a.selected {
   color: #000;
   border-color: #000;
 }
+
+/* Recommendation. */
+.recommendation {
+  font-size: 18px;
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  font-style: italic;
+  border: 1px solid #d2d2d2;
+  background-color: #f8f8f8;
+/*  background-color: #FFDC00;*/
+/*  background-color: #333;*/
+  margin-left: -50px;
+  margin-right: 0;
+  width: auto;
+  border-left: none;
+  border-right: none;
+  padding-left: 50px;
+}
+.recommendation * {
+/*  color: white !important;*/
+  font-size: 18px;
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  font-style: italic;
+  display: block;
+}
+.recommendation-inner {
+  padding: 1em 0px;
+  position: relative;
+  width: 657px;
+}
+.recommendation-inner-text {width: 500px;}
+.recommendation img {
+/*  -webkit-filter: invert(100%);  */
+  position: absolute;
+  bottom: 1em;
+  right: 0px;
+}
+.recommendation .recommendation-person {
+  margin-top: 1em;
+}
+.recommendation a {border: none !important;}
