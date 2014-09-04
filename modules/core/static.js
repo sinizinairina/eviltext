@@ -85,20 +85,10 @@ proto._generateFiles = function(ecb, cb){
 
         // Checking if entry has been already processed.
         var needsUpdate = false
-        var targets = processor.targets(entry, config)
-        for(var j = 0; j < targets.length; j++){
-          var targetPath = targets[j]
-          var targetEntry = _this.buildEntries[targetPath]
-          if(
-            app.regenerateFiles ||
-            !targetEntry ||
-            (entry.updatedAt > targetEntry.updatedAt) ||
-            (config.updatedAt > targetEntry.updatedAt)
-          ){
-            needsUpdate = true
-            break
-          }
-        }
+        var targetEntry = _this.buildEntries[entry.path]
+        needsUpdate = app.regenerateFiles || !targetEntry ||
+          (entry.updatedAt > targetEntry.updatedAt) ||
+          (config.updatedAt > targetEntry.updatedAt)
 
         // Processing entry.
         if(needsUpdate){
@@ -114,7 +104,9 @@ proto._generateFiles = function(ecb, cb){
         if(!targetEntry || (entry.updatedAt > targetEntry.updatedAt)){
           app.debug('[core] copying file ' + entry.path)
           anyFileBeenUpdated = true
-          app.copyFile(fspath.join(_this.srcPath, entry.path)
+          // Using lovercased paths for targets.
+          var targetPath = entry.basePath + '.' + entry.extension
+          app.copyFile(fspath.join(_this.srcPath, targetPath)
           , fspath.join(_this.buildPath, targetPath), ecb, next())
         } else next()
       }

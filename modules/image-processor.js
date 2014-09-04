@@ -1,4 +1,4 @@
-var fs = require('fs')
+var fs = require('fs-extra')
 var fspath = require('path')
 
 var target = function(file){return file.path}
@@ -29,16 +29,6 @@ var resizedTarget = function(file, sizeAlias){
   return file.basePath + '.' + sizeAlias + '.' + file.extension
 }
 
-exports.targets = function(file, config){
-  var targets = [originalTarget(file)]
-  if(config.images){
-    _(config.images).each(function(sizeFormat, sizeAlias){
-      targets.push(resizedTarget(file, sizeAlias))
-    })
-  }
-  return targets
-}
-
 exports.process = function(srcDir, buildDir, file, config, ecb, cb){
   // Parsing image formats.
   var sizes = []
@@ -50,14 +40,18 @@ exports.process = function(srcDir, buildDir, file, config, ecb, cb){
   }
 
   var originalPath = fspath.join(srcDir, file.path)
-  app.copyFile(originalPath, fspath.join(buildDir, originalTarget(file))
-  , ecb, function(){
+  // Creating directory because GraphicMagic can't create parent paths.
+  var directoryPath = fspath.join(buildDir, file.parent.basePath)
+  app.ensurePathInBuildDirectory(directoryPath)
+  fs.ensureDir(directoryPath, _.fork(ecb, function(){
+    // Converting images to different sizes.
     _(sizes).asyncEach(function(sizeAliasAndFormat, i, ecb, next){
       var sizeAlias  = sizeAliasAndFormat[0]
       var sizeFormat = sizeAliasAndFormat[1]
 
       var targetPath = fspath.join(buildDir, resizedTarget(file, sizeAlias))
       app.ensurePathInBuildDirectory(targetPath)
+      app
 
       require('gm')(originalPath)
       .resize(sizeFormat.width, sizeFormat.height, sizeFormat.format)
@@ -70,6 +64,8 @@ exports.process = function(srcDir, buildDir, file, config, ecb, cb){
           app.copyFile(originalPath, targetPath, ecb, next)
         }else ecb(err)
       }, next))
-    }, ecb, cb)
-  })
+    }, ecb, function(){
+      app.copyFile(originalPath, fspath.join(buildDir, originalTarget(file)), ecb, cb)
+    })
+  }))
 }

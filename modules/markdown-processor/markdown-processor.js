@@ -5,8 +5,6 @@ var baseProcessor = require('../base-processor')
 var targetMd = function(file){return file.basePath + '.' + file.extension}
 var targetJson = function(file){return file.basePath + '.json'}
 
-exports.targets = function(file, config){return [targetMd(file), targetJson(file)]}
-
 exports.process = function(srcDir, buildDir, file, config, ecb, cb, dontWrite){
   var parser = require('./parser')
   var textUtil = require('../text-util')
@@ -49,10 +47,10 @@ exports.process = function(srcDir, buildDir, file, config, ecb, cb, dontWrite){
     // Copying md and generating json files.
     if(dontWrite) cb(data)
     else{
-      app.copyFile(fspath.join(srcDir, file.path), fspath.join(buildDir, targetMd(file))
-      , ecb, function(){
-        app.writeFile(fspath.join(buildDir, targetJson(file)), JSON.stringify(data, null, 2), ecb
-        , function(){cb(data)})
+      app.writeFile(fspath.join(buildDir, targetJson(file)), JSON.stringify(data, null, 2), ecb
+      , function(){
+        app.copyFile(fspath.join(srcDir, file.path), fspath.join(buildDir, targetMd(file))
+        , ecb, function(){cb(data)})
       })
     }
   })

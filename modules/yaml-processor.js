@@ -5,8 +5,6 @@ var baseProcessor = require('./base-processor')
 
 var target = function(file){return file.basePath + '.json'}
 
-exports.targets = function(file, config){return [target(file)]}
-
 exports.process = function(srcDir, buildDir, file, config, ecb, cb, dontWrite){
   fs.readFile(fspath.join(srcDir, file.path), _.fork(ecb, function(data){
     try{
@@ -22,7 +20,8 @@ exports.process = function(srcDir, buildDir, file, config, ecb, cb, dontWrite){
     else {
       app.writeFile(fspath.join(buildDir, target(file)), JSON.stringify(data, null, 2)
       , ecb, function(){
-        cb(data)
+        app.copyFile(fspath.join(srcDir, file.path), fspath.join(buildDir, file.path)
+        , ecb, function(){cb(data)})
       })
     }
   }))
