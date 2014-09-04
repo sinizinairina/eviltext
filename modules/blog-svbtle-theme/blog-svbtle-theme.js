@@ -1,3 +1,4 @@
+var fspath = require('path')
 var Svbtle = module.exports = function(){this.initialize.apply(this, arguments)}
 var proto = Svbtle.prototype
 var themeName = 'blog-svbtle-theme'
@@ -34,16 +35,35 @@ proto.generatePost = function(post, ecb, cb){
 }
 
 proto.generatePostCollection = function(tag, page, pagesCount, posts, ecb, cb){
-  var target = this.paths.posts({tag: tag, page: page, format: 'html'})
-  app.debug('[blog-svbtle-theme] generating post collection, page ' + page + ' to ' + target)
-  this.renderTo('/posts.html', {
-    title        : this.config.title,
-    date         : _(posts).max(function(post){return post.date}).date,
-    posts        : posts,
-    nextPath     : this.paths.nextPosts({tag: tag, page: page, pagesCount: pagesCount}),
-    previousPath : this.paths.previousPosts({tag: tag, page: page, pagesCount: pagesCount}),
-    currentPath  : this.paths.posts({tag: tag, page: page}),
-    themeName    : themeName,
-    layout       : '/layout.html'
-  }, target, ecb, cb)
+  var _this = this
+  this.readHero(ecb, function(hero){
+    var target = _this.paths.posts({tag: tag, page: page, format: 'html'})
+    app.debug('[blog-svbtle-theme] generating post collection, page ' + page + ' to ' + target)
+    _this.renderTo('/posts.html', {
+      title        : _this.config.title,
+      date         : _(posts).max(function(post){return post.date}).date,
+      posts        : posts,
+      nextPath     : _this.paths.nextPosts({tag: tag, page: page, pagesCount: pagesCount}),
+      previousPath : _this.paths.previousPosts({tag: tag, page: page, pagesCount: pagesCount}),
+      currentPath  : _this.paths.posts({tag: tag, page: page}),
+      themeName    : themeName,
+      layout       : '/layout.html',
+      hero         : hero
+    }, target, ecb, cb)
+  })
+}
+
+// Reading hero unit, can be a markdown file with title and text, it will be put on the top
+// of the blog.
+proto.readHero = function(ecb, cb){
+  if('heroCache' in this) return cb(this.heroCache)
+  var heroPath = this.config.hero
+  if(!heroPath) return cb(null)
+  var heroPath = app.pathUtil.absolutePathIfNotAbsolute(this.mountPath, heroPath)
+  var _this = this
+  app.readJson(fspath.join(this.buildPath, heroPath + '.json'), ecb, function(data){
+    data.basePath = heroPath
+    _this.heroCache = data
+    _this.readHero(ecb, cb)
+  })
 }

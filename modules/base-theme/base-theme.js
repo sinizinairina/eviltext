@@ -7,13 +7,15 @@ module.exports = function(klass, themeName, objectName, objectsName, themeDirect
     return _({}).extend(applicationConfig, klass.defaultConfig, userConfig)
   }
 
-  proto.initialize = function(config, paths, navigation, tagCloud, buildPath, buildEntries){
+  proto.initialize = function(config, paths, navigation, tagCloud, buildPath, buildEntries
+  , mountPath){
     this.config = config
     this.paths = paths
     this.navigation = navigation
     this.tagCloud = tagCloud
     this.buildPath = buildPath
     this.buildEntries = buildEntries
+    this.mountPath = mountPath
   }
 
   proto.copyAsset = function(themeDirectory, themeName, relativePath, ecb, cb){

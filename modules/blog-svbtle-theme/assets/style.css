@@ -208,3 +208,12 @@ ul#user_meta a.selected {
   margin-top: 1em;
 }
 .recommendation a {border: none !important;}
+
+/* Hero unit. */
+.hero * {
+  font-size: 18px;
+  line-height: 25px;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+.hero strong {font-weight: 600;}

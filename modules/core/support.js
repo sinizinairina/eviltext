@@ -11,7 +11,7 @@ global.p = function(){
 // info, warn and error
 app.info = console.info.bind(console)
 app.warn = console.warn.bind(console)
-app.error = console.error.bind(console)
+app.error = function(err){throw err}
 
 // app.debug
 app.debugMode = !!(process.env['debug'] || process.env['DEBUG'])

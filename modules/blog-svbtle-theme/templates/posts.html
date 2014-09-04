@@ -1,8 +1,18 @@
 <section id="river">
-  <!-- Top Time. -->
-  <header id="begin">
-    <time datetime="<%= formatDateForWeb(date) %>" id="top_time"><%= formatDateForHuman(date) %></time>
-  </header>
+  <!-- If there's a hero unit - displaying it instead of time. -->
+  <% if(hero){ %>
+    <!-- Hero unit, reusing styles from post. -->
+    <article class="post hero">
+      <div class="entry-content">
+        <%- hero.html %>
+      </div>
+    </article>
+  <% }else{ %>
+    <!-- Top Time. -->
+    <header id="begin">
+      <time datetime="<%= formatDateForWeb(date) %>" id="top_time"><%= formatDateForHuman(date) %></time>
+    </header>
+  <% } %>
 
   <!-- Posts. -->
   <% _(posts).each(function(post){ %>

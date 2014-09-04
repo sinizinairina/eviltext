@@ -235,7 +235,7 @@ module.exports = function(klass, appName, appDirectory){
     if(!this._theme){
       var Theme = app.getTheme(appName, this.config.theme)
       this._theme = new Theme(this.config, this.paths, this.navigation, this.tagCloud, this.buildPath
-      , this.buildEntries)
+      , this.buildEntries, this.mountPath)
     }
     return this._theme
   }

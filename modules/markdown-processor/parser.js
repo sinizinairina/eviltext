@@ -63,6 +63,9 @@ exports.parseMarkdown = function(markdown){
     // Boolean attribute, `Key`.
     else if(match = /^\s*([^:]*[^:\s][^:]*)\s*$/i.exec(line))
       result = [match[1], 'true']
+    // Empty key value `Key :`
+    else if(match = /^\s*([^:]*[^:\s][^:]*)(\s*:\s*)$/i.exec(line))
+      result = [match[1], null]
     else result = null
     return result
   }
@@ -72,7 +75,7 @@ exports.parseMarkdown = function(markdown){
     _(attrTokens).each(function(token){
       if(_(token.text).isPresent()){
         var nameAndValue = parseAttributeLine(token.text)
-        attrs[nameAndValue[0]] = nameAndValue[1]
+        if(nameAndValue) attrs[nameAndValue[0]] = nameAndValue[1]
       }
     })
     return baseProcessor.parseAttributes(attrs)
