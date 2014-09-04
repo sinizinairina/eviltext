@@ -1,7 +1,7 @@
 var fspath = require('path')
 
 var Wiki = module.exports = function(){this.initialize.apply(this, arguments)}
-require('../base-application')(Wiki, 'wiki', __dirname)
+require('./base-application')(Wiki, 'wiki', __dirname)
 var proto = Wiki.prototype
 
 Wiki.defaultConfig = {

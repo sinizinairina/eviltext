@@ -1,7 +1,7 @@
 var yaml = require('js-yaml')
 var fs = require('fs')
 var fspath = require('path')
-var baseProcessor = require('../base-processor')
+var baseProcessor = require('./base-processor')
 
 var target = function(file){return file.basePath + '.json'}
 

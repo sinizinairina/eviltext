@@ -1,7 +1,7 @@
 var fspath = require('path')
 
 var Blog = module.exports = function(){this.initialize.apply(this, arguments)}
-require('../base-application')(Blog, 'blog', __dirname)
+require('./base-application')(Blog, 'blog', __dirname)
 var proto = Blog.prototype
 
 Blog.defaultConfig = {
