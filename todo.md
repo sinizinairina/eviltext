@@ -2,6 +2,11 @@
 
 # High
 
+- Refactoring - don't use images with pregenerated formats in base applicaton, use just plain paths.
+- Rename `images` attribute to `imageFormats`.
+
+- Add multiple htmlPreviews, with attributes like text-only.
+- Link type should also redirect to link when clicking on the title.
 - Add heading for svbtle theme.
 - Add gallery capabilities for the Svbtle theme, use http://imbalance2.wpshower.com as inspiration.
 - Add main image for every content type.
@@ -10,7 +15,6 @@
 
 # Normal
 
-- Link type should also redirect to link when clicking on the title.
 - Add featured, and style Svbtle accordingly.
 - Add docs.
 - Navigate to default application from the top-level.

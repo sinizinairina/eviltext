@@ -14,14 +14,16 @@ app.pathUtil =
     if /^\/|^http:\/\/|^https:\/\/|^mailto:/.test path then path
     else @absolutePath(rootPath, "/#{path}")
 
-  # # Split path into base and extension.
-  # splitIntoBaseAndExtension: (fullPath) ->
-  #   if match = /\.([a-z0-9]+)$/i.exec(fullPath)
-  #     extension = match[1]
-  #     path = fullPath[0..(fullPath.length - 1 - 1 - extension.length)]
-  #     [path, extension]
-  #   else
-  #     [fullPath, null]
+  # Split path into base and extension.
+  splitIntoBaseAndExtension: (fullPath) ->
+    if match = /\.([a-z0-9]+)$/i.exec(fullPath)
+      extension = match[1]
+      path = fullPath[0..(fullPath.length - 1 - 1 - extension.length)]
+      [path, extension]
+    else
+      [fullPath, null]
+
+  getName: (path) -> return path.replace(/.*\//, '')
 
   # split: (path) ->
   #   return ['/'] if path == '/'

@@ -61,6 +61,7 @@ app.attributeTypes = {
   googleId       : 'string',
   head           : 'string',
   home           : 'string',
+  image          : 'path',
   images         : 'hash',
   language       : 'lowerCaseString',
   lazyImages     : 'boolean',

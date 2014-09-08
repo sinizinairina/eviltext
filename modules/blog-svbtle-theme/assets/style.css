@@ -206,6 +206,7 @@ ul#user_meta a.selected {
 }
 .recommendation .recommendation-person {
   margin-top: 1em;
+  font-weight: bold;
 }
 .recommendation a {border: none !important;}
 
@@ -217,3 +218,50 @@ ul#user_meta a.selected {
   -webkit-font-smoothing: antialiased;
 }
 .hero strong {font-weight: 600;}
+
+/* Thumb. */
+.posts-thumb {border-top: 1px solid #e2e2e2;}
+.posts-thumb-inner {
+  width: 707px;
+  padding-left: 50px;
+  padding-top: 50px;
+}
+.post-thumb {
+/*  border: 1px solid #e3e3e3;*/
+/*  background-color: #e3e3e3;*/
+/*  float: left;
+  margin-right: 50px;
+  margin-top: 50px;
+*/  width: 303px;
+  margin-bottom: 50px;
+/*  padding-top: 15px;*/
+
+}
+.post-thumb-image {
+  width: 303px;
+/*  height: 303px;*/
+  display: table-cell;
+/*  vertical-align: middle;*/
+  text-align: center;
+}
+.post-thumb-image img {
+  max-width: 303px;
+  max-height: 303px;
+  width: auto;
+  height: auto;
+}
+.post-thumb-title {
+  margin-top: 10px;
+  display: block;
+  text-decoration: none !important;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+.post-thumb a {
+  text-decoration: none !important;
+  border: none !important;
+}
+/*.river-thumb {border-left: none !important;}
+.header-thumb {border-left: 1px solid #e3e3e3;}*/

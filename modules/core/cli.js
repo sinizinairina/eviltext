@@ -34,7 +34,7 @@ var serve = function(mountPath, host, port){
     var absolutePath = fspath.join(mountPath, path)
     fs.stat(absolutePath, function(err, stat){
       var ecb = function(err){
-        app.error("can't serve " + path)
+        console.error("can't serve " + path)
         res.send(404)
       }
       if(err || !stat.isFile()){

@@ -24,7 +24,7 @@ exports.parseImageFormat = function(expression){
   return parseImageFormatCache[expression]
 }
 
-var originalTarget = function(file){return file.basePath + '.' + file.extension}
+var originalTarget = function(file){return file.lowerCasedPath}
 var resizedTarget = function(file, sizeAlias){
   return file.basePath + '.' + sizeAlias + '.' + file.extension
 }

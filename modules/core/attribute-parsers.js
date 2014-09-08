@@ -38,8 +38,10 @@ parsers.hash = function(value){
     var hash = {}
     var key = null
     _(array).each(function(item){
-      if(key){hash[key] = item}
-      else key = item
+      if(key){
+        hash[key] = item
+        key = null
+      }else key = item
     })
     return hash
   }
@@ -60,4 +62,10 @@ parsers.boolean = function(value){
   if(_(value).isBoolean()) return value
   if(!value) return false
   return ['yes', 'true'].indexOf(_s.strip(value).toLowerCase()) >= 0
+}
+
+parsers.path = function(value, mountPath){
+  if(!value) return null
+  value = app.attributeParsers.lowerCaseString(value)
+  return app.pathUtil.absolutePathIfNotAbsolute(mountPath, value)
 }

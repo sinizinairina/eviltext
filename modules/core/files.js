@@ -31,9 +31,10 @@ var _readEntries = function(directory, path, entries, parent, ecb, cb){
       var relativePath = fspath.join('/', path, fname)
       fs.stat(absolutePath, _.fork(ecb, function(stat){
         var entry = {
-          name      : fname,
-          path      : relativePath,
-          parent    : parent
+          name           : fname,
+          path           : relativePath,
+          lowerCasedPath : relativePath.toLowerCase(),
+          parent         : parent
         }
         entries[relativePath] = entry
         parent.subtree[relativePath] = entry
@@ -42,6 +43,7 @@ var _readEntries = function(directory, path, entries, parent, ecb, cb){
         if(stat.isFile()){
           entry.entry = 'file'
 
+          // TODO use pathUtil here.
           var extensionWithDot = fspath.extname(fname)
           entry.basePath = relativePath.substring(0, relativePath.length - extensionWithDot.length)
           .toLowerCase()

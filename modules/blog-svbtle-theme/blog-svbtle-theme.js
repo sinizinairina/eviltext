@@ -1,5 +1,11 @@
 var fspath = require('path')
-var Svbtle = module.exports = function(){this.initialize.apply(this, arguments)}
+var Svbtle = module.exports = function(){
+  this.initialize.apply(this, arguments)
+
+  // Special theme attributes - path to hero unit and listing type.
+  this.heroPath = app.attributeParsers.path(this.config.hero, this.mountPath)
+  this.listing  = app.attributeParsers.lowerCaseString(this.config.listing)
+}
 var proto = Svbtle.prototype
 var themeName = 'blog-svbtle-theme'
 require('../base-theme')(Svbtle, themeName, 'post', 'posts', __dirname)
@@ -10,8 +16,16 @@ Svbtle.defaultConfig = {
   previewLength : 1200,
   tagCount      : 7,
   images        : {
-    default: '657'
+    default : '657'
   }
+}
+
+// Overriding default configure because we need to add `thumb` image format only in
+// case special listing type used.
+Svbtle.configure = function(applicationConfig, userConfig){
+  var config = _(Svbtle.defaultConfig).deepClone()
+  if(userConfig.listing) config.images.thumb = '303x303'
+  return _({}).extend(applicationConfig, config, userConfig)
 }
 
 proto.generate = function(ecb, cb){
@@ -48,7 +62,8 @@ proto.generatePostCollection = function(tag, page, pagesCount, posts, ecb, cb){
       currentPath  : _this.paths.posts({tag: tag, page: page}),
       themeName    : themeName,
       layout       : '/layout.html',
-      hero         : hero
+      hero         : hero,
+      listing      : _this.listing
     }, target, ecb, cb)
   })
 }
@@ -56,13 +71,13 @@ proto.generatePostCollection = function(tag, page, pagesCount, posts, ecb, cb){
 // Reading hero unit, can be a markdown file with title and text, it will be put on the top
 // of the blog.
 proto.readHero = function(ecb, cb){
+  if(!this.heroPath) return cb(null)
   if('heroCache' in this) return cb(this.heroCache)
-  var heroPath = this.config.hero
-  if(!heroPath) return cb(null)
-  var heroPath = app.pathUtil.absolutePathIfNotAbsolute(this.mountPath, heroPath)
   var _this = this
-  app.readJson(fspath.join(this.buildPath, heroPath + '.json'), ecb, function(data){
-    data.basePath = heroPath
+  app.readJson(fspath.join(this.buildPath, this.heroPath + '.json')
+  , function(){ecb(new Error("invalid path for hero unit " + _this.heroPath))}
+  , function(data){
+    data.basePath = _this.heroPath
     _this.heroCache = data
     _this.readHero(ecb, cb)
   })

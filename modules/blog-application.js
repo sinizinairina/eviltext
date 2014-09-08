@@ -89,7 +89,6 @@ proto.generatePostCollection = function(ecb, cb){
   _(pages).asyncEach(function(page, i, ecb, next){
     _this.theme().generatePostCollection(null, i + 1, pages.length, page, ecb, next)
   }, ecb, cb)
-
   // // Generating JSON.
   // var json = {
   //   tagCloud    : this.tagCloud,
@@ -127,7 +126,7 @@ proto.generatePostCollectionsByTag = function(ecb, cb){
 }
 
 proto.generatePost = function(post, ecb, cb){
-  app.debug('[blog] generating post ' + post.path)
+  app.debug('[blog] generating post ' + post.basePath)
   this.theme().generatePost(post, ecb, cb)
 
   // // Generating JSON.

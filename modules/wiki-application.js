@@ -107,7 +107,7 @@ proto.generatePageCollectionsByTag = function(ecb, cb){
 }
 
 proto.generatePage = function(page, ecb, cb){
-  app.debug('[wiki] generating page ' + page.path)
+  app.debug('[wiki] generating page ' + page.basePath)
   this.theme().generatePage(page, ecb, cb)
 }
 
@@ -128,7 +128,7 @@ proto.preparePages = function(ecb, cb){
 }
 
 proto.preparePage = function(page, ecb, cb){
-  app.debug('[wiki] preparing page ' + page.path)
+  app.debug('[wiki] preparing page ' + page.basePath)
 
   _(page).extendIfBlank({
     tags : [],

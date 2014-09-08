@@ -14,7 +14,8 @@ exports.process = function(srcDir, buildDir, file, config, ecb, cb, dontWrite){
     }
 
     data = _(baseProcessor.extractAttributesFromFileStats(file))
-    .extendIfNotBlank(baseProcessor.parseAttributes(data), {updatedAt: file.updatedAt})
+    .extendIfNotBlank(baseProcessor.parseAttributes(data, file.parent.basePath)
+    , {updatedAt: file.updatedAt})
 
     if(dontWrite) cb(data)
     else {

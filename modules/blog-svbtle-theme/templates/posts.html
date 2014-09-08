@@ -15,41 +15,79 @@
   <% } %>
 
   <!-- Posts. -->
-  <% _(posts).each(function(post){ %>
+  <% if(listing == 'thumb'){ %>
+    <!-- Thumb is experimental view, using heavy machinery here. -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/masonry/3.1.5/masonry.pkgd.min.js"></script>
+    <script src="http://imagesloaded.desandro.com/imagesloaded.pkgd.min.js"></script>
 
-    <!-- Post. -->
-    <article class="post">
-
-      <!-- Title. -->
-      <h2 class="entry-title">
-        <a href="<%= paths.post(post) %>" class="no-link title"><%= post.title %></a>
-      </h2>
-
-      <!-- Text. -->
-      <div class="entry-content">
-        <% if(post.type == 'text'){ %>
-          <%- post.htmlPreview %>
-          <% if(post.link){ %>
-            <p><a href='<%= post.link %>'>Read more ...</a></p>
-          <% }else if(post.htmlPreviewTruncated){ %>
-            <p><a href='<%= paths.post(post) %>'>Read more ...</a></p>
-          <% } %>
-        <% }else if(post.type == 'gallery'){ %>
-          <% if(post.htmlPreview){ %><%- post.htmlPreview %><% } %>
-          <% _(post.imagesPreview).each(function(image){ %>
-            <p>
-              <%- imageTag(image) %>
-            </p>
-          <% }) %>
-          <% if(post.link){ %>
-            <p><a href='<%= post.link %>'>Read more ...</a></p>
-          <% }else if(post.imagesPreviewTruncated || post.htmlPreviewTruncated){ %>
-            <p><a href='<%= paths.post(post) %>'>Read more ...</a></p>
-          <% } %>
-        <% } %>
+    <div class="posts-thumb">
+      <div class="posts-thumb-inner">
+        <% _(posts).each(function(post){ %>
+          <!-- Post. -->
+          <% var postLink = post.link || paths.post(post) %>
+          <article class="post-thumb">
+            <div class="post-thumb-image">
+              <a href="<%= postLink %>">
+                <%- imageTag(mainImage(post), {format: 'thumb', title: post.title})%>
+              </a>
+            </div>
+            <div class="post-thumb-title">
+              <a href="<%= postLink %>">
+                <%= post.title %>
+              </a>
+            </div>
+          </article>
+        <% }) %>
       </div>
-    </article>
-  <% }) %>
+    </div>
+
+    <script type="text/javascript">
+      imagesLoaded('.posts-thumb-inner', function(){
+        $('.posts-thumb-inner').masonry({
+      		itemSelector : '.post-thumb',
+      		columnWidth  : 303,
+      		gutter  : 50
+      	})
+      })
+    </script>
+  <% }else{ %>
+    <% _(posts).each(function(post){ %>
+
+      <!-- Post. -->
+      <article class="post">
+
+        <!-- Title. -->
+        <h2 class="entry-title">
+          <a href="<%= post.link || paths.post(post) %>" class="no-link title"><%= post.title %></a>
+        </h2>
+
+        <!-- Text. -->
+        <div class="entry-content">
+          <% if(post.type == 'text'){ %>
+            <%- post.htmlPreview %>
+            <% if(post.link){ %>
+              <p><a href='<%= post.link %>'>Read more ...</a></p>
+            <% }else if(post.htmlPreviewTruncated){ %>
+              <p><a href='<%= paths.post(post) %>'>Read more ...</a></p>
+            <% } %>
+          <% }else if(post.type == 'gallery'){ %>
+            <% if(post.htmlPreview){ %><%- post.htmlPreview %><% } %>
+            <% _(post.imagesPreview).each(function(image){ %>
+              <p>
+                <%- imageTag(image) %>
+              </p>
+            <% }) %>
+            <% if(post.link){ %>
+              <p><a href='<%= post.link %>'>Read more ...</a></p>
+            <% }else if(post.imagesPreviewTruncated || post.htmlPreviewTruncated){ %>
+              <p><a href='<%= paths.post(post) %>'>Read more ...</a></p>
+            <% } %>
+          <% } %>
+        </div>
+      </article>
+    <% }) %>
+  <% } %>
 
   <!-- Pagination. -->
   <% if(previousPath || nextPath){ %>

@@ -169,29 +169,29 @@ module.exports = function(klass, appName, appDirectory){
     var entry = this.srcBaseEntries[post.basePath]
     _(entry.children).each(function(childEntry){
       if(app.imageExtensions.indexOf(childEntry.extension) >= 0){
-        var image = {}
+        // var image = {}
+        //
+        // // Original image.
+        // image.original = {
+        //   title : childEntry.baseName,
+        //   path  : (childEntry.lowerCasedPath)
+        // }
+        //
+        // // Resized images.
+        // _(_this.config.images || {}).each(function(format, formatAlias){
+        //   image[formatAlias] = {
+        //     title : childEntry.baseName,
+        //     path  : (childEntry.basePath + '.' + formatAlias + '.' + childEntry.extension)
+        //   }
+        // })
 
-        // Original image.
-        image.original = {
-          title : childEntry.baseName,
-          path  : (childEntry.basePath + '.' + childEntry.extension)
-        }
-
-        // Resized images.
-        _(_this.config.images || {}).each(function(format, formatAlias){
-          image[formatAlias] = {
-            title : childEntry.baseName,
-            path  : (childEntry.basePath + '.' + formatAlias + '.' + childEntry.extension)
-          }
-        })
-
-        images.push(image)
+        images.push(childEntry.lowerCasedPath)
       }
     })
 
     if((images.length > 0) || (post.type == 'gallery')){
       if(!post.type) post.type = 'gallery'
-      post.images = _(images).sortBy(function(image){return image.original.title})
+      post.images = images.sort() //  = _(images).sortBy(function(image){return image.original.title})
 
       // Truncating.
       post.imagesPreview = [images[0]]

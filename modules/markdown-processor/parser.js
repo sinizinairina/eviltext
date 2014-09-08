@@ -11,20 +11,20 @@ exports.markedOptions = {
   langPrefix  : 'lang-'
 }
 
-exports.parse = function(text){
+exports.parse = function(text, mountPath){
   // Parsing YAML.
-  var yamlAttributesAndText = exports.extractYaml(text)
+  var yamlAttributesAndText = exports.extractYaml(text, mountPath)
   var yamlAttributes = yamlAttributesAndText[0]
   var text = yamlAttributesAndText[1]
 
   // Parsing Markdown.
-  var htmlAndAttributes = exports.parseMarkdown(text)
+  var htmlAndAttributes = exports.parseMarkdown(text, mountPath)
   var html = htmlAndAttributes[0]
   var markdownAttributes = htmlAndAttributes[1]
   return [html, yamlAttributes, markdownAttributes]
 }
 
-exports.parseMarkdown = function(markdown){
+exports.parseMarkdown = function(markdown, mountPath){
   var marked = require('marked')
 
   var splitMarkdownIntoTextAndAttributes = function(tokens){
@@ -78,7 +78,7 @@ exports.parseMarkdown = function(markdown){
         if(nameAndValue) attrs[nameAndValue[0]] = nameAndValue[1]
       }
     })
-    return baseProcessor.parseAttributes(attrs)
+    return baseProcessor.parseAttributes(attrs, mountPath)
   }
 
   // Parsing markdown text into tokens.
@@ -96,7 +96,7 @@ exports.parseMarkdown = function(markdown){
     if(firstToken.type == 'heading' && firstToken.depth == 1 && _(firstToken.text).isPresent()){
       // Extracting title and removing it from text.
       textTokens.shift()
-      _(markdownAttrs).extend(baseProcessor.parseAttributes({title: firstToken.text}))
+      _(markdownAttrs).extend(baseProcessor.parseAttributes({title: firstToken.text}, mountPath))
     }
   }
 
@@ -106,13 +106,13 @@ exports.parseMarkdown = function(markdown){
   return [html, markdownAttrs]
 }
 
-exports.extractYaml = function(text){
+exports.extractYaml = function(text, mountPath){
   var match = /^\s*---([\s\S]*)---[\s\n]*([\s\S]*)$/g.exec(text)
   if(match){
     var yaml = require('js-yaml')
     var data = yaml.safeLoad(match[1])
     if(!_(data).isObject()) data = {}
-    return [baseProcessor.parseAttributes(data), match[2]]
+    return [baseProcessor.parseAttributes(data, mountPath), match[2]]
   }
   return [{}, text]
 }

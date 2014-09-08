@@ -2,7 +2,7 @@ var fs = require('fs')
 var fspath = require('path')
 var baseProcessor = require('../base-processor')
 
-var targetMd = function(file){return file.basePath + '.' + file.extension}
+var targetMd = function(file){return file.lowerCasedPath}
 var targetJson = function(file){return file.basePath + '.json'}
 
 exports.process = function(srcDir, buildDir, file, config, ecb, cb, dontWrite){
@@ -12,7 +12,7 @@ exports.process = function(srcDir, buildDir, file, config, ecb, cb, dontWrite){
   app.readFile(fspath.join(srcDir, file.path), ecb, function(text){
     // Parsing markdown.
     try{
-      var result = parser.parse(text)
+      var result = parser.parse(text, file.parent.basePath)
     }catch(err){
       return ecb(err)
     }

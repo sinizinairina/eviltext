@@ -9,6 +9,7 @@ _(app.attributeTranslation).extend({
   'черновик'         : 'draft',
   'шапка'            : 'head',
   'домашняяСтраница' : 'home',
+  'картинка'         : 'image',
   'картинки'         : 'images',
   'язык'             : 'language',
   'lazyImages'       : 'lazyImages',

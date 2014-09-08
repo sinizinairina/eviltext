@@ -61,16 +61,35 @@ module.exports = function(klass, themeName, objectName, objectsName, themeDirect
       // imgStub            : _imgStub,
       formatDateForHuman : function(date){return _formatDate(date, 'MMMM DD, YYYY')},
       formatDateForWeb   : function(date){return _formatDate(date, 'YYYY-MM-DD')},
+      mainImage          : function(object){
+        return object.image || (object.images && object.images[0]) ||
+        (object.htmlImages && object.htmlImages[0])
+      },
       paths              : this.paths,
       config             : this.config,
       navigation         : this.navigation,
       tagCloud           : this.tagCloud,
-      imageTag           : function(image){
+      imageTag           : function(image, options){
+        options = options || {}
+        var format = options.format || 'default'
+        var results = app.pathUtil.splitIntoBaseAndExtension(image)
+        var basePath = results[0]
+        var extension = results[1]
+
+        // Image already can be formatted like `image.thumb.png`, extracting extension
+        // for the second time.
+        var results = app.pathUtil.splitIntoBaseAndExtension(basePath)
+        var basePath = results[0]
+        var currentFormat = results[1]
+
+        var imagePath = basePath + '.' + format + '.' + extension
+        var imageTitle = options.title || _s.humanize(app.pathUtil.getName(basePath))
+
         if(_this.config.lazyImages){
-          return '<img src="' + _imgStub + '" data-src="' + image.default.path + '" title="' +
-          image.default.title + '" onload="lazyImage(this)"></img>'
+          return '<img src="' + _imgStub + '" data-src="' + imagePath + '" title="' +
+          imageTitle + '" onload="lazyImage(this)"></img>'
         }else{
-          return '<img src="' + image.default.path + '" title="' + image.default.title + '"></img>'
+          return '<img src="' + imagePath + '" title="' + imageTitle + '"></img>'
         }
       }
     }

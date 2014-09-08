@@ -31,6 +31,19 @@
         return this.absolutePath(rootPath, "/" + path);
       }
     },
+    splitIntoBaseAndExtension: function(fullPath) {
+      var extension, match, path;
+      if (match = /\.([a-z0-9]+)$/i.exec(fullPath)) {
+        extension = match[1];
+        path = fullPath.slice(0, +(fullPath.length - 1 - 1 - extension.length) + 1 || 9e9);
+        return [path, extension];
+      } else {
+        return [fullPath, null];
+      }
+    },
+    getName: function(path) {
+      return path.replace(/.*\//, '');
+    },
     join: function() {
       var args;
       args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
