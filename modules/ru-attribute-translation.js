@@ -15,6 +15,7 @@ _(app.attributeTranslation).extend({
   'lazyImages'       : 'lazyImages',
   'ссылка'           : 'link',
   'лого'             : 'logo',
+  'вКорневуюПапку'   : 'mountAsRoot',
   'навигация'        : 'navigation',
   'наСтранице'       : 'perPage',
   'сортироватьПо'    : 'sortBy',

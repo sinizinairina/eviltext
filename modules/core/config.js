@@ -67,13 +67,14 @@ app.attributeTypes = {
   lazyImages     : 'boolean',
   link           : 'string',
   logo           : 'string',
+  mountAsRoot    : 'boolean',
   navigation     : 'orderedHash',
   perPage        : 'number',
   sortBy         : 'string',
   tags           : 'sortedArray',
   theme          : 'lowerCaseString',
   title          : 'string',
-  type           : 'lowerCaseString'
+  type           : 'lowerCaseString',
 }
 
 // Attribute translations.

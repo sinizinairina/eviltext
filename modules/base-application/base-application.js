@@ -280,19 +280,43 @@ module.exports = function(klass, appName, appDirectory){
     })
   }
 
+  proto.generateRedirects = function(homePath, ecb, cb){
+    var _this = this
+    this.generateRedirectToHomePage(homePath, ecb, function(){
+      _this.generateMountAsRootPage(homePath, ecb, cb)
+    })
+  }
+
   proto.generateRedirectToHomePage = function(homePath, ecb, cb){
     var indexBasePath = app.pathUtil.join(this.mountPath, '/index')
     var indexPath = indexBasePath + '.html'
+
     // If there's `index.html` file created by user don't owerwritting it.
     if(indexBasePath in this.srcBaseEntries) return cb()
+
     if(this.config.home){
       // Generating index with redirect to home path.
+      app.debug('[' + appName + '] generating home page as redirect to ' + this.config.home)
       this.renderTo(__dirname + '/templates/redirect-page.html'
       , {name: 'Home', path: this.config.home}, indexPath, ecb, cb)
     }else{
       // Copying home page to index.
+      app.debug('[' + appName + '] generating home page')
       app.copyFile(app.pathUtil.join(this.buildPath, homePath + '.html')
       , app.pathUtil.join(this.buildPath, indexPath), ecb, cb)
     }
+  }
+
+  proto.generateMountAsRootPage = function(homePath, ecb, cb){
+    if(!this.config.mountAsRoot) return cb()
+
+    // If there's `index.html` file created by user don't owerwritting it.
+    if('/index' in this.srcBaseEntries)
+      throw new Error("can't mount as root because there's already /index exists!")
+
+    // Copying home page to index.
+    app.debug('[' + appName + '] mounting as root')
+    app.copyFile(app.pathUtil.join(this.buildPath, homePath + '.html')
+    , app.pathUtil.join(this.buildPath, '/index.html'), ecb, cb)
   }
 }
