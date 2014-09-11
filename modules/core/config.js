@@ -67,7 +67,7 @@ app.attributeTypes = {
   head           : 'string',
   home           : 'path',
   image          : 'path',
-  images         : 'hash',
+  imageFormats   : 'hash',
   language       : 'lowerCaseString',
   lazyImages     : 'boolean',
   link           : 'string',

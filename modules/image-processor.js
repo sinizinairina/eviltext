@@ -32,8 +32,8 @@ var resizedTarget = function(file, sizeAlias){
 exports.process = function(srcDir, buildDir, file, config, Application, ecb, cb){
   // Parsing image formats.
   var sizes = []
-  if(config.images){
-    _(config.images).each(function(sizeFormat, sizeAlias){
+  if(config.imageFormats){
+    _(config.imageFormats).each(function(sizeFormat, sizeAlias){
       var sizeFormat = exports.parseImageFormat(sizeFormat)
       if(sizeFormat) sizes.push([sizeAlias, sizeFormat])
     })

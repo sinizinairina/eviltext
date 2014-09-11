@@ -8,7 +8,7 @@ Gray.defaultConfig = {
   perPage       : 25,
   previewLength : 1200,
   tagCount      : 7,
-  images        : {
+  imageFormats  : {
     default: '750'
   }
 }

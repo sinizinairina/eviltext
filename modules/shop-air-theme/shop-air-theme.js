@@ -9,7 +9,7 @@ Air.defaultConfig = {
   perPage       : 25,
   previewLength : 1200,
   tagCount      : 12,
-  images        : {
+  imageFormats  : {
     thumb   : '229x229',
     default : '528x528'
   }

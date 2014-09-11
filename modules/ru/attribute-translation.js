@@ -11,7 +11,7 @@ _(app.attributeTranslation).extend({
   'шапка'            : 'head',
   'домашняяСтраница' : 'home',
   'картинка'         : 'image',
-  'картинки'         : 'images',
+  'форматКартинок'   : 'imageFormats',
   'язык'             : 'language',
   'lazyImages'       : 'lazyImages',
   'ссылка'           : 'link',

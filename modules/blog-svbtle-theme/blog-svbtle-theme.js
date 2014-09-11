@@ -9,7 +9,7 @@ Svbtle.defaultConfig = {
   perPage       : 25,
   previewLength : 1200,
   tagCount      : 7,
-  images        : {
+  imageFormats  : {
     default : '657'
   }
 }
@@ -22,7 +22,7 @@ Svbtle.configure = function(applicationConfig, userConfig, mountPath){
     userConfig.listing = app.attributeParsers.lowerCaseString(userConfig.listing)
     // Overriding default configure because we need to add `thumb` image format only in
     // case special listing type used.
-    config.images.thumb = '303x303'
+    config.imageFormats.thumb = '303x303'
   }
   return _({}).extend(applicationConfig, Svbtle.defaultConfig, userConfig)
 }

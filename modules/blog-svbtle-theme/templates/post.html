@@ -7,7 +7,7 @@
   <!-- Post. -->
   <article class="post">
     <h2 class="entry-title">
-      <a href="<%= paths.post(post) %>" class="no-link title"><%- post.title %></a>
+      <a href="<%= post.link || paths.post(post) %>" class="no-link title"><%- post.title %></a>
     </h2>
 
     <!-- Content. -->
