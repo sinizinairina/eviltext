@@ -24,7 +24,7 @@ var serve = function(mountPath, host, port){
     var path = decodeURI(req.path)
     app.debug("serving file " + path)
     // Setting cache.
-    res.setHeader('Cache-Control', 'public, max-age=' + 31536000)
+    // res.setHeader('Cache-Control', 'public, max-age=' + 31536000)
 
     // Sending file.
     var relativePath = path

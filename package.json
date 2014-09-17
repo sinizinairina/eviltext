@@ -1,6 +1,6 @@
 {
   "name": "eviltext",
-  "version": "1.2.2",
+  "version": "1.2.4",
   "dependencies": {
     "js-yaml": "3.1.x",
     "underscore": "1.6.x",
