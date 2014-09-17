@@ -5,32 +5,59 @@
 
 <% if(config.lazyImages){ %>
   <!-- Lazy images. -->
-  <script src="<%= paths.asset('/vendor/lazyload-2.0.5.js?cache=true') %>" data-turbolinks-eval="false"></script>
+  <script src="<%= paths.asset('/vendor/lazyload-2.0.5.js') %>" data-turbolinks-eval="false"></script>
   <script data-turbolinks-eval="false">lazyImage.implement(lzld)</script>
 <% } %>
 
 <!-- Make navigation faster. -->
-<!-- <script src="<%= paths.asset('/vendor/turbolinks-latest.js?cache=true') %>" data-turbolinks-eval="false"></script> -->
+<!-- <script src="<%= paths.asset('/vendor/turbolinks-latest.js') %>" data-turbolinks-eval="false"></script> -->
 
 <!-- Fastclick. -->
-<script src="<%= paths.asset('/vendor/fastclick-0.6.7.js?cache=true') %>" data-turbolinks-eval="false"></script>
+<script src="<%= paths.asset('/vendor/fastclick-0.6.7.js') %>" data-turbolinks-eval="false"></script>
 <script data-turbolinks-eval="false">FastClick.attach(document.body)</script>
 
 <% if(config.bottom){ %><%- config.bottom %><% } %>
 
 <!-- Code Highlight. -->
-<link rel="stylesheet" type="text/css" media="all" href="<%= paths.asset('/vendor/prettify/prettify.css?cache=true') %>" data-turbolinks-eval="false"/>
-<script src="<%= paths.asset('/vendor/prettify/prettify.js?cache=true') %>" data-turbolinks-eval="false"></script>
 <script>
-  // Adding prettify only to `code` inside of `pre`, ignoring inline `code` elements.
-  var elements = document.getElementsByTagName('code')
-  for(var i = 0; i < elements.length; i++){
-    var code = elements[i]
-    var parent = code.parentNode
-    if(parent && parent.nodeName && parent.nodeName.toLowerCase() == 'pre')
-      code.className += ' prettyprint'
-  }
-  prettyPrint()
+  (function(){
+    // Adding prettify only to `code` inside of `pre`, ignoring inline `code` elements.
+    var hasCode = false
+    var elements = document.getElementsByTagName('code')
+    for(var i = 0; i < elements.length; i++){
+      var code = elements[i]
+      var parent = code.parentNode
+      if(parent && parent.nodeName && parent.nodeName.toLowerCase() == 'pre'){
+        code.className += ' prettyprint'
+        hasCode = true
+      }
+    }
+
+    // Loading prettify only if there's the code.
+    if(hasCode){
+      // Helpers.
+      var loadCss = function(url){
+        var link = document.createElement('link')
+        link.setAttribute('rel', 'stylesheet')
+        link.setAttribute('type', 'text/css')
+        link.setAttribute('href', url)
+        document.getElementsByTagName('head')[0].appendChild(link)
+      }
+      var loadJs = function(url, callback){
+        var head = document.getElementsByTagName('head')[0]
+        var script = document.createElement('script')
+        script.type = 'text/javascript'
+        script.src = url
+        script.onreadystatechange = callback
+        script.onload = callback
+        head.appendChild(script)
+      }
+
+      // Loading prettify.
+      loadCss("<%= paths.asset('/vendor/prettify/prettify.css') %>")
+      loadJs("<%= paths.asset('/vendor/prettify/prettify.js') %>", function(){prettyPrint()})
+    }
+  })()
 </script>
 
 <% if(config.googleId){ %>

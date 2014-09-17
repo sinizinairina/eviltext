@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>EvilText</title>
+    <link rel="stylesheet" type="text/css" media="all" href="assets/normalize.css"/>
+    <link rel="stylesheet" type="text/css" media="all" href="assets/style.css"/>
+    <link rel="stylesheet" type="text/css" media="all" href="assets/vendor/font-awesome-4.2.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" type="text/css" media="all" href="assets/vendor/owl-carousel-1.27.0/owl-carousel.css"/> -->
+
+    <!-- Has to put it into head because carousel is needed for rendering. -->
+    <!-- <script src="assets/vendor/jquery-2.1.1.min.js"></script> -->
+    <!-- <script src="assets/vendor/owl-carousel-1.27.0/owl-carousel.js"></script> -->
+  </head>
+  <body class="home">
+    <!-- Navigation -->
+    <!-- <div class="navigation">
+      <a href="https://github.com/sinizinairina/eviltext">Sources</a>
+    </div>     -->
+
+    <!-- Hero. -->
+    <section class="section-black hero">
+      <div class="logo">EvilText</div>
+
+      <h1>Websites for you and your projects.</h1>
+      <h2>Transform plain text into blog, wiki or website.</h2>
+
+      <div class="slides owl-carousel">
+        <a href="http://jslang.info" target="_blank">
+          <img src="images/blog-svbtle-with-iphone-cut.png"/>
+        </a>
+        <!-- <a href="http://alex-craft.com/small-business-optimization" target="_blank">
+          <img src="images/wiki-clean-cut.png"/>
+        </a>
+        <a href="http://alex-craft.com/documents/rad-quick-start-guide" target="_blank">
+          <img src="images/wiki-gray-cut.png"/>
+        </a> -->
+      </div>
+      <script>
+        // $('.slides').owlCarousel({
+        //   slideSpeed      : 300,
+        //   paginationSpeed : 400,
+        //   singleItem      : true,
+        //   autoPlay        : 5000
+        // })
+      </script>
+    </section>
+
+    <!-- Quick Start. -->
+    <section class="section-light">
+      <h1>Quick Start</h1>
+
+      <div class="step">
+        <div class="step-counter">1</div>
+        <h1>Install Node.js</h1>
+        <p>Follow instruction on the <a href="http://nodejs.org">official Node.js site</a>.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-counter">2</div>
+        <h1>Install EvilText</h1>
+        <div class="terminal">
+          <div class="header"></div>
+          <div class="shell">
+            <p>npm install -p eviltext</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-counter">3</div>
+        <h1>Create sample site</h1>
+        <p>
+          Clone
+          <a href="https://github.com/sinizinairina/eviltext-blog-example">sample</a>
+          with Git or
+          <a href="https://github.com/sinizinairina/eviltext-blog-example/archive/master.zip">download</a> it.
+        </p>
+        <div class="terminal">
+          <div class="header"></div>
+          <div class="shell">
+            <p>git clone http://github.com/sinizinairina/eviltext-blog-example</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-counter">4</div>
+        <h1>Build and see it live</h1>
+        <div class="terminal">
+          <div class="header"></div>
+          <div class="shell">
+            <p>cd eviltext-blog-example</p>
+            <p>eviltext build</p>
+            <p>eviltext serve</p>
+          </div>
+        </div>
+        <p>Open <a href="http://localhost:3000">http://localhost:3000</a> in your Browser</p>
+      </div>
+    </section>
+
+    <!-- Details. -->
+    <section class="section-white">
+      <div class="columns-3">
+        <div class="column">
+          <i class="fa fa-book fa-5x"></i>
+          <h1>Docs</h1>
+        </div>
+        <div class="column">
+          <a href="https://github.com/sinizinairina/eviltext/issues">
+            <i class="fa fa-bug fa-5x"></i><br/>
+            <h1>Bugs</h1>
+          </a>
+        </div>
+        <div class="column">
+          <a href="https://github.com/sinizinairina/eviltext">
+            <i class="fa fa-github fa-5x"></i><br/>
+            <h1>Contribute</h1>
+          </a>
+        </div>
+        <!-- <div class="column">
+          <a href="mailto:alexey.petrushin@gmail.com?Subject=EvilText%20Work">
+            <i class="fa fa-wrench fa-5x"></i>
+            <h1>Hire Us<br/>$55/hr</h1>
+          </a>
+        </div> -->
+      </div>
+    </section>
+
+    <!-- Features. -->
+    <!--
+      Features:
+      - Localization - English, Russian
+      - Filte types - Markdown, Image, YAML
+      - Image resizing
+      - Galleries
+      - Site types - Blog, Wiki, eCommerce
+      - Themes - Svbtle, Gray, Clean, Air, Robo
+      - Analytics - Google Analytics
+      - RSS
+    -->
+
+    <script>
+      // setInterval(function(){
+      //   var links = document.querySelectorAll('head link')
+      //   for(var i = 0; i < links.length; i++){
+      //     var link = links[i]
+      //     var href = link.getAttribute('href').split('#')[0]
+      //     link.setAttribute('href', href + '#' + Math.random())
+      //   }
+      // }, 500)
+    </script>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-54125691-4', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+    <a href="https://github.com/sinizinairina/eviltext"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
+  </body>
+</html>

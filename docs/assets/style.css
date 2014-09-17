@@ -1,0 +1,197 @@
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #333;
+  line-height: 1.4;
+  font-size: 14px;
+  overflow: auto;
+}
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+.evil {
+  font-family: "Lucida Console", Monaco, monospace;
+  text-align: center;
+  font-weight: bold;
+}
+.hero .logo {
+  font-family: "Lucida Console", Monaco, monospace;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 40px;
+  margin-bottom: 50px;
+  font-size: 24px;
+  color: #FFF;
+}
+.hero > h1 {
+  text-align: center;
+  margin-bottom: -15px;
+}
+.hero > h2 {
+  text-align: center;
+}
+.section-black {
+  margin-top: 0px;
+  overflow: auto;
+  border-bottom: 1px solid #eee;
+  background-color: #222;
+}
+.section-black > h1 {
+  color: #FFF;
+}
+.section-black > h2 {
+  font-size: 18px;
+  color: #a7a7a7;
+}
+.section-light {
+  overflow: auto;
+  border-bottom: 1px solid #eee;
+  background-color: #f5f5f5;
+}
+.section-light > h1 {
+  text-align: center;
+  margin-top: 50px;
+}
+.section-light > h2 {
+  text-align: center;
+}
+.section-white {
+  overflow: auto;
+  border-bottom: 1px solid #eee;
+  background-color: #FFF;
+}
+.columns-3 {
+  width: 740px;
+  margin: auto;
+}
+.columns-3:before,
+.columns-3:after {
+  content: " ";
+  display: table;
+}
+.columns-3:after {
+  clear: both;
+}
+.columns-3 .column {
+  margin-top: 70px;
+  margin-bottom: 40px;
+  text-align: center;
+  float: left;
+  width: 246px;
+}
+.columns-3 .column h1 {
+  font-size: 30px;
+}
+.slides {
+  width: 740px !important;
+  margin: auto;
+  text-align: center;
+  margin-top: 50px;
+}
+.slides img {
+  width: 740px;
+  margin: auto;
+  display: block;
+}
+.navigation a {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #333;
+  color: #bbb;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.navigation a:hover {
+  color: #fff;
+}
+.step {
+  background-color: #fff;
+  margin: 0 0 70px 0px;
+  padding: 20px 0 20px;
+  font-size: 18px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: center;
+  width: 740px;
+  margin: auto;
+  position: relative;
+  margin-bottom: 60px;
+}
+.step .step-counter {
+  width: 58px;
+  height: 58px;
+  line-height: 58px;
+  background-color: #327fc7;
+  border-radius: 200px;
+  font-size: 30px;
+  font-weight: 300;
+  color: #fff;
+  position: absolute;
+  left: -15px;
+  top: -15px;
+  text-align: center;
+}
+.step h1 {
+  font-size: 30px;
+}
+h1 {
+  font-size: 48px;
+  font-weight: 200;
+}
+h2 {
+  font-size: 21px;
+  font-weight: 200;
+}
+.terminal {
+  width: 700px;
+  margin: 30px auto 0;
+}
+.terminal .header {
+  height: 25px;
+  display: block;
+  background: #aaaaaa;
+  background: -moz-linear-gradient(top, #f7f7f7 0%, #cfcfcf 5%, #aaaaaa 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f7f7f7), color-stop(5%, #cfcfcf), color-stop(100%, #aaaaaa));
+  background: -webkit-linear-gradient(top, #f7f7f7 0%, #cfcfcf 5%, #aaaaaa 100%);
+  background: -o-linear-gradient(top, #f7f7f7 0%, #cfcfcf 5%, #aaaaaa 100%);
+  background: -ms-linear-gradient(top, #f7f7f7 0%, #cfcfcf 5%, #aaaaaa 100%);
+  background: linear-gradient(top, #f7f7f7 0%, #cfcfcf 5%, #aaaaaa 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f7f7', endColorstr='#aaaaaa', GradientType=0);
+  border: 1px solid #9c9c9c;
+  border-bottom-color: #111;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 25px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+  color: #444;
+}
+.terminal .shell {
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+  font-size: 17px;
+  line-height: 28px;
+  color: #eeeb82;
+  background-color: #3d3d3d;
+  overflow: hidden;
+  padding: 20px;
+  margin: 0;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  text-align: left;
+  display: block;
+}
+.terminal p {
+  margin: 0px;
+}
