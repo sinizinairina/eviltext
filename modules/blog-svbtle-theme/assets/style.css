@@ -265,3 +265,6 @@ ul#user_meta a.selected {
 }
 /*.river-thumb {border-left: none !important;}
 .header-thumb {border-left: 1px solid #e3e3e3;}*/
+
+/* Disqus comments. */
+#disqus_thread {margin-top: 2em; margin-bottom: 2em;}

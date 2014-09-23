@@ -91,10 +91,11 @@ module.exports = function(klass, themeName, objectName, objectsName, themeDirect
         }else{
           return '<img src="' + imagePath + '" title="' + imageTitle + '"></img>'
         }
-      }
+      },
+      showComments       : false
     }
 
-    data = _({}).extend(data, helpers)
+    data = _({}).extendIfBlank(data, helpers)
     var layout = data.layout
     delete data.layout
 

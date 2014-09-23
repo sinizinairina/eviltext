@@ -25,11 +25,12 @@ proto.generatePage = function(page, ecb, cb){
   var target = this.paths.page(page, {format: 'html'})
   app.debug('[wiki-gray-theme] generating page ' + target)
   _this.renderTo('/page.html', {
-    title       : page.title,
-    currentPath : this.paths.page(page),
-    page        : page,
-    themeName   : themeName,
-    layout      : '/layout.html'
+    title        : page.title,
+    currentPath  : this.paths.page(page),
+    page         : page,
+    themeName    : themeName,
+    layout       : '/layout.html',
+    showComments : (('comments' in page) ? page.comments : _this.config.comments)
   }, target, ecb, cb)
 }
 

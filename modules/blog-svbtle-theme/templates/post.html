@@ -26,6 +26,11 @@
         <p><a href='<%= post.link %>'>Read more ...</a></p>
       <% } %>
     </div>
+
+    <!-- Comments. -->
+    <% if(showComments){ %>
+      <div id="disqus_thread"></div>
+    <% } %>
   </article>
 
   <!-- Pagination. -->

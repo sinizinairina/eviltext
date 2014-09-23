@@ -40,11 +40,12 @@ proto.generatePost = function(post, ecb, cb){
   var target = this.paths.post(post, {format: 'html'})
   app.debug('[blog-svbtle-theme] generating post ' + target)
   _this.renderTo('/post.html', {
-    title       : post.title,
-    currentPath : this.paths.post(post),
-    post        : post,
-    themeName   : themeName,
-    layout      : '/layout.html'
+    title        : post.title,
+    currentPath  : this.paths.post(post),
+    post         : post,
+    themeName    : themeName,
+    layout       : '/layout.html',
+    showComments : (('comments' in post) ? post.comments : _this.config.comments)
   }, target, ecb, cb)
 }
 

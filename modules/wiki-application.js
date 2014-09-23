@@ -8,7 +8,8 @@ Wiki.defaultConfig = {
   language   : 'en',
   theme      : 'clean',
   sortBy     : {attribute : 'title', order: 'ascending'},
-  tagsSortBy : {attribute : 'count', order: 'descending'}
+  tagsSortBy : {attribute : 'count', order: 'descending'},
+  comments   : false
 }
 
 proto.buildPaths = function(){

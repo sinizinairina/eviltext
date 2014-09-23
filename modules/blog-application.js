@@ -8,7 +8,8 @@ Blog.defaultConfig = {
   language   : 'en',
   theme      : 'svbtle',
   sortBy     : {attribute : 'date', order: 'descending'},
-  tagsSortBy : {attribute : 'count', order: 'descending'}
+  tagsSortBy : {attribute : 'count', order: 'descending'},
+  comments   : false
 }
 
 proto.buildPaths = function(){

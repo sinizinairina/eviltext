@@ -4,6 +4,7 @@ _(app.attributeTranslation).extend({
   'приложение'       : 'application',
   'подвал'           : 'bottom',
   'charset'          : 'charset',
+  'комментарии'      : 'comments',
   'дата'             : 'date',
   'детали'           : 'details',
   'черновик'         : 'draft',

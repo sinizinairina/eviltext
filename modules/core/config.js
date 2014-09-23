@@ -54,6 +54,7 @@ app.attributeTypes = {
   amount         : 'number',
   application    : 'lowerCaseString',
   bottom         : 'string',
+  comments       : 'boolean',
   charset        : 'string',
   date           : 'date',
   details        : 'string',
