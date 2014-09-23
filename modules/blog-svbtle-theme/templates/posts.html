@@ -67,9 +67,9 @@
           <% if(post.type == 'text'){ %>
             <%- post.htmlPreview %>
             <% if(post.link){ %>
-              <p><a href='<%= post.link %>'>Read more ...</a></p>
+              <p><a href='<%= post.link %>'><%= t('readMore') %>...</a></p>
             <% }else if(post.htmlPreviewTruncated){ %>
-              <p><a href='<%= paths.post(post) %>'>Read more ...</a></p>
+              <p><a href='<%= paths.post(post) %>'><%= t('readMore') %>...</a></p>
             <% } %>
           <% }else if(post.type == 'gallery'){ %>
             <% if(post.htmlPreview){ %><%- post.htmlPreview %><% } %>
@@ -79,9 +79,9 @@
               </p>
             <% }) %>
             <% if(post.link){ %>
-              <p><a href='<%= post.link %>'>Read more ...</a></p>
+              <p><a href='<%= post.link %>'><%= t('readMore') %>...</a></p>
             <% }else if(post.imagesPreviewTruncated || post.htmlPreviewTruncated){ %>
-              <p><a href='<%= paths.post(post) %>'>Read more ...</a></p>
+              <p><a href='<%= paths.post(post) %>'><%= t('readMore') %>...</a></p>
             <% } %>
           <% } %>
         </div>
@@ -97,7 +97,7 @@
       </span> -->
       <% if(previousPath){ %>
         <span class="prev">
-          <a href="<%= previousPath %>" rel="prev">←&nbsp;&nbsp;&nbsp;Newer</a>
+          <a href="<%= previousPath %>" rel="prev">←&nbsp;&nbsp;&nbsp;<%= t('previousPosts') %></a>
         </span>
       <% } %>
       <!-- <span class="page current">
@@ -105,7 +105,7 @@
       </span> -->
       <% if(nextPath){ %>
         <span class="next">
-          <a href="<%= nextPath %>" rel="next">Continue&nbsp;&nbsp;&nbsp;→</a>
+          <a href="<%= nextPath %>" rel="next"><%= t('nextPosts') %>&nbsp;&nbsp;&nbsp;→</a>
         </span>
       <% } %>
       <!-- <span class="last">

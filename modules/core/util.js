@@ -16,3 +16,18 @@ app.generate = function(srcPath, buildPath, ecb, cb){
     _static.generate(ecb, cb)
   })
 }
+
+// Translation.
+app.translations = {en: {}}
+var defaultPluralize = function(count){return count === 1 ? 'One' : 'Many'}
+app.t = function(language, module, key, options){
+  options = options || {}
+  var locale = app.translations[language] || {}
+  var moduleLocale = locale[module] || {}
+  if('count' in options) key = key + (locale.pluralize || defaultPluralize)(options.count)
+  str = moduleLocale[key] || ('no ' + language + ' translation for ' + moduleLocale + ' ' + key)
+  _(options).each(function(v, k){
+    str = str.replace(new RegExp('\#\{' + k + '\}', 'g'), v)
+  })
+  return str
+}

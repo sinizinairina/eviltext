@@ -34,7 +34,8 @@ app.configProcessors = {
 // Applications.
 app.applications = {
   blog : function(){return require('../blog-application')},
-  wiki : function(){return require('../wiki-application')}
+  wiki : function(){return require('../wiki-application')},
+  shop : function(){return require('../shop-application')}
 }
 
 // Themes.

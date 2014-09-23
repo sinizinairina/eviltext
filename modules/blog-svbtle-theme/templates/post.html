@@ -23,7 +23,7 @@
         <% }) %>
       <% } %>
       <% if(post.link){ %>
-        <p><a href='<%= post.link %>'>Read more ...</a></p>
+        <p><a href='<%= post.link %>'><%= t('readMore') %>...</a></p>
       <% } %>
     </div>
 
@@ -36,7 +36,7 @@
   <!-- Pagination. -->
   <nav class="pagination">
     <span class="prev">
-      <a href="<%= paths.home() %>" class="back_to_blog">&larr;&nbsp;&nbsp;&nbsp;Read more</a>
+      <a href="<%= paths.home() %>" class="back_to_blog">&larr;&nbsp;&nbsp;&nbsp;<%= t('readMore') %></a>
     </span>
   </nav>
 </section>

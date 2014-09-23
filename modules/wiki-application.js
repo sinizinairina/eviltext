@@ -46,7 +46,7 @@ proto.buildPaths = function(){
 proto.prepare = function(ecb, cb){
   app.debug('[wiki] preparing ' + this.mountPath)
   var _this = this
-  this.loadObjects('page', 'pages', ecb, function(objects){
+  this.loadObjects('page', 'pages', {}, ecb, function(objects){
     _this.pages = objects
     _this.preparePages(ecb, function(){
       _this.pages = _this.sortAndPaginateObjects(_this.pages, 'pages')

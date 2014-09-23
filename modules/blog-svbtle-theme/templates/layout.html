@@ -62,7 +62,7 @@
         <% var truncatedTagCloud = tagCloud.slice(0, config.tagCount) %>
         <% _(truncatedTagCloud).each(function(item){ %>
           <li class="link">
-            <% var humanizedCount = _s.pluralizeCount(item.count, 'post', 'posts') %>
+            <% var humanizedCount = t('postCount', {count: item.count}) %>
             <% var tagPath = paths.posts({tag: item.name}) %>
             <% if(tagPath == currentPath){ %>
               <a href="<%= tagPath %>" class="selected" title="<%= humanizedCount %>"><%= item.name %></a>

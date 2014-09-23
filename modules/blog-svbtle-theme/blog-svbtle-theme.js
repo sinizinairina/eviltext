@@ -83,3 +83,11 @@ proto.readHero = function(ecb, cb){
     _this.readHero(ecb, cb)
   })
 }
+
+// Translation.
+var en = app.translations.en[themeName] = {}
+en.previousPosts = 'Newer'
+en.nextPosts = 'Continue'
+en.readMore = 'Read more'
+en.postCountOne = '#{count} post'
+en.postCountMany = '#{count} posts'

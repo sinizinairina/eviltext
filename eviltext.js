@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
 require('./modules/core')
-require('./modules/ru-attribute-translation')
+
+// Support for russian languages.
+require('./modules/ru')
 
 var cli = require('./modules/core/cli')
 cli.run()

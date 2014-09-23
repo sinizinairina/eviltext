@@ -46,7 +46,7 @@ proto.buildPaths = function(){
 proto.prepare = function(ecb, cb){
   app.debug('[blog] preparing ' + this.mountPath)
   var _this = this
-  this.loadObjects('post', 'posts', ecb, function(objects){
+  this.loadObjects('post', 'posts', {}, ecb, function(objects){
     _this.posts = objects
     _this.preparePosts(ecb, function(){
       _this.posts = _this.sortAndPaginateObjects(_this.posts, 'posts')

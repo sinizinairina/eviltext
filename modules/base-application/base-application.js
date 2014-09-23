@@ -246,7 +246,7 @@ module.exports = function(klass, appName, appDirectory){
 
   // Posts can be located at level 1 or 2. Searching first in direct children and if
   // nothing found trying to find in grandchildren.
-  proto.loadObjects = function(objectName, objectsName, ecb, cb){
+  proto.loadObjects = function(objectName, objectsName, options, ecb, cb){
     app.debug('[' + appName + '] searching for ' + objectsName + ' in ' + this.mountPath)
     var objects = []
     var _this = this
@@ -270,6 +270,7 @@ module.exports = function(klass, appName, appDirectory){
     }
 
     // Checking first level.
+    var directory = this.srcBaseEntries[options.path || this.mountPath]
     checkAndAddObject(this.mountDirectory, ecb, function(){
       // Checking for the second level objects only if there was no objects on the first level.
       if(objects.length == 0){

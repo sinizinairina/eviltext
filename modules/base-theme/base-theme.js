@@ -52,11 +52,11 @@ module.exports = function(klass, themeName, objectName, objectsName, themeDirect
   }
 
   var _imgStub = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-  var _formatDate = function(date, format){
-    return date ? require('moment')(date).format(format) : ''
-  }
   proto.addCommonAttributesAndHelpers = function(data, ecb, cb){
     var _this = this
+    var _formatDate = function(date, format){
+      return date ? require('moment')(date).lang(_this.config.language).format(format) : ''
+    }
     var helpers = {
       // imgStub            : _imgStub,
       formatDateForHuman : function(date){return _formatDate(date, 'MMMM DD, YYYY')},
@@ -92,7 +92,10 @@ module.exports = function(klass, themeName, objectName, objectsName, themeDirect
           return '<img src="' + imagePath + '" title="' + imageTitle + '"></img>'
         }
       },
-      showComments       : false
+      showComments       : false,
+      t                  : function(key, options){
+        return app.t(_this.config.language, themeName, key, options)
+      }
     }
 
     data = _({}).extendIfBlank(data, helpers)
