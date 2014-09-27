@@ -139,3 +139,9 @@ a.product-item-title {display: block; .no-link(); text-align: center;
 .footer-bordered {border-top: 1px solid @light-gray; padding-top: @margin;}
 .footer-navigation {.navigation(); float: left; margin-top: -4px;}
 .footer-details {float: right; .small-text();}
+
+// Powered by.
+.powered-by {.clearfix(); clear: both; margin-bottom: 25px;
+  .powered-by-text {float: right; .small-text(); color: @gray; margin-top: 25px;}
+  a{.no-link; font-weight: bold; color: @gray; text-transform: uppercase;}
+  a:hover {text-decoration: underline;}}

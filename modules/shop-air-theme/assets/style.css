@@ -779,3 +779,33 @@ a.product-item-title:hover {
   float: right;
   font-size: 0.75em;
 }
+.powered-by {
+  *zoom: 1;
+  clear: both;
+  margin-bottom: 25px;
+}
+.powered-by:before,
+.powered-by:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.powered-by:after {
+  clear: both;
+}
+.powered-by .powered-by-text {
+  float: right;
+  font-size: 0.75em;
+  color: #545454;
+  margin-top: 25px;
+}
+.powered-by a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: bold;
+  color: #545454;
+  text-transform: uppercase;
+}
+.powered-by a:hover {
+  text-decoration: underline;
+}
