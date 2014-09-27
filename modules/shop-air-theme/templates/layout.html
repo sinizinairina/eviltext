@@ -30,11 +30,11 @@
       <!-- Navigation and cart. -->
       <div class="navigation">
         <!-- Navigation. -->
-        <% _(navigation).each(function(item){ %>
-          <% if(item.path == currentPath){ %>
-            <a href="<%= item.path %>" class="selected"><%= item.title %></a>
+        <% _(config.navigation).each(function(path, title){ %>
+          <% if(path == currentPath){ %>
+            <a href="<%= path %>" class="selected"><%= title %></a>
           <% }else{ %>
-            <a href="<%= item.path %>"><%= item.title %></a>
+            <a href="<%= path %>"><%= title %></a>
           <% } %>
         <% }) %>
 
@@ -95,18 +95,18 @@
       <div class="footer footer-bordered">
     <% } %>
         <!-- Footer navigation. -->
-        <% if(navigation.length > 0){ %>
+        <% if(!_(config.navigation).isEmpty()){ %>
           <div class="footer-navigation">
             <!-- Home. -->
             <% if(config.logo && !config.isLogoPath){ %>
               <a href="#header"><%- config.logo %></a>
             <% } %>
 
-            <% _(navigation).each(function(item){ %>
-              <% if(item.path == currentPath){ %>
-                <a href="<%= item.path %>" class="selected"><%= item.title %></a>
+            <% _(config.navigation).each(function(path, title){ %>
+              <% if(path == currentPath){ %>
+                <a href="<%= path %>" class="selected"><%= title %></a>
               <% }else{ %>
-                <a href="<%= item.path %>"><%= item.title %></a>
+                <a href="<%= path %>"><%= title %></a>
               <% } %>
             <% }) %>
           </div>

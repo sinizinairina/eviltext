@@ -52,7 +52,6 @@ proto.prepare = function(ecb, cb){
       _this.pages = _this.sortAndPaginateObjects(_this.pages, 'pages')
       _this.publishedPages = _this.publishedObjects(_this.pages)
       _this.prepareTagCloud(_this.pages)
-      _this.prepareNavigation()
       cb(_this)
     })
   })

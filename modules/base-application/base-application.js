@@ -154,14 +154,6 @@ module.exports = function(klass, appName, appDirectory){
     if(this.config.tagsSortBy.order == 'descending') this.tagCloud.reverse()
   }
 
-  proto.prepareNavigation = function(){
-    var _this = this
-    this.navigation = []
-    _(this.config.navigation).each(function(path, title){
-      _this.navigation.push({title: title, path: path})
-    })
-  }
-
   // Checking if object is a gallery and if so preparing it.
   proto.tryPrepareGallery = function(object){
     var images = []
@@ -234,7 +226,7 @@ module.exports = function(klass, appName, appDirectory){
   proto.theme = function(){
     if(!this._theme){
       var Theme = app.getTheme(appName, this.config.theme)
-      this._theme = new Theme(this.config, this.paths, this.navigation, this.tagCloud, this.buildPath
+      this._theme = new Theme(this.config, this.paths, this.tagCloud, this.buildPath
       , this.buildEntries, this.mountPath)
     }
     return this._theme

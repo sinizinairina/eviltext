@@ -4,13 +4,13 @@
 <% } %>
 
 <!-- Navigation -->
-<% if(navigation.length > 0){ %>
+<% if(!_(config.navigation).isEmpty()){ %>
   <p>
-    <% _(navigation).each(function(item){ %>
-      <% if(item.path == currentPath){ %>
-        <a href="<%= item.path %>" class="selected"><%= item.title %></a>
+    <% _(config.navigation).each(function(path, title){ %>
+      <% if(path == currentPath){ %>
+        <a href="<%= path %>" class="selected"><%= title %></a>
       <% }else{ %>
-        <a href="<%= item.path %>"><%= item.title %></a>
+        <a href="<%= path %>"><%= title %></a>
       <% } %>
     <% }) %>
   </p>

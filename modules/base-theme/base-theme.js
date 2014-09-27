@@ -7,11 +7,10 @@ module.exports = function(klass, themeName, objectName, objectsName, themeDirect
     return _({}).extend(applicationConfig, klass.defaultConfig, userConfig)
   }
 
-  proto.initialize = function(config, paths, navigation, tagCloud, buildPath, buildEntries
+  proto.initialize = function(config, paths, tagCloud, buildPath, buildEntries
   , mountPath){
     this.config = config
     this.paths = paths
-    this.navigation = navigation
     this.tagCloud = tagCloud
     this.buildPath = buildPath
     this.buildEntries = buildEntries
@@ -67,7 +66,6 @@ module.exports = function(klass, themeName, objectName, objectsName, themeDirect
       },
       paths              : this.paths,
       config             : this.config,
-      navigation         : this.navigation,
       tagCloud           : this.tagCloud,
       imageTag           : function(image, options){
         options = options || {}

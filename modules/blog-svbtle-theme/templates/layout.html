@@ -43,16 +43,16 @@
         </li>
 
         <!-- Navigation. -->
-        <% _(navigation).each(function(item){ %>
+        <% _(config.navigation).each(function(path, title){ %>
           <li class="link">
-            <% if(item.path == currentPath){ %>
-              <a href="<%= item.path %>" class="selected"><%= item.title %></a>
+            <% if(path == currentPath){ %>
+              <a href="<%= path %>" class="selected"><%= title %></a>
             <% }else{ %>
-              <a href="<%= item.path %>"><%= item.title %></a>
+              <a href="<%= path %>"><%= title %></a>
             <% } %>
           </li>
         <% }) %>
-        <% if(navigation.length > 0){ %>
+        <% if(!_(config.navigation).isEmpty()){ %>
           <li>
             &nbsp;
           </li>

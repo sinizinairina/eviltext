@@ -85,7 +85,6 @@ proto.prepare = function(ecb, cb){
   loadAndPrepareProducts(ecb, function(){
     loadAndPreparePages(ecb, function(){
       _this.prepareTagCloud(_this.products)
-      _this.prepareNavigation()
       cb()
     })
   })

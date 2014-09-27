@@ -6,3 +6,4 @@
 - Details     : Tel.: <b>8 (222) 333-33-33</b><br/> Skype: <b>camstore</b>
 - Per Page    : 1
 - Currency    : $
+- MountAsRoot : true
