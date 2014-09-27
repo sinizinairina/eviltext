@@ -29,20 +29,18 @@ exports.process = function(srcDir, buildDir, file, config, Application, ecb, cb,
     var html = result[0]
     var htmlImages = result[1]
 
-    // Truncating
-    if(config.previewLength > 0){
-      var previewAttributes = {}
-      var result = textUtil.smartHtmlTruncate(html, config.previewLength)
-      previewAttributes.htmlPreview = result[0]
-      previewAttributes.htmlPreviewLength = result[1]
-      previewAttributes.htmlPreviewTruncated = result[2]
-    }
+    // Truncating.
+    htmlPreviews = {}
+    _(config.previewLengths).each(function(previewLength, previewAlias){
+      htmlPreviews[previewAlias] = textUtil.smartHtmlTruncate(html, previewLength)
+    })
 
     // File attributes.
     var fileAttributes = baseProcessor.extractAttributesFromFileStats(file)
 
     var data = _.extendIfNotBlank({}, fileAttributes, markdownAttributes, yamlAttributes
-    , {updatedAt: file.updatedAt, html: html, htmlImages: htmlImages}, previewAttributes)
+    , {updatedAt: file.updatedAt, html: html, htmlImages: htmlImages}
+    , {htmlPreviews: htmlPreviews})
 
     // Application-specific processing.
     if(Application) data = Application.process(data, file.parent.basePath)

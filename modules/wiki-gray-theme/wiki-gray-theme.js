@@ -4,11 +4,11 @@ var themeName = 'wiki-gray-theme'
 require('../base-theme')(Gray, themeName, 'page', 'pages', __dirname)
 
 Gray.defaultConfig = {
-  charset       : 'utf-8',
-  perPage       : 25,
-  previewLength : 1200,
-  tagCount      : 7,
-  imageFormats  : {
+  charset        : 'utf-8',
+  perPage        : 25,
+  previewLengths : {},
+  tagCount       : 7,
+  imageFormats   : {
     default: '750'
   }
 }

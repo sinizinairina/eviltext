@@ -13,15 +13,16 @@
       </h1>
 
       <div class='page-item-body'>
+        <% var preview = page.htmlPreviews.default %>
         <% if(page.type == 'text'){ %>
-          <%- page.htmlPreview %>
+          <%- preview.html %>
           <% if(page.link){ %>
             <p><a href='<%= page.link %>'>Read more ...</a></p>
-          <% }else if(page.htmlPreviewTruncated){ %>
+          <% }else if(preview.isTruncated){ %>
             <p><a href='<%= paths.page(page) %>'>Read more ...</a></p>
           <% } %>
         <% }else if(page.type == 'gallery'){ %>
-          <% if(page.htmlPreview){ %><%- page.htmlPreview %><% } %>
+          <% if(preview.html){ %><%- preview.html %><% } %>
           <% _(page.imagesPreview).each(function(image){ %>
             <p>
               <%- imageTag(image) %>
@@ -29,7 +30,7 @@
           <% }) %>
           <% if(page.link){ %>
             <p><a href='<%= page.link %>'>Read more ...</a></p>
-          <% }else if(page.imagesPreviewTruncated || page.htmlPreviewTruncated){ %>
+          <% }else if(page.imagesPreviewTruncated || preview.isTruncated){ %>
             <p><a href='<%= paths.page(page) %>'>Read more ...</a></p>
           <% } %>
         <% } %>

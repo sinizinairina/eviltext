@@ -64,15 +64,16 @@
 
         <!-- Text. -->
         <div class="entry-content">
+          <% var preview = post.htmlPreviews.default %>
           <% if(post.type == 'text'){ %>
-            <%- post.htmlPreview %>
+            <%- preview.html %>
             <% if(post.link){ %>
               <p><a href='<%= post.link %>'><%= t('readMore') %>...</a></p>
-            <% }else if(post.htmlPreviewTruncated){ %>
+            <% }else if(preview.isTruncated){ %>
               <p><a href='<%= paths.post(post) %>'><%= t('readMore') %>...</a></p>
             <% } %>
           <% }else if(post.type == 'gallery'){ %>
-            <% if(post.htmlPreview){ %><%- post.htmlPreview %><% } %>
+            <% if(preview.html){ %><%- preview.html %><% } %>
             <% _(post.imagesPreview).each(function(image){ %>
               <p>
                 <%- imageTag(image) %>
@@ -80,7 +81,7 @@
             <% }) %>
             <% if(post.link){ %>
               <p><a href='<%= post.link %>'><%= t('readMore') %>...</a></p>
-            <% }else if(post.imagesPreviewTruncated || post.htmlPreviewTruncated){ %>
+            <% }else if(post.imagesPreviewTruncated || preview.isTruncated){ %>
               <p><a href='<%= paths.post(post) %>'><%= t('readMore') %>...</a></p>
             <% } %>
           <% } %>

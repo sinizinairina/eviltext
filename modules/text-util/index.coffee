@@ -210,8 +210,11 @@ module.exports =
       [convertedNode, truncated] = convert node
       convertedNodes.push convertedNode if convertedNode
       break if truncated
-
-    [@buildHtml(convertedNodes), totalLength, truncated]
+      
+    return
+      html        : @buildHtml(convertedNodes),
+      length      : totalLength,
+      isTruncated : truncated
 
   smartHtmlTruncate: (html, max) ->
     @truncateHtml html,

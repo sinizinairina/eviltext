@@ -5,12 +5,14 @@ var themeName = 'blog-svbtle-theme'
 require('../base-theme')(Svbtle, themeName, 'post', 'posts', __dirname)
 
 Svbtle.defaultConfig = {
-  charset       : 'utf-8',
-  perPage       : 25,
-  previewLength : 1200,
-  tagCount      : 7,
-  imageFormats  : {
-    default : '657'
+  charset        : 'utf-8',
+  perPage        : 25,
+  previewLengths : {
+    default: 1200
+  },
+  tagCount       : 7,
+  imageFormats   : {
+    default: '657'
   }
 }
 

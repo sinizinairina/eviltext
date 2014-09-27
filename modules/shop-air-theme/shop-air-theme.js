@@ -5,11 +5,13 @@ var themeName = 'shop-air-theme'
 require('../base-theme')(Air, themeName, 'product', 'products', __dirname)
 
 Air.defaultConfig = {
-  charset       : 'utf-8',
-  perPage       : 25,
-  previewLength : 1200,
-  tagCount      : 12,
-  imageFormats  : {
+  charset        : 'utf-8',
+  perPage        : 25,
+  previewLengths : {
+    default: 1200
+  },
+  tagCount       : 12,
+  imageFormats   : {
     thumb   : '229x229',
     default : '528x528'
   }

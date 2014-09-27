@@ -4,11 +4,13 @@ var themeName = 'wiki-clean-theme'
 require('../base-theme')(Clean, themeName, 'page', 'pages', __dirname)
 
 Clean.defaultConfig = {
-  charset       : 'utf-8',
-  perPage       : 25,
-  previewLength : 1200,
-  tagCount      : 7,
-  imageFormats  : {
+  charset        : 'utf-8',
+  perPage        : 25,
+  previewLengths : {
+    default: 400
+  },
+  tagCount       : 7,
+  imageFormats   : {
     default: '704'
   }
 }
