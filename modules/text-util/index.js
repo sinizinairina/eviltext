@@ -28,8 +28,8 @@
       path = _arg.path, replaceRelativePaths = _arg.replaceRelativePaths, lazyImages = _arg.lazyImages;
       cheerio = require('cheerio');
       $ = cheerio.load(html);
-      base = path.replace(/\/[^\/]+$/, '');
-      if (replaceRelativePaths && !(base === '/' || base === '')) {
+      base = path.replace(/\/[^\/]+$/, '') || '/';
+      if (replaceRelativePaths) {
         $('a').each(function() {
           var e;
           e = $(this);
@@ -145,6 +145,30 @@
         root.append(convert(node));
       }
       return root.html();
+    },
+    buildText: function(nodes) {
+      var convert, node, text, _i, _len;
+      text = [];
+      convert = function(node) {
+        var child, _i, _len, _ref, _results;
+        switch (node.type) {
+          case 'text':
+            return text.push(node.text);
+          default:
+            _ref = node.children;
+            _results = [];
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              child = _ref[_i];
+              _results.push(convert(child));
+            }
+            return _results;
+        }
+      };
+      for (_i = 0, _len = nodes.length; _i < _len; _i++) {
+        node = nodes[_i];
+        convert(node);
+      }
+      return _s.trim(text.join(' ').replace(/\n/g, ' ').replace(/\s+/g, ' '));
     },
     truncateText: function(text, options) {
       var availableLength, buff, char, hasAtLeastOneWord, i, lastToken, length, result, spaceRe, token, tokens, truncated, type, _i, _j, _len, _ref, _ref1, _ref2;
@@ -324,7 +348,12 @@
           break;
         }
       }
-      return [this.buildHtml(convertedNodes), totalLength, truncated];
+      return {
+        html: this.buildHtml(convertedNodes),
+        text: this.buildText(convertedNodes),
+        length: totalLength,
+        isTruncated: truncated
+      };
     },
     smartHtmlTruncate: function(html, max) {
       return this.truncateHtml(html, {

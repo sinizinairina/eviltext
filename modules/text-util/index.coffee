@@ -14,8 +14,8 @@ module.exports =
     $ = cheerio.load html
 
     # Replacing paths.
-    base = path.replace /\/[^\/]+$/, ''
-    if replaceRelativePaths and not (base == '/' or base == '')
+    base = path.replace(/\/[^\/]+$/, '') || '/'
+    if replaceRelativePaths # and not (base == '/' or base == '')
       $('a').each -> e = $(@); e.attr 'href', app.pathUtil.expandRelativePath(e.attr('href'), base)
       $('img').each -> e = $(@); e.attr 'src', app.pathUtil.expandRelativePath(e.attr('src'), base)
 
@@ -75,6 +75,16 @@ module.exports =
     root = $('div').first()
     root.append convert(node) for node in nodes
     root.html()
+
+  buildText: (nodes) ->
+    text = []
+    convert = (node) ->
+      switch node.type
+        when 'text' then text.push(node.text)
+        else
+          convert(child) for child in node.children
+    convert(node) for node in nodes
+    _s.trim(text.join(' ').replace(/\n/g, ' ').replace(/\s+/g, ' '))
 
   truncateText: (text, options={}) ->
     # Skipping, because althoug it will be slower, code will be better tested.
@@ -210,11 +220,13 @@ module.exports =
       [convertedNode, truncated] = convert node
       convertedNodes.push convertedNode if convertedNode
       break if truncated
-      
-    return
-      html        : @buildHtml(convertedNodes),
-      length      : totalLength,
+
+    return {
+      html        : @buildHtml(convertedNodes)
+      text        : @buildText(convertedNodes)
+      length      : totalLength
       isTruncated : truncated
+    }
 
   smartHtmlTruncate: (html, max) ->
     @truncateHtml html,
