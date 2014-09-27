@@ -5,7 +5,7 @@ var baseProcessor = require('./base-processor')
 
 var target = function(file){return file.basePath + '.json'}
 
-exports.process = function(srcDir, buildDir, file, config, ecb, cb, dontWrite){
+exports.process = function(srcDir, buildDir, file, config, Application, ecb, cb, dontWrite){
   fs.readFile(fspath.join(srcDir, file.path), _.fork(ecb, function(data){
     try{
       data = yaml.safeLoad(data)
@@ -16,6 +16,9 @@ exports.process = function(srcDir, buildDir, file, config, ecb, cb, dontWrite){
     data = _(baseProcessor.extractAttributesFromFileStats(file))
     .extendIfNotBlank(baseProcessor.parseAttributes(data, file.parent.basePath)
     , {updatedAt: file.updatedAt})
+
+    // Application-specific processing.
+    if(Application) data = Application.process(data, file.parent.basePath)
 
     if(dontWrite) cb(data)
     else {
@@ -29,5 +32,5 @@ exports.process = function(srcDir, buildDir, file, config, ecb, cb, dontWrite){
 }
 
 exports.processConfig = function(srcDir, buildDir, file, config, ecb, cb){
-  exports.process(srcDir, buildDir, file, config, ecb, cb, true)
+  exports.process(srcDir, buildDir, file, config, null, ecb, cb, true)
 }

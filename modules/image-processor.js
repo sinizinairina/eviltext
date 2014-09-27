@@ -29,7 +29,7 @@ var resizedTarget = function(file, sizeAlias){
   return file.basePath + '.' + sizeAlias + '.' + file.extension
 }
 
-exports.process = function(srcDir, buildDir, file, config, ecb, cb){
+exports.process = function(srcDir, buildDir, file, config, Application, ecb, cb){
   // Parsing image formats.
   var sizes = []
   if(config.images){

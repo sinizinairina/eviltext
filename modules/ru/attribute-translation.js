@@ -3,8 +3,7 @@ _(app.attributeTranslation).extend({
   'количество'       : 'amount',
   'приложение'       : 'application',
   'подвал'           : 'bottom',
-  'charset'          : 'charset',
-  'валюта'           : 'currency',
+  'charset'          : 'charset',  
   'комментарии'      : 'comments',
   'дата'             : 'date',
   'детали'           : 'details',
@@ -19,12 +18,15 @@ _(app.attributeTranslation).extend({
   'лого'             : 'logo',
   'вКорневуюПапку'   : 'mountAsRoot',
   'навигация'        : 'navigation',
-  'наСтранице'       : 'perPage',
-  'цена'             : 'price',
+  'наСтранице'       : 'perPage',  
   'сортироватьПо'    : 'sortBy',
   'теги'             : 'tags',
   'тэги'             : 'tags',
   'тема'             : 'theme',
   'заголовок'        : 'title',
-  'тип'              : 'type'
+  'тип'              : 'type',
+  
+  // Shop.
+  'валюта'           : 'currency',
+  'цена'             : 'price'
 })

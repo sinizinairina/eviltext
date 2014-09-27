@@ -18,10 +18,17 @@ Shop.parseSpecialConfigAttributes = function(mountPath, userConfig){
   userConfig = this.parseSpecialConfigAttributesWithoutShop(mountPath, userConfig)
   userConfig = _(userConfig).clone()
 
-  if(userConfig.currency){
+  if(userConfig.currency)
     userConfig.isCurrencyBeforePrice = ['$', '£'].indexOf(userConfig.currency) >= 0
-  }
   return userConfig
+}
+
+// Processing file attributes special to shop.
+Shop.process = function(attributes, mountPath){
+  attributes = _(attributes).clone()
+  if(attributes.price) attributes.price = app.attributeParsers.number(attributes.price, mountPath)
+  p(attributes)
+  return attributes
 }
 
 proto.buildPaths = function(){

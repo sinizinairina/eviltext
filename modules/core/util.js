@@ -1,9 +1,3 @@
-app.getApplication = function(applicationName){
-  var Application = app.applications[applicationName]
-  if(!Application) throw new Error('no application ' + applicationName)
-  return Application()
-}
-
 app.getTheme = function(applicationName, themeName){
   var themes = app.themes[applicationName] || {}
   var Theme = themes[themeName]

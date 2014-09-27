@@ -58,6 +58,8 @@ module.exports = function(klass, appName, appDirectory){
     return Theme.configure(klass.defaultConfig, userConfig, mountPath)
   }
 
+  klass.process = function(attributes, mountPath){return attributes}
+
   proto.initialize = function(mountPath, config, srcPath, srcBaseEntries, buildPath
   , buildEntries, ecb, cb){
     this.config = config

@@ -5,7 +5,7 @@ var baseProcessor = require('../base-processor')
 var targetMd = function(file){return file.lowerCasedPath}
 var targetJson = function(file){return file.basePath + '.json'}
 
-exports.process = function(srcDir, buildDir, file, config, ecb, cb, dontWrite){
+exports.process = function(srcDir, buildDir, file, config, Application, ecb, cb, dontWrite){
   var parser = require('./parser')
   var textUtil = require('../text-util')
 
@@ -44,6 +44,9 @@ exports.process = function(srcDir, buildDir, file, config, ecb, cb, dontWrite){
     var data = _.extendIfNotBlank({}, fileAttributes, markdownAttributes, yamlAttributes
     , {updatedAt: file.updatedAt, html: html, htmlImages: htmlImages}, previewAttributes)
 
+    // Application-specific processing.
+    if(Application) data = Application.process(data, file.parent.basePath)
+
     // Copying md and generating json files.
     if(dontWrite) cb(data)
     else{
@@ -57,5 +60,5 @@ exports.process = function(srcDir, buildDir, file, config, ecb, cb, dontWrite){
 }
 
 exports.processConfig = function(srcDir, buildDir, file, config, ecb, cb){
-  exports.process(srcDir, buildDir, file, config, ecb, cb, true)
+  exports.process(srcDir, buildDir, file, config, null, ecb, cb, true)
 }

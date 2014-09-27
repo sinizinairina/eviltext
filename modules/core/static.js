@@ -92,7 +92,8 @@ proto._generateFiles = function(ecb, cb){
         ){
           app.debug('[core] processing file ' + entry.path)
           anyFileBeenUpdated = true
-          processor.process(_this.srcPath, _this.buildPath, entry, config, ecb, next)
+          var Application = _this._getApplicationOrNull(config)
+          processor.process(_this.srcPath, _this.buildPath, entry, config, Application, ecb, next)
         }else next()
       }else{
         // Target path is the same as file path, but lovercased.
@@ -223,20 +224,24 @@ proto._getConfigForEntry = function(entry){
 proto._processConfigFile = function(configFile, ecb, cb){
   var processor = app.configProcessors[configFile.extension]
   processor = processor()
+  var _this = this
   processor.processConfig(this.srcPath, this.buildPath, configFile, {}, ecb, function(data){
     if(!data) throw new Error("config processor return no data!")
     if(!data.updatedAt) throw new Error("config processor return no updatedAt!")
 
     // Adding data from application.
-    var applicationName = data.application
-    if(applicationName){
-      var Application
-      try{Application = app.getApplication(applicationName)}catch(err){return ecb(err)}
-      data = Application.configure(data, configFile.parent.basePath)
-    }
+    var Application
+    try{Application = _this._getApplicationOrNull(data)}catch(err){return ecb(err)}
+    if(Application) data = Application.configure(data, configFile.parent.basePath)
     cb(data)
   })
 }
 
-
-
+proto._getApplicationOrNull = function(config){
+  var applicationName = config.application
+  if(applicationName){
+    var Application = app.applications[applicationName]
+    if(!Application) throw new Error('no application ' + applicationName)
+    return Application()
+  }else return null
+}
