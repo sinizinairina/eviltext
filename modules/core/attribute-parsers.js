@@ -74,3 +74,15 @@ parsers.arrayOfPaths = function(value, mountPath){
   value = parsers.array(value, mountPath)
   return _(value).map(function(v){return parsers.path(v, mountPath)})
 }
+
+parsers.hashOfPaths = function(value, mountPath){
+  value = parsers.hash(value, mountPath)
+  var paths = {}
+  _(value).each(function(path, title){
+    paths[title] = parsers.path(path, mountPath)
+  })
+  return paths
+}
+// There's no ordered hash in JavaScript, but ordinary hash in most implementations is
+// ordered.
+parsers.orderedHashOfPaths = parsers.hashOfPaths

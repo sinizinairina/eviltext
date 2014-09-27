@@ -10,26 +10,6 @@ module.exports = function(klass, appName, appDirectory){
   klass.parseSpecialConfigAttributes = function(mountPath, userConfig){
     userConfig = _(userConfig).clone()
 
-    // Navigation.
-    if(userConfig.navigation){
-      var navigation = {}
-      _(userConfig.navigation).each(function(path, title){
-        navigation[title] = app.pathUtil.absolutePathIfNotAbsolute(mountPath, path)
-      })
-      userConfig.navigation = navigation
-    }
-
-    // Home.
-    if(userConfig.home){
-      userConfig.home = app.pathUtil.absolutePathIfNotAbsolute(mountPath, userConfig.home)
-    }
-
-    // Logo.
-    if(app.pathUtil.isImagePath(userConfig.logo)){
-      userConfig.logo = app.pathUtil.absolutePathIfNotAbsolute(mountPath, userConfig.logo)
-      userConfig.isLogoPath = true
-    }
-
     // Sort by.
     if(_(userConfig.sortBy).isPresent()){
       var tokens = userConfig.sortBy.toLowerCase().split(/[\s,]+/)

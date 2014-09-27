@@ -1,5 +1,4 @@
 - Application : Shop
-- Logo        : My Shop
 - Title       : Digital Cameras
 - About       : Best cameras in the world
 - Navigation  : Products, products, Contact us, pages/contacts

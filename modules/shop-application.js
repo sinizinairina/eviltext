@@ -27,7 +27,6 @@ Shop.parseSpecialConfigAttributes = function(mountPath, userConfig){
 Shop.process = function(attributes, mountPath){
   attributes = _(attributes).clone()
   if(attributes.price) attributes.price = app.attributeParsers.number(attributes.price, mountPath)
-  p(attributes)
   return attributes
 }
 

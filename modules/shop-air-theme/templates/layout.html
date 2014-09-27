@@ -18,13 +18,11 @@
 
       <!-- Logo. -->
       <% if(config.logo){ %>
-        <% if(config.isLogoPath){ %>
-          <a href="<%= paths.home() %>" class="logo">
-            <img src="<%= config.logo %>" alt="Cart">
-          </a>
-        <% }else{ %>
-          <a href="<%= paths.home() %>" class="logo"><%- config.logo %></a>
-        <% } %>
+        <a href="<%= paths.home() %>" class="logo">
+          <img src="<%= config.logo %>" title="<%= config.title %>">
+        </a>
+      <% }else{ %>
+        <a href="<%= paths.home() %>" class="logo"><%- config.title %></a>
       <% } %>
 
       <!-- Navigation and cart. -->
@@ -98,9 +96,7 @@
         <% if(!_(config.navigation).isEmpty()){ %>
           <div class="footer-navigation">
             <!-- Home. -->
-            <% if(config.logo && !config.isLogoPath){ %>
-              <a href="#header"><%- config.logo %></a>
-            <% } %>
+            <a href="#header"><%- config.title %></a>
 
             <% _(config.navigation).each(function(path, title){ %>
               <% if(path == currentPath){ %>
