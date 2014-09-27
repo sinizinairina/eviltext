@@ -232,7 +232,7 @@ proto._processConfigFile = function(configFile, ecb, cb){
     if(applicationName){
       var Application
       try{Application = app.getApplication(applicationName)}catch(err){return ecb(err)}
-      data = Application.configure(configFile.parent.basePath, data)
+      data = Application.configure(data, configFile.parent.basePath)
     }
     cb(data)
   })

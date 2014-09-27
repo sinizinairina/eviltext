@@ -3,7 +3,7 @@ var fspath = require('path')
 module.exports = function(klass, themeName, objectName, objectsName, themeDirectory){
   var proto = klass.prototype
 
-  klass.configure = function(applicationConfig, userConfig){
+  klass.configure = function(applicationConfig, userConfig, mountPath){
     return _({}).extend(applicationConfig, klass.defaultConfig, userConfig)
   }
 

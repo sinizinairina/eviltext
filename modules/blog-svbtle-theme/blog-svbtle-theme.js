@@ -1,11 +1,5 @@
 var fspath = require('path')
-var Svbtle = module.exports = function(){
-  this.initialize.apply(this, arguments)
-
-  // Special theme attributes - path to hero unit and listing type.
-  this.heroPath = app.attributeParsers.path(this.config.hero, this.mountPath)
-  this.listing  = app.attributeParsers.lowerCaseString(this.config.listing)
-}
+var Svbtle = module.exports = function(){this.initialize.apply(this, arguments)}
 var proto = Svbtle.prototype
 var themeName = 'blog-svbtle-theme'
 require('../base-theme')(Svbtle, themeName, 'post', 'posts', __dirname)
@@ -20,12 +14,17 @@ Svbtle.defaultConfig = {
   }
 }
 
-// Overriding default configure because we need to add `thumb` image format only in
-// case special listing type used.
-Svbtle.configure = function(applicationConfig, userConfig){
-  var config = _(Svbtle.defaultConfig).deepClone()
-  if(userConfig.listing) config.images.thumb = '303x303'
-  return _({}).extend(applicationConfig, config, userConfig)
+// Adding theme-specific configuration options.
+Svbtle.configure = function(applicationConfig, userConfig, mountPath){
+  userConfig = _(userConfig).clone()
+  if(userConfig.hero) userConfig.heroPath = app.attributeParsers.path(userConfig.hero, mountPath)
+  if(userConfig.listing){
+    userConfig.listing = app.attributeParsers.lowerCaseString(userConfig.listing)
+    // Overriding default configure because we need to add `thumb` image format only in
+    // case special listing type used.
+    config.images.thumb = '303x303'
+  }
+  return _({}).extend(applicationConfig, Svbtle.defaultConfig, userConfig)
 }
 
 proto.generate = function(ecb, cb){
@@ -63,8 +62,7 @@ proto.generatePostCollection = function(tag, page, pagesCount, posts, ecb, cb){
       currentPath  : _this.paths.posts({tag: tag, page: page}),
       themeName    : themeName,
       layout       : '/layout.html',
-      hero         : hero,
-      listing      : _this.listing
+      hero         : hero
     }, target, ecb, cb)
   })
 }
@@ -72,13 +70,13 @@ proto.generatePostCollection = function(tag, page, pagesCount, posts, ecb, cb){
 // Reading hero unit, can be a markdown file with title and text, it will be put on the top
 // of the blog.
 proto.readHero = function(ecb, cb){
-  if(!this.heroPath) return cb(null)
+  if(!this.config.heroPath) return cb(null)
   if('heroCache' in this) return cb(this.heroCache)
   var _this = this
-  app.readJson(fspath.join(this.buildPath, this.heroPath + '.json')
-  , function(){ecb(new Error("invalid path for hero unit " + _this.heroPath))}
+  app.readJson(fspath.join(this.buildPath, this.config.heroPath + '.json')
+  , function(){ecb(new Error("invalid path for hero unit " + _this.config.heroPath))}
   , function(data){
-    data.basePath = _this.heroPath
+    data.basePath = _this.config.heroPath
     _this.heroCache = data
     _this.readHero(ecb, cb)
   })

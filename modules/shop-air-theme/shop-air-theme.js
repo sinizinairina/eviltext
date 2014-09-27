@@ -1,16 +1,10 @@
 var fspath = require('path')
-var Svbtle = module.exports = function(){
-  this.initialize.apply(this, arguments)
-
-  // Special theme attribute - list of slides.
-  this.config = _(this.config).clone()
-  this.config.slides = app.attributeParsers.arrayOfPaths(this.config.slides, this.mountPath)
-}
-var proto = Svbtle.prototype
+var Air = module.exports = function(){this.initialize.apply(this, arguments)}
+var proto = Air.prototype
 var themeName = 'shop-air-theme'
-require('../base-theme')(Svbtle, themeName, 'product', 'products', __dirname)
+require('../base-theme')(Air, themeName, 'product', 'products', __dirname)
 
-Svbtle.defaultConfig = {
+Air.defaultConfig = {
   charset       : 'utf-8',
   perPage       : 25,
   previewLength : 1200,
@@ -21,12 +15,11 @@ Svbtle.defaultConfig = {
   }
 }
 
-// Overriding default configure because we need to add `thumb` image format only in
-// case special listing type used.
-Svbtle.configure = function(applicationConfig, userConfig){
-  var config = _(Svbtle.defaultConfig).deepClone()
-  if(userConfig.listing) config.images.thumb = '303x303'
-  return _({}).extend(applicationConfig, config, userConfig)
+// Adding theme-specific configuration options.
+Air.configure = function(applicationConfig, userConfig, mountPath){
+  userConfig = _(userConfig).clone()
+  userConfig.slides = app.attributeParsers.arrayOfPaths(userConfig.slides, mountPath)
+  return _({}).extend(applicationConfig, Air.defaultConfig, userConfig)
 }
 
 proto.generate = function(ecb, cb){

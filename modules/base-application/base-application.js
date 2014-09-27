@@ -49,13 +49,13 @@ module.exports = function(klass, appName, appDirectory){
     return userConfig
   }
 
-  klass.configure = function(mountPath, userConfig){
+  klass.configure = function(userConfig, mountPath){
     userConfig = klass.parseSpecialConfigAttributes(mountPath, userConfig)
 
     // Merging application, theme and user configs.
     var themeName = userConfig.theme || klass.defaultConfig.theme
     var Theme = app.getTheme(appName, themeName)
-    return Theme.configure(klass.defaultConfig, userConfig)
+    return Theme.configure(klass.defaultConfig, userConfig, mountPath)
   }
 
   proto.initialize = function(mountPath, config, srcPath, srcBaseEntries, buildPath
