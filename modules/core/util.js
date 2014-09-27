@@ -25,7 +25,7 @@ app.t = function(language, module, key, options){
   var locale = app.translations[language] || {}
   var moduleLocale = locale[module] || {}
   if('count' in options) key = key + (locale.pluralize || defaultPluralize)(options.count)
-  str = moduleLocale[key] || ('no ' + language + ' translation for ' + moduleLocale + ' ' + key)
+  str = moduleLocale[key] || ('no ' + language + ' translation for ' + module + ' ' + key)
   _(options).each(function(v, k){
     str = str.replace(new RegExp('\#\{' + k + '\}', 'g'), v)
   })

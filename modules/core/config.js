@@ -40,12 +40,15 @@ app.applications = {
 
 // Themes.
 app.themes = {
-  blog: {
+  blog : {
     svbtle: function(){return require('../blog-svbtle-theme')}
   },
-  wiki: {
+  wiki : {
     clean : function(){return require('../wiki-clean-theme')},
     gray  : function(){return require('../wiki-gray-theme')}
+  },
+  shop : {
+    air : function(){return require('../shop-air-theme')}
   }
 }
 
@@ -57,6 +60,7 @@ app.attributeTypes = {
   bottom         : 'string',
   comments       : 'boolean',
   charset        : 'string',
+  currency       : 'string',
   date           : 'date',
   details        : 'string',
   draft          : 'boolean',
@@ -72,6 +76,7 @@ app.attributeTypes = {
   mountAsRoot    : 'boolean',
   navigation     : 'orderedHash',
   perPage        : 'number',
+  price          : 'number',
   sortBy         : 'string',
   tags           : 'sortedArray',
   theme          : 'lowerCaseString',

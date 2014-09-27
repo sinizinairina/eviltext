@@ -1,0 +1,141 @@
+// Normalize.
+@import './normalize-2.1.3.less';
+
+// Fonts.
+@import url('//fonts.googleapis.com/css?family=Open+Sans:300italic,300,400italic,400,600italic,600,700italic,700,800italic,800&subset=latin,cyrillic,cyrillic-ext');
+
+// # Styles and mixins.
+body {font-family: "Open Sans",Helvetica,Arial,sans-serif; font-size: 16px; font-weight: 300;}
+
+@container-width : 1024px;
+
+@light-gray  : hsl(0, 0%, 93%);
+@gray        : hsl(0, 0%, 33%);
+@slides-gray : hsl(0, 0%, 66%);
+
+@margin: 20px;
+
+@product-item-width        : 241px;
+@product-item-image-height : ceil(1.1 * @product-item-width);
+
+@product-image-width           : 120px;
+@product-image-height          : ceil(1.1 * @product-image-width);
+@product-images-max-width      : (120 + @margin) * 4 - @margin;
+@product-description-max-width : @container-width - @product-images-max-width - 20;
+
+.bold-text {font-family: "Open Sans",Helvetica,Arial,sans-serif; font-weight: bold;}
+.small-text {font-size: 0.75em;}
+.small-navigation-text{.small-text(); color: @gray;}
+
+.no-link {text-decoration: none; color: inherit;}
+
+.clearfix {*zoom: 1;
+  &:before, &:after {display: table; content: ""; line-height: 0;}
+  &:after {clear: both;}}
+*, *:before, *:after {box-sizing: border-box;}
+
+// # Components.
+.container {margin-left: auto; margin-right: auto; width: @container-width;}
+
+// Header.
+.header {.clearfix();}
+
+// Logo.
+.logo, a.logo {.no-link(); float: left; font-size: 3em; line-height: 1; margin-bottom: 25px;
+  margin-top: 16px; text-shadow: 2px 2px 2px rgba(150, 150, 150, 1);}
+
+// Navigation.
+.navigation {float: right; margin-top: 16px;
+  a {display: inline-block; .no-link(); .small-navigation-text();
+    border-right: 1px solid @gray; padding-right: 0.45em; padding-top: 0; padding-bottom: 0;
+    line-height: 1;}
+  a:hover {text-decoration: underline;}
+  a:last-child {border-right: none; padding-right: none;}}
+.cart-button {padding-right: 0 !important;
+  .cart-button-icon {margin-bottom: -1px; margin-left: 3px;}}
+
+// Tags.
+.tags {clear: both; .clearfix(); margin-bottom: 25px;
+  border-top: 1px solid @light-gray; border-bottom: 1px solid @light-gray; color: @gray;
+  a {float: left; .no-link(); padding: 0.5em;}
+  a:hover, a.selected {background-color: @light-gray;}}
+
+// Slides.
+.slides {display: none; margin-bottom: 16px;
+  img {display: block; width: 100%; height: auto;}}
+.owl-theme .owl-controls .owl-page span {background-color: @slides-gray !important;}
+
+// Products.
+.products {.clearfix(); margin-top: 10px; margin-bottom: 25px;}
+
+// Product item.
+.centered-image (@max) {
+  display: table-cell; vertical-align: middle; text-align: center; border: 1px solid @light-gray;
+  img {max-width: @max - 2 - 10; max-height: @max - 2 - 10; width: auto; height: auto;}}
+
+.product-item {float: left; width: @product-item-width; margin-right: @margin;
+  margin-bottom: @margin;
+  &:nth-child(4n){margin-right: 0; margin-bottom: 0;}
+  &:nth-last-child(-n + 4){margin-bottom: 0;}}
+.product-item-image {width: @product-item-width; height: @product-item-image-height;
+  .centered-image(@product-item-width);}
+a.product-item-title {display: block; .no-link(); text-align: center;
+  color: @gray;
+  &:hover {text-decoration: underline;}}
+.product-item-price {text-align: center; .small-text(); color: @gray;}
+
+.frontground {display: none; position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 1;
+  background-color: @gray; opacity: 0.1;}
+.product-item-image {position: relative;}
+.product-item-image-background {.frontground();}
+.product-item:hover .product-item-image-background {display: inherit;}
+// There's a bug in firefox it doesn't uderstand `table cell > relative > absolute`.
+// http://stackoverflow.com/questions/17487974/css-absolute-div-inside-relative-parent-for-firefox
+@-moz-document url-prefix() {
+  .product-item-image-background {
+    display: none !important;}}
+
+// Product.
+.product {.clearfix(); margin-bottom: @margin;}
+.product-images {.clearfix(); float: left; max-width: @product-images-max-width;}
+.product-selected-image {
+  margin-bottom: @margin;
+  // Uncomment to use float-height image
+  // > div {.centered-image(@product-images-max-width); max-width: @product-images-max-width;}}
+  > div {.centered-image(@product-images-max-width); width: @product-images-max-width;
+    height: @product-images-max-width;}}
+.product-images-list {clear: both;}
+.product-image {float: left; margin-right: @margin; margin-bottom: @margin; cursor: pointer;
+  &:nth-child(4n){margin-right: 0;}
+  &:nth-last-child(-n + 4){margin-bottom: 0;}
+  > div {.centered-image(@product-image-width); width: @product-image-width;
+    height: @product-image-height;}}
+.product-description {float: right; max-width: @product-description-max-width;
+  margin-bottom: 4px;}
+.product-title {float: left; font-size: 2em; line-height: 1;}
+.product-price {float: left; font-size: 1.5em; line-height: 1; .bold-text(); color: @gray;}
+.product-title-and-buy-button{.clearfix();}
+// .product-details {clear: both; margin-top:}
+.product-buy-button {float: right; .bold-text(); margin-top: -2px; color: white;
+  background-color: @gray; padding: 4px 15px; cursor: pointer; border-radius: 3px;}
+
+.product-image {position: relative;}
+.product-image-background {.frontground();}
+.product-image:hover .product-image-background {display: inherit;}
+
+// Page.
+.page > h1 {line-height: 1; margin: 0;}
+
+// Pagination.
+.pagination {clear: both; .clearfix(); border-top: 1px solid @light-gray;
+  border-bottom: 1px solid @light-gray; margin-bottom: 25px;
+  a {.no-link(); padding: 0em 1em; color: @gray;}
+  a:hover, a.selected {background-color: @light-gray;}
+  .pagination-previous {float: left; font-size: 2em; line-height: 1;}
+  .pagination-next {float: right; font-size: 2em; line-height: 1;}}
+
+// Footer.
+.footer {.clearfix(); margin-bottom: 25px;}
+.footer-bordered {border-top: 1px solid @light-gray; padding-top: @margin;}
+.footer-navigation {.navigation(); float: left; margin-top: -4px;}
+.footer-details {float: right; .small-text();}

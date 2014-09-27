@@ -1,0 +1,49 @@
+<!-- Product. -->
+<div class="product js-product">
+
+  <!-- Images. -->
+  <div class="product-images">
+
+    <!-- Selected image. -->
+    <div class="product-selected-image js-product-selected-image">
+      <div>
+        <%- imageTag(mainImage(product)) %>
+      </div>
+    </div>
+
+    <!-- Other images. -->
+    <div class="product-images-list">
+      <% _(product.images).each(function(image){ %>
+        <div class="product-image js-product-image">
+          <div>
+            <%- imageTag(image) %>
+            <div class="product-image-background"></div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+
+  <div class="product-description">
+    <div class="product-title-and-buy-button">
+      <!-- Buy button. -->
+      <div class="product-buy-button cart-buy-button"
+        data-name="<%- product.title %>"
+        data-price="<%- product.price %>"
+        data-quantity="1"
+      >
+        <% if(config.isCurrencyBeforePrice){ %>
+          <%= t('buy') %> <%= config.currency %><%= product.price %>
+        <% }else{ %>
+          <%= t('buy') %> <%= product.price %><%= config.currency %>
+        <% } %>
+      </div>
+
+      <!-- Title. -->
+      <div class="product-title"><%- product.title %></div>
+    </div>
+
+    <!-- Details. -->
+    <div class="product-details"><%- product.html %></div>
+  </div>
+</div>

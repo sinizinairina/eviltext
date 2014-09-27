@@ -1,0 +1,8 @@
+- Application : Shop
+- Logo        : My Shop
+- Title       : Digital Cameras
+- About       : Best cameras in the world
+- Navigation  : Products, products, Contact us, pages/contacts
+- Details     : Tel.: <b>8 (222) 333-33-33</b><br/> Skype: <b>camstore</b>
+- Per Page    : 1
+- Currency    : $

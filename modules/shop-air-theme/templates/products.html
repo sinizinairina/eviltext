@@ -1,0 +1,33 @@
+<!-- Products. -->
+<div class="products">
+  <% _(products).each(function(product){ %>
+
+    <!-- Product item. -->
+    <div class="product-item">
+
+      <!-- Product image. -->
+      <% if(product.images.length > 0 ){ %>
+        <div class="product-item-image">
+          <% var link = product.link || paths.product(product) %>
+          <a href="<%= link %>">
+            <%- imageTag(mainImage(product), {format: 'thumb'}) %>
+          </a>
+          <a href="<%= link %>" class="product-item-image-background"></a>
+        </div>
+      <% } %>
+
+      <!-- Product info. -->
+      <div class="product-info">
+        <a href="<%= link %>" class="product-item-title"><%- product.title %></a>
+        <div class="product-item-price">
+          <% if(config.isCurrencyBeforePrice){ %>
+            <%= config.currency %><%= product.price %>
+          <% }else{ %>
+            <%= product.price %><%= config.currency %>
+          <% } %>
+        </div>
+      </div>
+    </div>
+
+  <% }) %>
+</div>

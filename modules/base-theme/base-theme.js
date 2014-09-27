@@ -42,7 +42,7 @@ module.exports = function(klass, themeName, objectName, objectsName, themeDirect
     var _this = this
     _([
       '/lazyload-2.0.5.js',
-      '/turbolinks-latest.js',
+      // '/turbolinks-latest.js',
       '/fastclick-0.6.7.js',
       '/prettify/prettify.js',
       '/prettify/prettify.css'

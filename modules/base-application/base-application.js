@@ -162,11 +162,11 @@ module.exports = function(klass, appName, appDirectory){
     })
   }
 
-  // Checking if post is a gallery and if so preparing it.
-  proto.tryPrepareGallery = function(post){
+  // Checking if object is a gallery and if so preparing it.
+  proto.tryPrepareGallery = function(object){
     var images = []
     var _this = this
-    var entry = this.srcBaseEntries[post.basePath]
+    var entry = this.srcBaseEntries[object.basePath]
     _(entry.children).each(function(childEntry){
       if(app.imageExtensions.indexOf(childEntry.extension) >= 0){
         // var image = {}
@@ -189,13 +189,13 @@ module.exports = function(klass, appName, appDirectory){
       }
     })
 
-    if((images.length > 0) || (post.type == 'gallery')){
-      if(!post.type) post.type = 'gallery'
-      post.images = images.sort() //  = _(images).sortBy(function(image){return image.original.title})
+    if((images.length > 0) || (object.type == 'gallery')){
+      if(!object.type) object.type = 'gallery'
+      object.images = images.sort() //  = _(images).sortBy(function(image){return image.original.title})
 
       // Truncating.
-      post.imagesPreview = [images[0]]
-      post.imagesPreviewTruncated = images.length > 1
+      object.imagesPreview = [images[0]]
+      object.imagesPreviewTruncated = images.length > 1
     }
   }
 
@@ -247,7 +247,8 @@ module.exports = function(klass, appName, appDirectory){
   // Posts can be located at level 1 or 2. Searching first in direct children and if
   // nothing found trying to find in grandchildren.
   proto.loadObjects = function(objectName, objectsName, options, ecb, cb){
-    app.debug('[' + appName + '] searching for ' + objectsName + ' in ' + this.mountPath)
+    var directory = this.srcBaseEntries[options.path || this.mountPath]
+    app.debug('[' + appName + '] searching for ' + objectsName + ' in ' + directory)
     var objects = []
     var _this = this
 
@@ -270,11 +271,10 @@ module.exports = function(klass, appName, appDirectory){
     }
 
     // Checking first level.
-    var directory = this.srcBaseEntries[options.path || this.mountPath]
-    checkAndAddObject(this.mountDirectory, ecb, function(){
+    checkAndAddObject(directory, ecb, function(){
       // Checking for the second level objects only if there was no objects on the first level.
       if(objects.length == 0){
-        _(_this.mountDirectory.children).asyncEach(function(entry, path, ecb, next){
+        _(directory.children).asyncEach(function(entry, path, ecb, next){
           entry.entry == 'directory' ? checkAndAddObject(entry, ecb, next) : next()
         }, ecb, function(){cb(objects)})
       }else cb(objects)

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="<%= config.charset %>"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+
+  <!-- Styles. -->
+  <link rel="stylesheet" type="text/css" media="all" href="<%= paths.themeAsset(themeName, '/style.css') %>"/>
+</head>
+<body>
+
+  <!-- Content. -->
+  <div class="container">
+
+    <!-- Header. -->
+    <div id="header" class="header">
+
+      <!-- Logo. -->
+      <% if(config.logo){ %>
+        <% if(config.isLogoPath){ %>
+          <a href="<%= paths.home() %>" class="logo">
+            <img src="<%= config.logo %>" alt="Cart">
+          </a>
+        <% }else{ %>
+          <a href="<%= paths.home() %>" class="logo"><%- config.logo %></a>
+        <% } %>
+      <% } %>
+
+      <!-- Navigation and cart. -->
+      <div class="navigation">
+        <!-- Navigation. -->
+        <% _(navigation).each(function(item){ %>
+          <% if(item.path == currentPath){ %>
+            <a href="<%= item.path %>" class="selected"><%= item.title %></a>
+          <% }else{ %>
+            <a href="<%= item.path %>"><%= item.title %></a>
+          <% } %>
+        <% }) %>
+
+        <!-- Cart, hiding it until `cartjs` would be loaded and initialise it. -->
+        <a href="#" class="cart-button" style="display: none;">
+          <!-- <span class="cart-button-quantity">0</span> -->
+          <!-- <span class="cart-button-label">Cart</span> -->
+          <img class="cart-button-icon" src="<%= paths.themeAsset(themeName, '/icons/cart.png') %>">
+        </a>
+      </div>
+
+      <!-- Tags. -->
+      <% var truncatedTagCloud = tagCloud.slice(0, config.tagCount) %>
+      <% if(truncatedTagCloud.length > 0){ %>
+        <div class="tags">
+          <% _(truncatedTagCloud).each(function(item){ %>
+            <% var humanizedCount = t('productCount', {count: item.count}) %>
+            <% var tagPath = paths.products({tag: item.name}) %>
+            <% if(tagPath == currentPath){ %>
+              <a href="<%= tagPath %>" class="selected" title="<%= humanizedCount %>"><%= item.name %></a>
+            <% }else{ %>
+              <a href="<%= tagPath %>" title="<%= humanizedCount %>"><%= item.name %></a>
+            <% } %>
+          <% }) %>
+        </div>
+      <% } %>
+
+    </div>
+
+    <!-- Slides. -->
+    <% if(config.slides.length > 0){ %>
+      <div class="slides owl-carousel owl-theme">
+        <% _(config.slides).each(function(path){ %>
+          <img src="<%= path %>">
+        <% }) %>
+      </div>
+    <% } %>
+
+    <!-- Content. -->
+    <%- content %>
+
+    <!-- Pagination. -->
+    <% if(previousPath || nextPath){ %>
+      <nav class="pagination">
+        <% if(previousPath){ %>
+          <a href="<%= previousPath %>" class="pagination-previous">&lt;</a>
+        <% } %>
+        <% if(nextPath){ %>
+          <a href="<%= nextPath %>" class="pagination-next">&gt;</a>
+        <% } %>
+      </nav>
+    <% } %>
+
+    <!-- Footer. -->
+    <% if(previousPath || nextPath){ %>
+      <div class="footer">
+    <% }else{ %>
+      <div class="footer footer-bordered">
+    <% } %>
+        <!-- Footer navigation. -->
+        <% if(navigation.length > 0){ %>
+          <div class="footer-navigation">
+            <!-- Home. -->
+            <% if(config.logo && !config.isLogoPath){ %>
+              <a href="#header"><%- config.logo %></a>
+            <% } %>
+
+            <% _(navigation).each(function(item){ %>
+              <% if(item.path == currentPath){ %>
+                <a href="<%= item.path %>" class="selected"><%= item.title %></a>
+              <% }else{ %>
+                <a href="<%= item.path %>"><%= item.title %></a>
+              <% } %>
+            <% }) %>
+          </div>
+        <% } %>
+
+        <!-- Footer details. -->
+        <div class="footer-details">
+          <%- config.details %>
+        </div>
+
+      </div>
+  </div>
+
+  <!-- jQuery -->
+  <script src="<%= paths.asset('/vendor/jquery-2.1.1.js') %>"></script>
+
+  <!-- Slides. -->
+  <% if(config.slides.length > 0){ %>
+    <!-- Consider possibility to switch to http://bchanx.com/slidr slides library. -->
+    <link rel="stylesheet" type="text/css" media="all" href="{{_assetPath}}/vendor/owl-carousel-1.27.0/owl-carousel.css"/>
+    <link rel="stylesheet" type="text/css" media="all" href="{{_assetPath}}/vendor/owl-carousel-1.27.0/owl-theme.css"/>
+    <style>
+      .slides {display: block;}
+    </style>
+
+    <script src="<%= paths.asset('/vendor/owl-carousel-1.27.0/owl-carousel.js') %>"></script>
+    <script>
+      $('.slides').owlCarousel({
+        slideSpeed      : 300,
+        paginationSpeed : 400,
+        singleItem      : true,
+        autoPlay        : 5000
+      })
+    </script>
+  <% } %>
+
+  <!-- Scripts. -->
+  <script src="<%= paths.asset('/vendor/spin-1.3.0.min.js') %>"></script>
+  <script src="<%= paths.themeAsset(themeName, '/script.js') %>"></script>
+
+  <!-- Salejs. -->
+  <script src="http://salejs.com/v1/cart.js"></script>
+  <style>
+    .bootstrap-widget .popover {margin-left: -119px !important;}
+    .bootstrap-widget .popover .arrow {display: none;;}
+  </style>
+  <script>
+    cartjs.initialize({
+      emailOrdersTo : '<%= config.emailOrdersTo %>',
+      currency      : '<%= config.currency %>',
+      language      : '<%= config.language %>'
+    })
+  </script>
+
+  <%- bottomCommons %>
+</body>
+</html>

@@ -69,3 +69,8 @@ parsers.path = function(value, mountPath){
   value = app.attributeParsers.lowerCaseString(value)
   return app.pathUtil.absolutePathIfNotAbsolute(mountPath, value)
 }
+
+parsers.arrayOfPaths = function(value, mountPath){
+  value = parsers.array(value, mountPath)
+  return _(value).map(function(v){return parsers.path(v, mountPath)})
+}

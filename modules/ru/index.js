@@ -27,3 +27,4 @@ app.translations.ru.pluralize = function(count){
 
 require('./attribute-translation')
 require('./blog-svbtle-theme')
+require('./shop-air-theme')
