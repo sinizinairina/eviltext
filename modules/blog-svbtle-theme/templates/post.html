@@ -1,8 +1,10 @@
 <section id="river" role="main">
   <!-- Top time. -->
-  <header id="begin">
-    <time datetime="<%= formatDateForWeb(post.date) %>" id="top_time"><%= formatDateForHuman(post.date) %></time>
-  </header>
+  <% if(post.date){ %>
+    <header id="begin">
+      <time datetime="<%= formatDateForWeb(post.date) %>" id="top_time"><%= formatDateForHuman(post.date) %></time>
+    </header>
+  <% } %>
 
   <!-- Post. -->
   <article class="post">

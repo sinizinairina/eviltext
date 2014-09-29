@@ -10,7 +10,7 @@ Air.defaultConfig = {
   previewLengths : {
     default: 1200
   },
-  tagCount       : 12,
+  tagCount       : 7,
   imageFormats   : {
     thumb   : '229x229',
     default : '528x528'
@@ -26,22 +26,24 @@ Air.configure = function(applicationConfig, userConfig, mountPath){
 
 proto.generate = function(ecb, cb){
   var _this = this
-  _([
-    '/jquery-2.1.1.js',
-    '/owl-carousel-1.27.0/owl-carousel.css',
-    '/owl-carousel-1.27.0/owl-theme.css',
-    '/owl-carousel-1.27.0/owl-carousel.js',
-    '/spin-1.3.0.min.js'
-  ]).asyncEach(function(assetPath, i, ecb, next){
-    _this.copyVendorAsset(__dirname, assetPath, ecb, next)
-  }, ecb, function(){
+  this.copyBaseAssets(ecb, function(){
     _([
-      '/style.css',
-      '/script.js',
-      '/icons/cart.png'
+      '/jquery-2.1.1.js',
+      '/owl-carousel-1.27.0/owl-carousel.css',
+      '/owl-carousel-1.27.0/owl-theme.css',
+      '/owl-carousel-1.27.0/owl-carousel.js',
+      '/spin-1.3.0.min.js'
     ]).asyncEach(function(assetPath, i, ecb, next){
-      _this.copyAsset(__dirname, themeName, assetPath, ecb, next)
-    }, ecb, cb)
+      _this.copyVendorAsset(__dirname, assetPath, ecb, next)
+    }, ecb, function(){
+      _([
+        '/style.css',
+        '/script.js',
+        '/icons/cart.png'
+      ]).asyncEach(function(assetPath, i, ecb, next){
+        _this.copyAsset(__dirname, themeName, assetPath, ecb, next)
+      }, ecb, cb)
+    })
   })
 }
 
@@ -56,7 +58,8 @@ proto.generateProduct = function(product, ecb, cb){
     layout       : '/layout.html',
     showComments : (('comments' in product) ? product.comments : this.config.comments),
     previousPath : null,
-    nextPath     : null
+    nextPath     : null,
+    showSlides   : false
   }, target, ecb, cb)
 }
 
@@ -72,6 +75,7 @@ proto.generateProductCollection = function(tag, page, pagesCount, products, ecb,
     currentPath  : this.paths.products({tag: tag, page: page}),
     themeName    : themeName,
     layout       : '/layout.html',
+    showSlides   : true
   }, target, ecb, cb)
 }
 
@@ -86,7 +90,8 @@ proto.generateShopPage = function(page, ecb, cb){
     layout       : '/layout.html',
     showComments : (('comments' in page) ? page.comments : this.config.comments),
     previousPath : null,
-    nextPath     : null
+    nextPath     : null,
+    showSlides   : false
   }, target, ecb, cb)
 }
 

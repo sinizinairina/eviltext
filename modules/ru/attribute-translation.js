@@ -1,6 +1,5 @@
 _(app.attributeTranslation).extend({
   'описание'         : 'about',
-  'количество'       : 'amount',
   'приложение'       : 'application',
   'подвал'           : 'bottom',
   'charset'          : 'charset',
@@ -28,5 +27,6 @@ _(app.attributeTranslation).extend({
 
   // Shop.
   'валюта'           : 'currency',
-  'цена'             : 'price'
+  'цена'             : 'price',
+  'слайды'           : 'slides'
 })

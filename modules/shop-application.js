@@ -67,7 +67,8 @@ proto.prepare = function(ecb, cb){
   app.debug('[shop] preparing ' + this.mountPath)
   var _this = this
   var loadAndPrepareProducts = function(ecb, cb){
-    _this.loadObjects('product', 'products', {path: _this.mountPath + '/products'}, ecb
+    var productsPath = app.pathUtil.join(_this.mountPath, '/products')
+    _this.loadObjects('product', 'products', {path: productsPath}, ecb
     , function(objects){
       _this.products = objects
       _this.prepareProducts(ecb, function(){
@@ -78,7 +79,8 @@ proto.prepare = function(ecb, cb){
     })
   }
   var loadAndPreparePages = function(ecb, cb){
-    _this.loadObjects('page', 'pages', {path: _this.mountPath + '/pages'}, ecb
+    var pagesPath = app.pathUtil.join(_this.mountPath, '/pages')
+    _this.loadObjects('page', 'pages', {path: pagesPath}, ecb
     , function(objects){
       _this.pages = objects
       _this.preparePages(ecb, function(){

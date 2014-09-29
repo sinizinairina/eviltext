@@ -63,7 +63,7 @@
     </div>
 
     <!-- Slides. -->
-    <% if(config.slides.length > 0){ %>
+    <% if(showSlides && (config.slides.length > 0)){ %>
       <div class="slides owl-carousel owl-theme">
         <% _(config.slides).each(function(path){ %>
           <img src="<%= path %>">
@@ -96,7 +96,7 @@
         <% if(!_(config.navigation).isEmpty()){ %>
           <div class="footer-navigation">
             <!-- Home. -->
-            <a href="#header"><%- config.title %></a>
+            <a href="<%= paths.home() %>#header"><%- config.title %></a>
 
             <% _(config.navigation).each(function(path, title){ %>
               <% if(path == currentPath){ %>
@@ -127,8 +127,8 @@
   <!-- Slides. -->
   <% if(config.slides.length > 0){ %>
     <!-- Consider possibility to switch to http://bchanx.com/slidr slides library. -->
-    <link rel="stylesheet" type="text/css" media="all" href="{{_assetPath}}/vendor/owl-carousel-1.27.0/owl-carousel.css"/>
-    <link rel="stylesheet" type="text/css" media="all" href="{{_assetPath}}/vendor/owl-carousel-1.27.0/owl-theme.css"/>
+    <link rel="stylesheet" type="text/css" media="all" href="<%= paths.asset('/vendor/owl-carousel-1.27.0/owl-carousel.css') %>"/>
+    <link rel="stylesheet" type="text/css" media="all" href="<%= paths.asset('/vendor/owl-carousel-1.27.0/owl-theme.css') %>"/>
     <style>
       .slides {display: block;}
     </style>
