@@ -44,7 +44,7 @@ proto._generateApplications = function(ecb, cb){
   app.debug('[core] processing applications')
   var _this = this
   _(this.configs).asyncEach(function(config, path, ecb, next){
-    var applicationName = config.application
+    var applicationName = config.type
     if(applicationName){
       var Application = app.applications[applicationName]
       if(!Application) return ecb(new Error('no application ' + applicationName))
@@ -238,7 +238,7 @@ proto._processConfigFile = function(configFile, ecb, cb){
 }
 
 proto._getApplicationOrNull = function(config){
-  var applicationName = config.application
+  var applicationName = config.type
   if(applicationName){
     var Application = app.applications[applicationName]
     if(!Application) throw new Error('no application ' + applicationName)

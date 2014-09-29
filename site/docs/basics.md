@@ -56,10 +56,10 @@ In case of Markdown it should contain list of lines when each line is started wi
 the attribute and its value delimited with the colon (for boolean attributes the colon can be 
 omited), see example below.
 
-    - Application : Blog
-    - Title       : My Blog
-    - About       : Life and Technology
-    - Navigation  : Home, /, Contact me, mailto:me@mail.com
+    - Type       : Blog
+    - Title      : My Blog
+    - About      : Life and Technology
+    - Navigation : Home, /, Contact me, mailto:me@mail.com
     - Comments
 
 ## Config options
@@ -67,8 +67,8 @@ omited), see example below.
 **about** - short description of the site, optional.  
 Example `- About: Blog about Photography`.
 
-**application** - the type of site, can be `blog`, `wiki` or `shop`, required.  
-Example `- Application: Blog`.
+**type** - the type of site, can be `blog`, `wiki` or `shop`, required.  
+Example `- Type: Blog`.
 
 **bottom** - HTML that would be included in the bottom of the site, optional.  
 Example `- Bottom: <script>alert('hi')</script>`

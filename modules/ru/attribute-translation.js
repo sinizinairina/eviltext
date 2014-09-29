@@ -1,6 +1,6 @@
 _(app.attributeTranslation).extend({
   'описание'         : 'about',
-  'приложение'       : 'application',
+  // 'приложение'       : 'application',
   'подвал'           : 'bottom',
   'charset'          : 'charset',
   'комментарии'      : 'comments',

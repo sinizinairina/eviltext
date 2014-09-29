@@ -55,7 +55,7 @@ app.themes = {
 // Known attributes.
 app.attributeTypes = {
   about          : 'string',
-  application    : 'lowerCaseString',
+  // application    : 'lowerCaseString',
   bottom         : 'string',
   comments       : 'boolean',
   charset        : 'string',

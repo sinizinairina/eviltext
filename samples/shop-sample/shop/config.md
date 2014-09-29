@@ -1,4 +1,4 @@
-- Application : Shop
+- Type        : Shop
 - Title       : Digital Cameras
 - About       : Best cameras in the world
 - Navigation  : Products, products, Contact us, pages/contacts

@@ -127,7 +127,7 @@ proto.generatePostCollectionsByTag = function(ecb, cb){
 
 proto.generatePost = function(post, ecb, cb){
   app.debug('[blog] generating post ' + post.basePath)
-  this.theme().generatePost(post, ecb, cb)
+  this.theme().generatePost(post, this.publishedPosts, ecb, cb)
 
   // // Generating JSON.
   // var _this = this

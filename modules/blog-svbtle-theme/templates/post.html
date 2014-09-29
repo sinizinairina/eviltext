@@ -36,9 +36,11 @@
   </article>
 
   <!-- Pagination. -->
-  <nav class="pagination">
-    <span class="prev">
-      <a href="<%= paths.home() %>" class="back_to_blog">&larr;&nbsp;&nbsp;&nbsp;<%= t('readMore') %></a>
-    </span>
-  </nav>
+  <% if(posts.length > 1){ %>
+    <nav class="pagination">
+      <span class="prev">
+        <a href="<%= paths.home() %>" class="back_to_blog">&larr;&nbsp;&nbsp;&nbsp;<%= t('readMore') %></a>
+      </span>
+    </nav>
+  <% } %>
 </section>

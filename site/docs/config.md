@@ -1,2 +1,2 @@
-- Application : Blog
-- Title       : EvilText Docs
+- Type  : Blog
+- Title : EvilText Docs
