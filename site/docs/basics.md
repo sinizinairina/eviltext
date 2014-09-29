@@ -1,7 +1,7 @@
 EvilText is a static site generator, it also can generate blogs, wikis and shops.
 Give it a folder with bunch of text and image files and it generates the website.
 
-See [blog example](http://blog-example.eviltext.com) or
+It's easier to start from examples, see [blog example](http://blog-example.eviltext.com) or
 [shop example](http://shop-example.eviltext.com).
 
 # How it works
