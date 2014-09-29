@@ -6,3 +6,4 @@
 - Per Page    : 1
 - Currency    : $
 - MountAsRoot : true
+- Slides      : slides/nikon-d3100-slide.jpg, slides/sony-alpha-slide.jpg
