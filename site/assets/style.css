@@ -95,22 +95,35 @@ a {
   margin: auto;
   text-align: center;
   margin-top: 50px;
+  line-height: 0;
 }
-.slides img {
+.slides a {
   width: 740px;
   margin: auto;
   display: block;
 }
-.navigation a {
+.slides a img {
+  width: 740px;
+}
+.slides > img {
+  width: 740px;
+  margin: auto;
+  display: block;
+}
+.navigation {
   position: absolute;
   top: 20px;
   right: 20px;
+}
+.navigation a {
   background-color: #333;
   color: #bbb;
   padding: 5px 10px;
   border-radius: 4px;
   font-size: 12px;
   font-weight: bold;
+  display: inline-block;
+  margin-left: 0.5em;
 }
 .navigation a:hover {
   color: #fff;

@@ -87,6 +87,7 @@ a {
   margin: auto;
   text-align: center;
   margin-top: 50px;
+  line-height: 0;
 
   a {
     width: 740px;
@@ -102,16 +103,18 @@ a {
 }
 
 .navigation {
+  position: absolute;
+  top: 20px;
+  right: 20px;
   a {
-    position: absolute;
-    top: 20px;
-    right: 20px;
     background-color: #333;
     color: #bbb;
     padding: 5px 10px;
     border-radius: 4px;
     font-size: 12px;
     font-weight: bold;
+    display: inline-block;
+    margin-left: 0.5em;
   }
   a:hover {color: #fff;}
 }
