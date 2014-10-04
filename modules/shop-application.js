@@ -1,5 +1,3 @@
-var fspath = require('path')
-
 var Shop = module.exports = function(){this.initialize.apply(this, arguments)}
 require('./base-application')(Shop, 'shop', __dirname)
 var proto = Shop.prototype
@@ -150,7 +148,7 @@ proto.generateProductCollection = function(ecb, cb){
   //   })
   // }
   //
-  // app.writeJson(fspath.join(this.buildPath, this.paths.home({format: 'json'})), json, ecb, function(){
+  // app.writeJson(app.pathUtil.join(this.buildPath, this.paths.home({format: 'json'})), json, ecb, function(){
   //
   // })
 }

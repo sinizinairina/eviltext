@@ -1,12 +1,11 @@
 var yaml = require('js-yaml')
 var fs = require('fs')
-var fspath = require('path')
 var baseProcessor = require('./base-processor')
 
 var target = function(file){return file.basePath + '.json'}
 
 exports.process = function(srcDir, buildDir, file, config, Application, ecb, cb, dontWrite){
-  fs.readFile(fspath.join(srcDir, file.path), _.fork(ecb, function(data){
+  fs.readFile(app.pathUtil.join(srcDir, file.path), _.fork(ecb, function(data){
     try{
       data = yaml.safeLoad(data)
     }catch(err){
@@ -22,9 +21,9 @@ exports.process = function(srcDir, buildDir, file, config, Application, ecb, cb,
 
     if(dontWrite) cb(data)
     else {
-      app.writeFile(fspath.join(buildDir, target(file)), JSON.stringify(data, null, 2)
+      app.writeFile(app.pathUtil.join(buildDir, target(file)), JSON.stringify(data, null, 2)
       , ecb, function(){
-        app.copyFile(fspath.join(srcDir, file.path), fspath.join(buildDir, file.path)
+        app.copyFile(app.pathUtil.join(srcDir, file.path), app.pathUtil.join(buildDir, file.path)
         , ecb, function(){cb(data)})
       })
     }

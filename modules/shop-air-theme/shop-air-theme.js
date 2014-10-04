@@ -1,4 +1,3 @@
-var fspath = require('path')
 var Air = module.exports = function(){this.initialize.apply(this, arguments)}
 var proto = Air.prototype
 var themeName = 'shop-air-theme'

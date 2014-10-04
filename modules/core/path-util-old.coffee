@@ -31,8 +31,7 @@ app.pathUtil =
   #   parts[0] = '/' if parts[0] == ''
   #   parts
 
-  join: (args...) ->
-    args.join('/').replace(/\/\/\/?/g, '/')
+  join: (args...) -> args.join('/').replace(/[\/]+/g, '/')
 
   # nextChildPath: (currentPath, path) ->
   #   return null if currentPath == path

@@ -20,15 +20,18 @@ var _propagateUpdatedAt = function(entry){
   }
 }
 var _readEntries = function(directory, path, entries, parent, ecb, cb){
-  fs.readdir(fspath.join(directory, path), _.fork(ecb, function(fnames){
+  // Replacing backslashes to support windows.
+  path = path.replace(/\\/g, '/')
+
+  fs.readdir(app.pathUtil.join(directory, path), _.fork(ecb, function(fnames){
     // Reading stats for files.
     _(fnames).asyncEach(function(fname, i, ecb, next){
       // Skipping files.
       if(app.systemFiles.test(fname) || app.ignoreFiles.test(fname)) return next()
 
       // Adding files to entries.
-      var absolutePath = fspath.join(directory, path, fname)
-      var relativePath = fspath.join('/', path, fname)
+      var absolutePath = app.pathUtil.join(directory, path, fname)
+      var relativePath = app.pathUtil.join('/', path, fname)
       fs.stat(absolutePath, _.fork(ecb, function(stat){
         var entry = {
           name           : fname,

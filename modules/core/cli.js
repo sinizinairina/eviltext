@@ -16,7 +16,6 @@ var printHelp = function(){
 // Serving static content.
 var serve = function(mountPath, host, port){
   app.debug('[core] serving ' + mountPath)
-  var fspath = require('path')
   var fs = require('fs')
   var express = require('express')
   var server = express()
@@ -28,7 +27,7 @@ var serve = function(mountPath, host, port){
 
     // Sending file.
     var relativePath = path
-    var absolutePath = fspath.join(mountPath, path)
+    var absolutePath = app.pathUtil.join(mountPath, path)
     fs.stat(absolutePath, function(err, stat){
       var ecb = function(err){
         console.error("can't serve " + path)

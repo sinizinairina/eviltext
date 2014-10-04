@@ -1,5 +1,3 @@
-var fspath = require('path')
-
 app.Static = function(srcPath, buildPath, ecb, cb){
   this.srcPath = srcPath
   this.buildPath = buildPath
@@ -74,7 +72,7 @@ proto._generateFiles = function(ecb, cb){
       if(app.regenerateFiles || !targetEntry || (entry.updatedAt > targetEntry.updatedAt)){
         app.debug('[core] processing config file ' + entry.path)
         anyFileBeenUpdated = true
-        app.writeJson(fspath.join(_this.buildPath, targetPath), config, ecb, next)
+        app.writeJson(app.pathUtil.join(_this.buildPath, targetPath), config, ecb, next)
       } else next()
     }else{
       // Processing ordinary entry.
@@ -104,8 +102,8 @@ proto._generateFiles = function(ecb, cb){
           app.debug('[core] copying file ' + entry.path)
           anyFileBeenUpdated = true
           // Using lovercased paths for targets.
-          app.copyFile(fspath.join(_this.srcPath, entry.path)
-          , fspath.join(_this.buildPath, entry.lowerCasedPath), ecb, next())
+          app.copyFile(app.pathUtil.join(_this.srcPath, entry.path)
+          , app.pathUtil.join(_this.buildPath, entry.lowerCasedPath), ecb, next())
         } else next()
       }
     }
@@ -202,7 +200,7 @@ proto._readConfigs = function(ecb, cb){
     }else{
       // Reading processed config.
       app.debug('[core] reading config ' + targetPath)
-      app.readJson(fspath.join(_this.buildPath, targetPath), ecb, function(data){
+      app.readJson(app.pathUtil.join(_this.buildPath, targetPath), ecb, function(data){
         _this.configs[parentBasePath] = data
         next()
       })

@@ -1,5 +1,3 @@
-var fspath = require('path')
-
 module.exports = function(klass, appName, appDirectory){
   var proto = klass.prototype
 
@@ -90,12 +88,12 @@ module.exports = function(klass, appName, appDirectory){
   }
 
   proto.renderTo = function(template, options, path, ecb, cb){
-    var templateDir = fspath.join(appDirectory, 'templates')
+    var templateDir = app.pathUtil.join(appDirectory, 'templates')
     var templatePath = app.pathUtil.absolutePathIfNotAbsolute(templateDir, template)
 
     app.debug('[' + appName + '] rendering ' + template + ' to ' + path)
     app.renderTo(templatePath, options
-    , fspath.join(this.buildPath, path), ecb, cb)
+    , app.pathUtil.join(this.buildPath, path), ecb, cb)
   }
 
   proto.paginate = function(objects){
@@ -215,7 +213,7 @@ module.exports = function(klass, appName, appDirectory){
   }
 
   proto.finalize = function(ecb, cb){
-    app.writeJson(fspath.join(this.buildPath, this.cachePath), {}, ecb, cb)
+    app.writeJson(app.pathUtil.join(this.buildPath, this.cachePath), {}, ecb, cb)
   }
 
   // Posts can be located at level 1 or 2. Searching first in direct children and if
@@ -234,7 +232,7 @@ module.exports = function(klass, appName, appDirectory){
           (entryJsonPath in _this.buildEntries)
         ){
           app.debug('[' + appName + '] reading ' + objectName + ' ' + entryJsonPath)
-          app.readJson(fspath.join(_this.buildPath, entryJsonPath), ecb, function(data){
+          app.readJson(app.pathUtil.join(_this.buildPath, entryJsonPath), ecb, function(data){
             // data.path = app.pathUtil.join(_this.mountPath, entry.baseName)
             data.basePath = entry.basePath
             objects.push(data)

@@ -1,5 +1,4 @@
 var fs = require('fs')
-var fspath = require('path')
 var baseProcessor = require('../base-processor')
 
 var targetMd = function(file){return file.lowerCasedPath}
@@ -9,7 +8,7 @@ exports.process = function(srcDir, buildDir, file, config, Application, ecb, cb,
   var parser = require('./parser')
   var textUtil = require('../text-util')
 
-  app.readFile(fspath.join(srcDir, file.path), ecb, function(text){
+  app.readFile(app.pathUtil.join(srcDir, file.path), ecb, function(text){
     // Parsing markdown.
     try{
       var result = parser.parse(text, file.parent.basePath)
@@ -48,9 +47,9 @@ exports.process = function(srcDir, buildDir, file, config, Application, ecb, cb,
     // Copying md and generating json files.
     if(dontWrite) cb(data)
     else{
-      app.writeFile(fspath.join(buildDir, targetJson(file)), JSON.stringify(data, null, 2), ecb
+      app.writeFile(app.pathUtil.join(buildDir, targetJson(file)), JSON.stringify(data, null, 2), ecb
       , function(){
-        app.copyFile(fspath.join(srcDir, file.path), fspath.join(buildDir, targetMd(file))
+        app.copyFile(app.pathUtil.join(srcDir, file.path), app.pathUtil.join(buildDir, targetMd(file))
         , ecb, function(){cb(data)})
       })
     }

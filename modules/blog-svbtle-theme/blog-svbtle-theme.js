@@ -1,4 +1,3 @@
-var fspath = require('path')
 var Svbtle = module.exports = function(){this.initialize.apply(this, arguments)}
 var proto = Svbtle.prototype
 var themeName = 'blog-svbtle-theme'
@@ -76,7 +75,7 @@ proto.readHero = function(ecb, cb){
   if(!this.config.heroPath) return cb(null)
   if('heroCache' in this) return cb(this.heroCache)
   var _this = this
-  app.readJson(fspath.join(this.buildPath, this.config.heroPath + '.json')
+  app.readJson(app.pathUtil.join(this.buildPath, this.config.heroPath + '.json')
   , function(){ecb(new Error("invalid path for hero unit " + _this.config.heroPath))}
   , function(data){
     data.basePath = _this.config.heroPath

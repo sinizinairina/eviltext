@@ -1,5 +1,4 @@
 var fs = require('fs-extra')
-var fspath = require('path')
 
 var target = function(file){return file.path}
 
@@ -39,9 +38,9 @@ exports.process = function(srcDir, buildDir, file, config, Application, ecb, cb)
     })
   }
 
-  var originalPath = fspath.join(srcDir, file.path)
+  var originalPath = app.pathUtil.join(srcDir, file.path)
   // Creating directory because GraphicMagic can't create parent paths.
-  var directoryPath = fspath.join(buildDir, file.parent.basePath)
+  var directoryPath = app.pathUtil.join(buildDir, file.parent.basePath)
   app.ensurePathInBuildDirectory(directoryPath)
   fs.ensureDir(directoryPath, _.fork(ecb, function(){
     // Converting images to different sizes.
@@ -49,7 +48,7 @@ exports.process = function(srcDir, buildDir, file, config, Application, ecb, cb)
       var sizeAlias  = sizeAliasAndFormat[0]
       var sizeFormat = sizeAliasAndFormat[1]
 
-      var targetPath = fspath.join(buildDir, resizedTarget(file, sizeAlias))
+      var targetPath = app.pathUtil.join(buildDir, resizedTarget(file, sizeAlias))
       app.ensurePathInBuildDirectory(targetPath)
       app
 
@@ -65,7 +64,7 @@ exports.process = function(srcDir, buildDir, file, config, Application, ecb, cb)
         }else ecb(err)
       }, next))
     }, ecb, function(){
-      app.copyFile(originalPath, fspath.join(buildDir, originalTarget(file)), ecb, cb)
+      app.copyFile(originalPath, app.pathUtil.join(buildDir, originalTarget(file)), ecb, cb)
     })
   }))
 }

@@ -1,5 +1,3 @@
-var fspath = require('path')
-
 module.exports = function(klass, themeName, objectName, objectsName, themeDirectory){
   var proto = klass.prototype
 
@@ -22,8 +20,8 @@ module.exports = function(klass, themeName, objectName, objectsName, themeDirect
     if((targetPath in this.buildEntries) && !app.regenerateAssets) cb()
     else {
       app.debug('[' + themeName + '] copying asset ' + relativePath)
-      app.copyFile(fspath.join(themeDirectory, 'assets', relativePath)
-      , fspath.join(this.buildPath, targetPath), ecb, cb)
+      app.copyFile(app.pathUtil.join(themeDirectory, 'assets', relativePath)
+      , app.pathUtil.join(this.buildPath, targetPath), ecb, cb)
     }
   }
 
@@ -32,8 +30,8 @@ module.exports = function(klass, themeName, objectName, objectsName, themeDirect
     if(targetPath in this.buildEntries) cb()
     else {
       app.debug('[' + themeName + '] copying asset ' + relativePath)
-      app.copyFile(fspath.join(themeDirectory, 'assets', 'vendor', relativePath)
-      , fspath.join(this.buildPath, targetPath), ecb, cb)
+      app.copyFile(app.pathUtil.join(themeDirectory, 'assets', 'vendor', relativePath)
+      , app.pathUtil.join(this.buildPath, targetPath), ecb, cb)
     }
   }
 
@@ -102,9 +100,9 @@ module.exports = function(klass, themeName, objectName, objectsName, themeDirect
 
     var _this = this
     var readHeadAndBottomCommons = function(cb){
-      app.render(fspath.join(__dirname, 'templates', 'head-commons.html')
+      app.render(app.pathUtil.join(__dirname, 'templates', 'head-commons.html')
       , data, ecb, function(headCommons){
-        app.render(fspath.join(__dirname, 'templates', 'bottom-commons.html')
+        app.render(app.pathUtil.join(__dirname, 'templates', 'bottom-commons.html')
         , data, ecb, function(bottomCommons){
           cb(headCommons, bottomCommons)
         })
@@ -121,7 +119,7 @@ module.exports = function(klass, themeName, objectName, objectsName, themeDirect
   }
 
   var absoluteTemplatePath = function(template){
-    return fspath.join(themeDirectory, 'templates', template)
+    return app.pathUtil.join(themeDirectory, 'templates', template)
   }
 
   proto.render = function(template, data, ecb, cb){
@@ -137,7 +135,7 @@ module.exports = function(klass, themeName, objectName, objectsName, themeDirect
     var _this = this
     this.addCommonAttributesAndHelpers(data, ecb, function(data){
       if(data.layout) data = _({}).extend(data, {layout: absoluteTemplatePath(data.layout)})
-      app.renderTo(absoluteTemplatePath(template), data, fspath.join(_this.buildPath, path), ecb, cb)
+      app.renderTo(absoluteTemplatePath(template), data, app.pathUtil.join(_this.buildPath, path), ecb, cb)
     })
   }
 }
