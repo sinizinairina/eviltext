@@ -17,15 +17,13 @@
   <body>
     <!-- Sidebar. -->
     <header id="sidebar">
-      <!-- <aside id="logo" class="clearfix">
-        <div class="clearfix">
-          <% if(config.logo){ %>
+      <% if(config.logo){ %>
+        <aside id="logo2" class="clearfix">
+          <div class="clearfix">
             <a href="<%= paths.home() %>"><img src="<%= config.logo %>" title="<% config.title %>"></a>
-          <% }else{ %>
-            <a href="<%= paths.home() %>"><%- config.title %></a>
-          <% } %>
-        </div>
-      </aside> -->
+          </div>
+        </aside>
+      <% } %>
       <ul id="user_meta">
         <li class="blog_name">
           <h1 id="blog_name">
@@ -38,9 +36,7 @@
           </h2>
         </li>
         <li class="tagline">
-          <h2 id="tagline">
-            <%- config.about %>
-          </h2>
+          <h2 id="tagline"><%- config.about %></h2>
         </li>
 
         <!-- Navigation. -->

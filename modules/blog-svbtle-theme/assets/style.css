@@ -269,3 +269,27 @@ p code {white-space: nowrap !important;}
 
 /* Disqus comments. */
 #disqus_thread {margin-top: 2em; margin-bottom: 2em;}
+
+/* Logo. */
+#logo2 {
+  position: relative;
+  /*background-color: #000;*/
+  display: block;
+  width: 140px;
+  height: 140px;
+  /*border-radius: 50%;*/
+  /*-moz-border-radius: 50%;*/
+  /*-webkit-border-radius: 50%;*/
+  margin-left: 20px;
+  margin-top: 30px;
+}
+#logo2 img {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  border-radius: 50%;
+  width: 140px;
+  height: 140px;
+}
+@media (max-width: 630px) {
+  #logo2 {display: none;}
+}
