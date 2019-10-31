@@ -11,7 +11,7 @@
     "cheerio": "0.10.x",
     "gm": "1.16.x",
     "less": "1.3.x",
-    "ejs": "1.0.x",
+    "ejs": "2.7.x",
     "node.extend": "1.1.x",
     "natural": "0.1.x",
     "hogan.js": "3.0.x",
